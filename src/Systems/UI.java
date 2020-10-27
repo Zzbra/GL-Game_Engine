@@ -17,8 +17,15 @@ public class UI extends SystemClass {
             case "OPEN_INVENTORY":
                 System.out.println("UI opens inventory");
                 break;
+            case "OPEN_CONSOLE":
+                openConsole();
+                break;
             default:
                 break;
         }
+    }
+
+    private void openConsole(){
+
     }
 }
