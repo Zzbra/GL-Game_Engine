@@ -1,3 +1,4 @@
+import Framework.ConsoleThread;
 import Message.*;
 import Systems.*;
 import org.lwjgl.Version;
@@ -33,8 +34,10 @@ public class Test {
         msgBus = new MessageBus();
         UI ui = new UI(msgBus);
         msgBus.addSystem(ui);
-        Message msg = new Message("OPEN_INVENTORY");
-        msgBus.post(msg);
+        //Message msg = new Message("OPEN_INVENTORY");
+        //msgBus.post(msg);
+        ConsoleThread consoleThread = new ConsoleThread(msgBus);
+        consoleThread.start();
         new Test().run();
 
     }
