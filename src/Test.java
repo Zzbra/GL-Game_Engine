@@ -29,6 +29,7 @@ public class Test {
     private long window;
     private static MessageBus msgBus;
     private static UI ui;
+    private static ConsoleThread consoleThread;
 
     public static void main(String[] args) {
         msgBus = new MessageBus();
@@ -36,7 +37,7 @@ public class Test {
         msgBus.addSystem(ui);
         //Message msg = new Message("OPEN_INVENTORY");
         //msgBus.post(msg);
-        ConsoleThread consoleThread = new ConsoleThread(msgBus);
+        consoleThread = new ConsoleThread(msgBus);
         consoleThread.start();
         new Test().run();
 
@@ -78,8 +79,10 @@ public class Test {
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
+            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+                consoleThread.stop();
+            }
         });
 
         // Get the thread stack and push a new frame
