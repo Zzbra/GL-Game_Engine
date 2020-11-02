@@ -2,7 +2,7 @@ package Systems;
 import Message.*;
 
 /**
- *  Classe Système UI.
+ *  Classe Système GUI.
  */
 
 public class GUI extends SystemClass {

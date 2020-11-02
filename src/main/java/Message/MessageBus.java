@@ -28,11 +28,16 @@ public class MessageBus {
     }
 
     public void refresh() {
-        for (SystemClass SC : systemsArray) {
-            for (Message msg : messageBus) {
+        for (Message msg : messageBus) {
+            for (SystemClass SC : systemsArray) {
                 SC.hanldeMessage(msg);
             }
         }
+
+        messageBus = new ArrayList<Message>();
     }
 
+    public ArrayList<Message> getMessageBus() {
+        return messageBus;
+    }
 }
