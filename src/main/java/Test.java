@@ -28,13 +28,13 @@ public class Test {
 
     private long window;
     private static MessageBus msgBus;
-    private static UI ui;
+    private static GUI gui;
     private static ConsoleThread consoleThread;
 
     public static void main(String[] args) {
         msgBus = new MessageBus();
-        UI ui = new UI(msgBus);
-        msgBus.addSystem(ui);
+        gui = new GUI(msgBus);
+        msgBus.addSystem(gui);
         //Message msg = new Message("OPEN_INVENTORY");
         //msgBus.post(msg);
         consoleThread = new ConsoleThread(msgBus);
