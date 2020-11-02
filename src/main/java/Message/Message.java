@@ -9,7 +9,6 @@ import java.util.Map;
 public class Message {
     private String type;
     private String data;
-    private Map<String, String> message;
 
     public Message(String type, String data){
         this.type = type;
