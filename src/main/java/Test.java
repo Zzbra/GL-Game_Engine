@@ -1,4 +1,4 @@
-import Framework.ConsoleThread;
+import Systems.ConsoleThread;
 import Message.*;
 import Systems.*;
 import org.lwjgl.Version;
