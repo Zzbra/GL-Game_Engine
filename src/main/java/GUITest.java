@@ -24,7 +24,6 @@ public class GUITest extends LWJGUIApplication {
     public static void main(String[] args) throws IOException {
         launch(args);
     }
-   /**test commit**/
     @Override
     public void start(String[] args, Window window) {
         // Create background pane
