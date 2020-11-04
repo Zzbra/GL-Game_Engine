@@ -13,6 +13,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="library" name="org.joml:joml:1.9.25" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11" level="project" />
     <orderEntry type="library" name="Maven: com.github.orange451:LWJGUI:pre-mt" level="project" />
     <orderEntry type="library" name="Maven: org.joml:joml:1.9.20" level="project" />
     <orderEntry type="library" name="Maven: org.lwjgl:lwjgl:natives-linux:3.2.3" level="project" />
