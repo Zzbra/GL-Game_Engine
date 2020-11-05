@@ -1,17 +1,18 @@
+import Systems.GraphicalEngine;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class HelloFX extends Application {
     private Scene mainMenuScene;
+    private GraphicalEngine graphicEngine;
     @Override
     public void start(Stage stage) {
         MenuScene MS = new MenuScene();
+        graphicEngine = new GraphicalEngine(stage);
         mainMenuScene = MS.getScene();
-        stage.setScene(mainMenuScene);
-        stage.show();
+        graphicEngine.loadScene(mainMenuScene);
+
 //        String javaVersion = System.getProperty("java.version");
 //        String javafxVersion = System.getProperty("javafx.version");
 //        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
@@ -21,11 +22,6 @@ public class HelloFX extends Application {
        // testMenu(stage);
     }
 
-    public void testMenu(Stage stage){
-        MenuScene MS = new MenuScene();
-        stage.setScene(MS.getScene());
-        stage.show();
-    }
 
     public static void main(String[] args) {
         launch();
