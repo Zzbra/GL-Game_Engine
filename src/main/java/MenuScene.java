@@ -26,9 +26,7 @@ public class MenuScene{
         vBox.setSpacing(20);
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
-
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-
         this.scene = new Scene(panel, 640, 480);
         scene.getStylesheets().add("MainMenuStyleSheet.css");
     }
