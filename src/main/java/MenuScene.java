@@ -30,7 +30,6 @@ public class MenuScene{
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         this.scene = new Scene(panel, 640, 480);
-        // Ne marche pas, problème de path probablement, a voir
         scene.getStylesheets().add("MainMenuStyleSheet.css");
     }
 
