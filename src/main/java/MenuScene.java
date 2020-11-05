@@ -19,9 +19,10 @@ public class MenuScene{
         Button startGameButton = new Button("Start Game");
         Button controlButton = new Button("Controls");
         Button aboutButton = new Button("About");
-        startGameButton.setStyle(" -fx-pref-height: 28px; -fx-pref-width: 200px;");
-        controlButton.setStyle(" -fx-pref-height: 28px; -fx-pref-width: 200px;");
-        aboutButton.setStyle(" -fx-pref-height: 28px; -fx-pref-width: 200px;");
+        String buttonCss = "-fx-pref-height: 28px; -fx-pref-width: 200px;";
+        startGameButton.setStyle(buttonCss);
+        controlButton.setStyle(buttonCss);
+        aboutButton.setStyle(buttonCss);
         Image img = new Image("PacMan.jpg");
         ImageView imgView = new ImageView(img);
         VBox vBox = new VBox(imgView,startGameButton, controlButton, aboutButton);
