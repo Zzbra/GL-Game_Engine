@@ -42,7 +42,11 @@ public class GameWorld {
         this.entities.remove(e);
     }
 
-    public void update(long lastFrameTime) {
+    public void onLoad() {
+        // Describe what should be done in the game world on load
+    }
+
+    public void onUpdate(long lastFrameTime) {
         // add the entity added since last frame
         this.entities.addAll(this.entitiesToAdd);
         this.entitiesToAdd.clear();
@@ -54,7 +58,6 @@ public class GameWorld {
                 e.update(lastFrameTime);
             }
         }
-
     }
 
 }
