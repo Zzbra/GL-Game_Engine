@@ -1,17 +1,31 @@
 import Systems.GraphicalEngine;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class HelloFX extends Application {
-    private Scene mainMenuScene;
+    private SceneWrapper mainMenuScene;
+    private SceneWrapper gameScene;
     private GraphicalEngine graphicEngine;
     @Override
     public void start(Stage stage) {
-        MenuScene MS = new MenuScene();
         graphicEngine = new GraphicalEngine(stage);
-        mainMenuScene = MS.getScene();
-        graphicEngine.loadScene(mainMenuScene);
+        mainMenuScene = SceneMaker.MakeMenuScene();
+        gameScene = SceneMaker.MakeGameScene();
+        Button startButton = (Button)mainMenuScene.getComponents().get("startGameButton");
+        startButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent e) {
+                graphicEngine.loadScene(gameScene.getScene());
+            }
+        });
+
+        graphicEngine.loadScene(mainMenuScene.getScene());
+
+
 
 //        String javaVersion = System.getProperty("java.version");
 //        String javafxVersion = System.getProperty("javafx.version");
