@@ -51,19 +51,23 @@ public class Player extends BaseEntity {
         // vertical direction
         if( input.isMoveUp()) {
             dy = -speed;
+            dx = 0d;
         } else if( input.isMoveDown()) {
             dy = speed;
+            dx = 0d;
         } else {
-            dy = 0d;
+            //dy = 0d;
         }
 
         // horizontal direction
         if( input.isMoveLeft()) {
+            dy = 0d;
             dx = -speed;
         } else if( input.isMoveRight()) {
+            dy = 0d;
             dx = speed;
         } else {
-            dx = 0d;
+            //dx = 0d;
         }
 
     }
