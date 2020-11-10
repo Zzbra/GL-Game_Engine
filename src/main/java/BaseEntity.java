@@ -2,11 +2,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Queue;
+import java.util.HashMap;
 
-public abstract class SpriteBase {
+public abstract class BaseEntity {
 
     Image image;
     ImageView imageView;
@@ -31,9 +30,10 @@ public abstract class SpriteBase {
     double h;
 
     boolean canMove = true;
-    private ArrayList<SpriteBase> collisionManifold;
+    private ArrayList<BaseEntity> collisionManifold;
+    //private HashMap<String, Component> components;
 
-    public SpriteBase(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
+    public BaseEntity(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
 
         this.layer = layer;
         this.image = image;
@@ -191,7 +191,7 @@ public abstract class SpriteBase {
     }
 
     // TODO: per-pixel-collision
-    public boolean collidesWith( SpriteBase otherSprite) {
+    public boolean collidesWith( BaseEntity otherSprite) {
 
         return ( otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
 
@@ -201,7 +201,7 @@ public abstract class SpriteBase {
      * Reduce health by the amount of damage that the given sprite can inflict
      * @param sprite
      */
-    public void getDamagedBy( SpriteBase sprite) {
+    public void getDamagedBy( BaseEntity sprite) {
         health -= sprite.getDamage();
     }
 
@@ -234,7 +234,7 @@ public abstract class SpriteBase {
 
     public abstract ArrayList<Game.Tag> collideWithTags();
 
-    public void addToCollisionManifold(SpriteBase entity){
+    public void addToCollisionManifold(BaseEntity entity){
         this.collisionManifold.add(entity);
     }
 
@@ -242,20 +242,20 @@ public abstract class SpriteBase {
         this.collisionManifold.clear();
     }
 
-    public boolean collisionStayed(SpriteBase entity){
+    public boolean collisionStayed(BaseEntity entity){
         return this.collisionManifold.contains(entity);
     }
 
-    public abstract void onCollide(SpriteBase entity);
+    public abstract void onCollide(BaseEntity entity);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
     }
 
 
-    public void removeCollision(SpriteBase entity){
+    public void removeCollision(BaseEntity entity){
         this.collisionManifold.remove(entity);
     }
 
-    public abstract void onCollisionStay(SpriteBase entity2);
+    public abstract void onCollisionStay(BaseEntity entity2);
 }
