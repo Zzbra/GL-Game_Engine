@@ -1,3 +1,10 @@
+import Component.Input;
+import Entity.BaseEntity;
+import Entity.Enemy;
+import Entity.Player;
+import GameWorld.Settings;
+import Systems.CollisionSystem;
+import Systems.ASystem;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,10 +18,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game extends Application {
 
@@ -30,14 +34,16 @@ public class Game extends Application {
     List<Enemy> enemies = new ArrayList<>();
 
     Text collisionText = new Text();
-    boolean collision = false;
-
-    public static enum Tag {PLAYER, ENEMY} ;
 
     Scene scene;
+    ASystem collisionService;
+    HashMap<String, ASystem> systems;
 
     @Override
     public void start(Stage primaryStage) {
+        /*** Création des moteurs ***/
+        systems = new HashMap<String, ASystem>();
+        systems.put("Collisions", new CollisionSystem());
 
         Group root = new Group();
 
@@ -58,33 +64,35 @@ public class Game extends Application {
         createScoreLayer();
         createPlayers();
 
+
         AnimationTimer gameLoop = new AnimationTimer() {
 
             @Override
             public void handle(long now) {
 
                 // player input
-                players.forEach(sprite -> sprite.processInput());
+                players.forEach(entity -> entity.processInput());
 
                 // add random enemies
                 spawnEnemies( true);
 
                 // movement
-                players.forEach(sprite -> sprite.move());
-                enemies.forEach(sprite -> sprite.move());
+                players.forEach(entity -> entity.move());
+                enemies.forEach(entity -> entity.move());
 
                 // update collisions
-                updateCollisions();
+                //updateCollisions();
+                systems.get("Collisions").update();
 
                 // update sprites in scene
-                players.forEach(sprite -> sprite.updateUI());
-                enemies.forEach(sprite -> sprite.updateUI());
+                players.forEach(entity -> entity.updateUI());
+                enemies.forEach(entity -> entity.updateUI());
 
                 // check if sprite can be removed
-                enemies.forEach(sprite -> sprite.checkRemovability());
+                enemies.forEach(entity -> entity.checkRemovability());
 
                 // remove removables from list, layer, etc
-                removeSprites( enemies);
+                removeEntity( enemies);
 
                 // update score, health, etc
                 updateScore();
@@ -99,12 +107,12 @@ public class Game extends Application {
         try {
             playerImage = new Image(getClass().getResource("player.png").toExternalForm());
         }catch(Exception e){
-            System.err.println("Pas trouvé");
+            java.lang.System.err.println("Pas trouvé");
         }
         try {
             enemyImage = new Image( getClass().getResource("enemy.png").toExternalForm());
         }catch(Exception e){
-            System.err.println("Pas trouvé");
+            java.lang.System.err.println("Pas trouvé");
         }
     }
 
@@ -147,6 +155,7 @@ public class Game extends Application {
 
         // register player
         players.add( player);
+        systems.get("Collisions").addEntity(player);
 
     }
 
@@ -172,10 +181,11 @@ public class Game extends Application {
 
         // manage sprite
         enemies.add( enemy);
+        systems.get("Collisions").addEntity(enemy);
 
     }
 
-    private void removeSprites(  List<? extends BaseEntity> spriteList) {
+    private void removeEntity(List<? extends BaseEntity> spriteList) {
         Iterator<? extends BaseEntity> iter = spriteList.iterator();
         while( iter.hasNext()) {
             BaseEntity sprite = iter.next();
@@ -184,6 +194,7 @@ public class Game extends Application {
 
                 // remove from layer
                 sprite.removeFromLayer();
+                systems.get("Collisions").removeEntity(sprite);
 
                 // remove from list
                 iter.remove();
@@ -191,35 +202,6 @@ public class Game extends Application {
         }
     }
 
-
-    /**
-     * Collision engine
-     */
-    private void updateCollisions() {
-
-        for( BaseEntity entity1: players) {
-            for( BaseEntity entity2: enemies) {
-                if (collidesAB(entity1, entity2)) {
-                    if (entity1.collisionStayed(entity2)) {
-                        entity1.onCollisionStay(entity2);
-                        continue;
-                    }
-                    entity1.addToCollisionManifold(entity2);
-                    entity1.onCollide(entity2);
-
-                }else
-                    if (entity1.collideWithTags().contains(entity2.getTag())) {
-                    entity1.removeCollision(entity2);
-                }
-            }
-        }
-    }
-
-    public boolean collidesAB(BaseEntity A, BaseEntity B) {
-
-        return ( B.x + B.w >= A.x && B.y + B.h >= A.y && B.x <= A.x + A.w && B.y <= A.y + A.h);
-
-    }
 
     private void updateScore() {
         if( players.get(0).hasCollisions()) {
