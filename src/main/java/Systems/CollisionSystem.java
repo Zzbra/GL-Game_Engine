@@ -2,28 +2,26 @@ package Systems;
 
 import Entity.BaseEntity;
 
-import java.util.ArrayList;
-
-public class CollisionService extends ISystem {
-    ArrayList<BaseEntity> entities;
+public class CollisionSystem extends ASystem {
     /**
      * Collision engine
      */
-    private void update() {
-
+    public void update() {
         for( BaseEntity entity1: entities) {
             for( BaseEntity entity2: entities) {
-                if (collidesAB(entity1, entity2)) {
-                    if (entity1.collisionStayed(entity2)) {
-                        entity1.onCollisionStay(entity2);
-                        continue;
+                if(entity1.equals(entity2)) continue;
+                if (entity1.getCollisionsCheck().contains(entity2.getTag())) {
+                    if (collidesAB(entity1, entity2)) {
+                        if (entity1.collisionStayed(entity2)) {
+                            entity1.onCollisionStay(entity2);
+                            continue;
+                        }
+                        entity1.addToCollisionManifold(entity2);
+                        entity1.onCollide(entity2);
+                    }else{
+                        entity1.removeCollision(entity2);
+                        entity1.onExit(entity2);
                     }
-                    entity1.addToCollisionManifold(entity2);
-                    entity1.onCollide(entity2);
-
-                }else
-                if (entity1.collideWithTags().contains(entity2.getTag())) {
-                    entity1.removeCollision(entity2);
                 }
             }
         }
