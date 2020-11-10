@@ -1,7 +1,7 @@
-package Systems;
+package org.example.Systems;
 
-import Message.Message;
-import Message.MessageBus;
+import org.example.Message.Message;
+import org.example.Message.MessageBus;
 
 import java.io.Console;
 import java.util.Scanner;

@@ -1,5 +1,5 @@
-package Message;
-import Systems.*;
+package org.example.Message;
+import org.example.Systems.*;
 import java.util.ArrayList;
 
 /**

@@ -1,6 +1,6 @@
-package Systems;
-import Message.Message;
-import Message.MessageBus;
+package org.example.Systems;
+import org.example.Message.Message;
+import org.example.Message.MessageBus;
 
 /**
  *  Classe abstraite dont hérite toutes les classe System (Moteur)

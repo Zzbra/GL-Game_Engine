@@ -1,7 +1,7 @@
-package Entity;
+package org.example.Entity;
 
-import Component.Component;
-import GameWorld.GameWorld;
+import org.example.Component.Component;
+import org.example.GameWorld.GameWorld;
 
 import java.util.ArrayList;
 
