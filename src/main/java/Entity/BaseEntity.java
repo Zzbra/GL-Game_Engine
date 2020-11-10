@@ -30,6 +30,9 @@ public abstract class BaseEntity {
     double h;
 
     boolean canMove = true;
+    Settings.Tag tag;
+
+    /*** ColiderComponent ***/
     private ArrayList<BaseEntity> collisionManifold;
     //private HashMap<String, Component> components;
 
@@ -148,6 +151,10 @@ public abstract class BaseEntity {
         this.removable = removable;
     }
 
+    public Settings.Tag getTag(){
+        return this.tag;
+    }
+
     public void move() {
 
         if( !canMove)
@@ -228,11 +235,10 @@ public abstract class BaseEntity {
 
     public abstract void checkRemovability();
 
-    public abstract Game.Tag getTag();
 
     /***  Collidable   ***/
 
-    public abstract ArrayList<Game.Tag> collideWithTags();
+    public abstract ArrayList<Settings.Tag> collideWithTags();
 
     public void addToCollisionManifold(BaseEntity entity){
         this.collisionManifold.add(entity);

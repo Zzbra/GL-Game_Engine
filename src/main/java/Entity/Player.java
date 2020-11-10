@@ -1,3 +1,5 @@
+import Entity.BaseEntity;
+import GameWorld.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -18,7 +20,7 @@ public class Player extends BaseEntity {
     public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, Input input) {
 
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-
+        super.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
         this.input = input;
 
@@ -69,8 +71,6 @@ public class Player extends BaseEntity {
 
         // ensure the ship can't move outside of the screen
         checkBounds();
-
-
     }
 
     private void checkBounds() {
@@ -98,15 +98,9 @@ public class Player extends BaseEntity {
     }
 
     @Override
-    public Game.Tag getTag() {
-        return Game.Tag.PLAYER;
-    }
-
-    @Override
-    public ArrayList<Game.Tag> collideWithTags() {
-
-        return new ArrayList<Game.Tag>(
-                Arrays.asList(Game.Tag.ENEMY));
+    public ArrayList<Settings.Tag> collideWithTags() {
+        return new ArrayList<Settings.Tag>(
+                Arrays.asList(Settings.Tag.ENEMY));
     }
 
     @Override
