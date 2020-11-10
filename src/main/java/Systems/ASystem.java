@@ -4,10 +4,10 @@ import Entity.BaseEntity;
 
 import java.util.*;
 
-public abstract class System {
+public abstract class ASystem {
     ArrayList<BaseEntity> entities;
 
-    System(){
+    ASystem(){
         this.entities = new ArrayList<>();
     }
 
@@ -16,7 +16,8 @@ public abstract class System {
     public void addEntity(BaseEntity entity){
         this.entities.add(entity);
         entity.setCollisionLister(this);
-        java.lang.System.out.println(entities.size());
+        System.out.println(entity.getTag());
+        System.out.println(entities.size());
     }
 
     public void removeEntity(BaseEntity entity){
