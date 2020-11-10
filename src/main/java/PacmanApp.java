@@ -1,4 +1,3 @@
-import Component.Input;
 import Entity.BaseEntity;
 import Entity.Enemy;
 import Entity.Player;

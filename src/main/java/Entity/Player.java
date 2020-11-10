@@ -1,13 +1,8 @@
 package Entity;
 
-import Component.Input;
-import Entity.BaseEntity;
 import GameWorld.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Player extends BaseEntity {
 
