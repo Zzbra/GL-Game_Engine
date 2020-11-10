@@ -1,3 +1,6 @@
+package Entity;
+
+import Component.Input;
 import Entity.BaseEntity;
 import GameWorld.Settings;
 import javafx.scene.image.Image;
@@ -20,16 +23,16 @@ public class Player extends BaseEntity {
     public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, Input input) {
 
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-        super.setTag(Settings.Tag.PLAYER);
+        this.tag = Settings.Tag.PLAYER;
         this.speed = speed;
         this.input = input;
 
+        collisionsCheck.add(Settings.Tag.ENEMY);
         init();
     }
 
 
     private void init() {
-
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
         playerShipMinX = 0 - image.getWidth() / 2.0;
