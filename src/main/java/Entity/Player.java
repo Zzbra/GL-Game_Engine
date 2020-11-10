@@ -16,16 +16,14 @@ public class Player extends BaseEntity {
     double playerShipMinY;
     double playerShipMaxY;
 
-    Input input;
 
     double speed;
 
-    public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, Input input) {
+    public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed) {
 
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
         this.tag = Settings.Tag.PLAYER;
         this.speed = speed;
-        this.input = input;
 
         collisionsCheck.add(Settings.Tag.ENEMY);
         init();
@@ -39,36 +37,6 @@ public class Player extends BaseEntity {
         playerShipMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
         playerShipMinY = 0 - image.getHeight() / 2.0;
         playerShipMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
-
-    }
-
-    public void processInput() {
-
-        // ------------------------------------
-        // movement
-        // ------------------------------------
-
-        // vertical direction
-        if( input.isMoveUp()) {
-            dy = -speed;
-            dx = 0d;
-        } else if( input.isMoveDown()) {
-            dy = speed;
-            dx = 0d;
-        } else {
-            //dy = 0d;
-        }
-
-        // horizontal direction
-        if( input.isMoveLeft()) {
-            dy = 0d;
-            dx = -speed;
-        } else if( input.isMoveRight()) {
-            dy = 0d;
-            dx = speed;
-        } else {
-            //dx = 0d;
-        }
 
     }
 

@@ -70,7 +70,7 @@ public class PacmanApp extends Application {
             public void handle(long now) {
 
                 // player input
-                players.forEach(entity -> entity.processInput());
+                //players.forEach(entity -> entity.processInput());
 
                 // add random enemies
                 spawnEnemies( true);
@@ -83,11 +83,11 @@ public class PacmanApp extends Application {
                 //updateCollisions();
                 systems.get("Collisions").update();
 
-                // update sprites in scene
+                // update entity in scene
                 players.forEach(entity -> entity.updateUI());
                 enemies.forEach(entity -> entity.updateUI());
 
-                // check if sprite can be removed
+                // check if entity can be removed
                 enemies.forEach(entity -> entity.checkRemovability());
 
                 // remove removables from list, layer, etc
@@ -132,16 +132,8 @@ public class PacmanApp extends Application {
         collisionText.setText("");
 
         collisionText.setBoundsType(TextBoundsType.VISUAL);
-
-
     }
     private void createPlayers() {
-
-        // player input
-        Input input = new Input( scene);
-
-        // register input listeners
-        input.addListeners(); // TODO: remove listeners on game over
 
         Image image = playerImage;
 
@@ -150,7 +142,7 @@ public class PacmanApp extends Application {
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, input);
+        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED);
 
         // register player
         players.add( player);
@@ -181,7 +173,6 @@ public class PacmanApp extends Application {
         // manage sprite
         enemies.add( enemy);
         systems.get("Collisions").addEntity(enemy);
-
     }
 
     private void removeEntity(List<? extends BaseEntity> spriteList) {
