@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class Game extends Application {
+public class PacmanApp extends Application {
 
     Random rnd = new Random();
 
