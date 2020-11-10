@@ -20,21 +20,14 @@ public class Enemy extends BaseEntity {
         }
     }
 
-    @Override
-    public Settings.Tag getTag() {
-        return this.tag;
-    }
 
+    /*** Colidable ***/
     @Override
-    public ArrayList<Settings.Tag> collideWithTags() {
-        return new ArrayList<Settings.Tag>();
-    }
-
-    @Override
-    public void onCollide(BaseEntity entity) {
-
-    }
+    public void onCollide(BaseEntity entity) {}
 
     @Override
     public void onCollisionStay(BaseEntity entity2) {}
+
+    @Override
+    public void onExit(BaseEntity entity2) {}
 }

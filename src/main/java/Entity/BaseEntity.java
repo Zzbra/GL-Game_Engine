@@ -1,33 +1,39 @@
+package Entity;
+
+import GameWorld.Settings;
+import Systems.ASystem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class BaseEntity {
 
-    Image image;
+    protected Image image;
+    protected ArrayList<Settings.Tag> collisionsCheck;
     ImageView imageView;
 
     Pane layer;
 
+    ASystem collisionLister;
 
-    double x;
-    double y;
-    double r;
 
-    double dx;
-    double dy;
-    double dr;
+    public double x;
+    public double y;
+    public double r;
+
+    public double dx;
+    public double dy;
+    public double dr;
 
     double health;
     double damage;
 
     boolean removable = false;
 
-    double w;
-    double h;
+    public double w;
+    public double h;
 
     boolean canMove = true;
     Settings.Tag tag;
@@ -57,7 +63,9 @@ public abstract class BaseEntity {
         this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
         this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
 
+        /*** Collidable ***/
         collisionManifold = new ArrayList<>();
+        this.collisionsCheck = new ArrayList<>();
 
         addToLayer();
 
@@ -110,6 +118,7 @@ public abstract class BaseEntity {
     public void setDx(double dx) {
         this.dx = dx;
     }
+
 
     public double getDy() {
         return dy;
@@ -235,10 +244,15 @@ public abstract class BaseEntity {
 
     public abstract void checkRemovability();
 
+    public ArrayList<Settings.Tag> getCollisionsCheck(){
+        return this.collisionsCheck;
+    }
+
 
     /***  Collidable   ***/
-
-    public abstract ArrayList<Settings.Tag> collideWithTags();
+    public void setCollisionLister(ASystem listener){
+        this.collisionLister = listener;
+    }
 
     public void addToCollisionManifold(BaseEntity entity){
         this.collisionManifold.add(entity);
@@ -264,4 +278,10 @@ public abstract class BaseEntity {
     }
 
     public abstract void onCollisionStay(BaseEntity entity2);
+
+    public void setTag(Settings.Tag tag){
+        this.tag = tag;
+    }
+
+    public abstract void onExit(BaseEntity entity2);
 }

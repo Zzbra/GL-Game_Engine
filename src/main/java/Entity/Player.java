@@ -98,9 +98,8 @@ public class Player extends BaseEntity {
     }
 
     @Override
-    public ArrayList<Settings.Tag> collideWithTags() {
-        return new ArrayList<Settings.Tag>(
-                Arrays.asList(Settings.Tag.ENEMY));
+    public void onCollisionStay(BaseEntity entity) {
+        System.err.println("Collision stay: " + entity.getTag());
     }
 
     @Override
@@ -108,8 +107,7 @@ public class Player extends BaseEntity {
         System.err.println("Collided with: " + entity.getTag());
     }
 
-    public void onCollisionStay(BaseEntity entity){
-        System.err.println("Collision stay: " + entity.getTag());
-    }
+    @Override
+    public void onExit(BaseEntity entity2) {}
 
 }
