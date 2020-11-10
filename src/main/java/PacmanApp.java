@@ -36,7 +36,6 @@ public class PacmanApp extends Application {
     Text collisionText = new Text();
 
     Scene scene;
-    ASystem collisionService;
     HashMap<String, ASystem> systems;
 
     @Override
