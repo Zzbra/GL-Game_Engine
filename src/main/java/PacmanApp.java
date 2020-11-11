@@ -23,15 +23,19 @@ public class PacmanApp extends Application {
 
     Random rnd = new Random();
 
+    // Scene manager ?
     Pane playfieldLayer;
     Pane scoreLayer;
 
+    // Peut aller dans une factory
     Image playerImage;
     Image enemyImage;
 
+    // Une seule liste d'entité
     List<Player> players = new ArrayList<>();
     List<Enemy> enemies = new ArrayList<>();
 
+    // Controller d'UI ?
     Text collisionText = new Text();
 
     Scene scene;
