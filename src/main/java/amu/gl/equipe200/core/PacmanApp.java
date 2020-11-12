@@ -142,7 +142,7 @@ public class PacmanApp extends Application {
 
     private void createPlayers() {
 
-        Image image = gameScene.getImages().get("playerImage");
+        Image image = graphicalEngine.getImages().get("playerImage");
 
         // center horizontally, position at 70% vertically
         double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
@@ -164,7 +164,7 @@ public class PacmanApp extends Application {
         }
 
         // image
-        Image image = gameScene.getImages().get("enemyImage");
+        Image image = graphicalEngine.getImages().get("enemyImage");
 
         // random speed
         double speed = rnd.nextDouble() * 1.0 + 2.0;

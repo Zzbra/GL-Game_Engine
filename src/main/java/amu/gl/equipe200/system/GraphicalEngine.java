@@ -1,18 +1,41 @@
 package amu.gl.equipe200.system;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 public class GraphicalEngine {
     private Stage stage;
     private Scene currentScene;
+    private HashMap<String, Image> imageMap;
     public GraphicalEngine(Stage stage){
         this.stage = stage;
+        this.imageMap = new HashMap<>();
+        loadImages();
     }
 
     public void loadScene(Scene scene){
         this.currentScene = scene;
         this.stage.setScene(scene);
         this.stage.show();
+    }
+
+    public HashMap<String, Image> getImages() {
+        return imageMap;
+    }
+
+    private void loadImages() {
+        try {
+            imageMap.put("playerImage", new Image("pacman.jpg"));
+        }catch(Exception e){
+            java.lang.System.err.println("Pas trouve");
+        }
+        try {
+            imageMap.put("enemyImage", new Image( "ghostRed.jpg"));
+        }catch(Exception e){
+            java.lang.System.err.println("Pas trouve");
+        }
     }
 }

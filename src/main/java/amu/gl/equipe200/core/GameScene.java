@@ -33,25 +33,11 @@ public class GameScene extends GameWorld {
         createScoreLayer();
         root.getChildren().add( playfieldLayer);
         root.getChildren().add( scoreLayer);
-        loadGame();
         this.setScene(new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT));
 
 
     }
-    private void loadGame() {
-        try {
-            playerImage = new Image(getClass().getResource("pacman.jpg").toExternalForm());
-            this.getImages().put("playerImage", playerImage);
-        }catch(Exception e){
-            java.lang.System.err.println("Pas trouve");
-        }
-        try {
-            enemyImage = new Image( getClass().getResource("ghostRed.jpg").toExternalForm());
-            this.getImages().put("enemyImage", enemyImage);
-        }catch(Exception e){
-            java.lang.System.err.println("Pas trouve");
-        }
-    }
+
 
 
 
