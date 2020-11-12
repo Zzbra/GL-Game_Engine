@@ -60,22 +60,9 @@ public class PacmanApp extends Application {
         systems = new HashMap<String, ASystem>();
         systems.put("Collisions", new CollisionSystem());
 
-       // Group root = new Group();
-
-        // create layers
-//        playfieldLayer = new Pane();
-//        scoreLayer = new Pane();
-
-//        root.getChildren().add( playfieldLayer);
-//        root.getChildren().add( scoreLayer);
-
-//        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-
-//        primaryStage.setScene( scene);
-//        primaryStage.show();
-
-        //loadGame();
         graphicalEngine.loadScene(mainMenuScene.getScene());
+
+        // Définition du callback de startGameButton
         Button startButton = (Button)mainMenuScene.getUIComponents().get("startGameButton");
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -84,7 +71,7 @@ public class PacmanApp extends Application {
             }
         });
 
-//        createScoreLayer();
+
         createPlayers();
 
 
@@ -126,18 +113,7 @@ public class PacmanApp extends Application {
 
     }
 
-    private void loadGame() {
-        try {
-            playerImage = new Image(getClass().getResource("pacman.jpg").toExternalForm());
-        }catch(Exception e){
-            java.lang.System.err.println("Pas trouve");
-        }
-        try {
-            enemyImage = new Image( getClass().getResource("ghostRed.jpg").toExternalForm());
-        }catch(Exception e){
-            java.lang.System.err.println("Pas trouve");
-        }
-    }
+
 
 
     private void createPlayers() {
