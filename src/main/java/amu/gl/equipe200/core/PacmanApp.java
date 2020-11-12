@@ -29,23 +29,6 @@ import java.util.*;
 public class PacmanApp extends Application {
 
     private Random rnd = new Random();
-
-    // Scene manager ?
-//    private Pane playfieldLayer;
-//    private Pane scoreLayer;
-
-    // Peut aller dans une factory
-    private Image playerImage;
-    private Image enemyImage;
-
-    // Une seule liste d'entité
-    //private List<Player> players = new ArrayList<>();
-    //private List<Enemy> enemies = new ArrayList<>();
-
-    // Controller d'UI ?
-
-
-    private Scene scene;
     private HashMap<String, ASystem> systems;
 
     private GraphicalEngine graphicalEngine;

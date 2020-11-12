@@ -39,24 +39,6 @@ public class GameScene extends GameWorld {
     }
 
 
-
-
-    public void setPlayerImage(Image playerImage) {
-        this.playerImage = playerImage;
-    }
-
-    public void setEnemyImage(Image enemyImage) {
-        this.enemyImage = enemyImage;
-    }
-
-    public Image getPlayerImage() {
-        return playerImage;
-    }
-
-    public Image getEnemyImage() {
-        return enemyImage;
-    }
-
     private void createScoreLayer() {
 
 
