@@ -9,7 +9,7 @@ public class Enemy extends BaseEntity {
 
     public Enemy(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-        this.tag = Settings.Tag.ENEMY;
+        this.setTag(Settings.Tag.ENEMY);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class CollisionSystem extends ASystem {
     }
 
     public boolean collidesAB(BaseEntity A, BaseEntity B) {
-        return ( B.x + B.w >= A.x && B.y + B.h >= A.y && B.x <= A.x + A.w && B.y <= A.y + A.h);
+        return ( B.getX() + B.getWidth() >= A.getX() && B.getY() + B.getHeight() >= A.getY() && B.getX() <= A.getX() + A.getWidth() && B.getY() <= A.getY() + A.getHeight());
 
     }
 }

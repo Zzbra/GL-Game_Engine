@@ -6,18 +6,18 @@ import javafx.scene.layout.Pane;
 
 public class Player extends BaseEntity {
 
-    double playerShipMinX;
-    double playerShipMaxX;
-    double playerShipMinY;
-    double playerShipMaxY;
+    private double playerShipMinX;
+    private double playerShipMaxX;
+    private double playerShipMinY;
+    private double playerShipMaxY;
 
 
-    double speed;
+    private double speed;
 
     public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed) {
 
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-        this.tag = Settings.Tag.PLAYER;
+        this.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
 
         collisionsCheck.add(Settings.Tag.ENEMY);
@@ -46,17 +46,17 @@ public class Player extends BaseEntity {
     private void checkBounds() {
 
         // vertical
-        if( Double.compare( y, playerShipMinY) < 0) {
-            y = playerShipMinY;
-        } else if( Double.compare(y, playerShipMaxY) > 0) {
-            y = playerShipMaxY;
+        if( Double.compare( getY(), playerShipMinY) < 0) {
+            setY(playerShipMinY);
+        } else if( Double.compare(getY(), playerShipMaxY) > 0) {
+            setY(playerShipMaxY);
         }
 
         // horizontal
-        if( Double.compare( x, playerShipMinX) < 0) {
-            x = playerShipMinX;
-        } else if( Double.compare(x, playerShipMaxX) > 0) {
-            x = playerShipMaxX;
+        if( Double.compare( getX(), playerShipMinX) < 0) {
+            setX(playerShipMinX);
+        } else if( Double.compare(getX(), playerShipMaxX) > 0) {
+            setX(playerShipMaxX);
         }
 
     }

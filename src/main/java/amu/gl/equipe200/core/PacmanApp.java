@@ -7,6 +7,7 @@ import amu.gl.equipe200.gameworld.Settings;
 
 import amu.gl.equipe200.system.CollisionSystem;
 import amu.gl.equipe200.system.ASystem;
+import amu.gl.equipe200.system.GraphicalEngine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -24,47 +25,55 @@ import java.util.*;
 
 public class PacmanApp extends Application {
 
-    Random rnd = new Random();
+    private Random rnd = new Random();
 
     // Scene manager ?
-    Pane playfieldLayer;
-    Pane scoreLayer;
+//    private Pane playfieldLayer;
+//    private Pane scoreLayer;
 
     // Peut aller dans une factory
-    Image playerImage;
-    Image enemyImage;
+    private Image playerImage;
+    private Image enemyImage;
 
     // Une seule liste d'entité
-    List<Player> players = new ArrayList<>();
-    List<Enemy> enemies = new ArrayList<>();
+    //private List<Player> players = new ArrayList<>();
+    //private List<Enemy> enemies = new ArrayList<>();
 
     // Controller d'UI ?
-    Text collisionText = new Text();
+    private Text collisionText = new Text();
 
-    Scene scene;
-    HashMap<String, ASystem> systems;
+    private Scene scene;
+    private HashMap<String, ASystem> systems;
 
+    private GraphicalEngine graphicalEngine;
+    private GameWorld mainMenuScene, gameScene;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
+        this.graphicalEngine = new GraphicalEngine(primaryStage);
+        this.mainMenuScene = GameWorldMaker.MakeMenuScene();
+        this.gameScene = GameWorldMaker.MakeGameScene();
+
         systems = new HashMap<String, ASystem>();
         systems.put("Collisions", new CollisionSystem());
 
-        Group root = new Group();
+       // Group root = new Group();
 
         // create layers
-        playfieldLayer = new Pane();
-        scoreLayer = new Pane();
+//        playfieldLayer = new Pane();
+//        scoreLayer = new Pane();
 
-        root.getChildren().add( playfieldLayer);
-        root.getChildren().add( scoreLayer);
+//        root.getChildren().add( playfieldLayer);
+//        root.getChildren().add( scoreLayer);
 
-        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+//        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 
-        primaryStage.setScene( scene);
-        primaryStage.show();
+//        primaryStage.setScene( scene);
+//        primaryStage.show();
 
-        loadGame();
+        //loadGame();
+        graphicalEngine.loadScene(mainMenuScene.getScene());
+        mainMenuScene.getUIComponents().get("startGameButton").
 
         createScoreLayer();
         createPlayers();
@@ -82,22 +91,22 @@ public class PacmanApp extends Application {
                 spawnEnemies( true);
 
                 // movement
-                players.forEach(entity -> entity.move());
-                enemies.forEach(entity -> entity.move());
+                gameScene.getPlayers().forEach(entity -> entity.move());
+                gameScene.getEnemies().forEach(entity -> entity.move());
 
                 // update collisions
                 //updateCollisions();
                 systems.get("Collisions").update();
 
                 // update amu.gl.equipe200.entity in scene
-                players.forEach(entity -> entity.updateUI());
-                enemies.forEach(entity -> entity.updateUI());
+                gameScene.getPlayers().forEach(entity -> entity.updateUI());
+                gameScene.getEnemies().forEach(entity -> entity.updateUI());
 
                 // check if amu.gl.equipe200.entity can be removed
-                enemies.forEach(entity -> entity.checkRemovability());
+                gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
 
                 // remove removables from list, layer, etc
-                removeEntity( enemies);
+                removeEntity( gameScene.getEnemies());
 
                 // update score, health, etc
                 updateScore();
@@ -128,7 +137,8 @@ public class PacmanApp extends Application {
         collisionText.setStroke(Color.BLACK);
         collisionText.setFill(Color.RED);
 
-        scoreLayer.getChildren().add( collisionText);
+
+        gameScene.getLayers().get("playerfieldLayer").getChildren().add( collisionText);
 
         // TODO: quick-hack to ensure the text is centered; usually you don't have that; instead you have a health bar on top
         collisionText.setText("Collision");
@@ -148,10 +158,10 @@ public class PacmanApp extends Application {
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED);
+        Player player = new Player(gameScene.getLayers().get("playerfieldLayer"), image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED);
 
         // register player
-        players.add( player);
+        gameScene.getPlayers().add( player);
         systems.get("Collisions").addEntity(player);
 
     }
@@ -174,10 +184,10 @@ public class PacmanApp extends Application {
         double y = -image.getHeight();
 
         // create a sprite
-        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0, 0, speed, 0, 1,1);
+        Enemy enemy = new Enemy( gameScene.getLayers().get("playerfieldLayer"), image, x, y, 0, 0, speed, 0, 1,1);
 
         // manage sprite
-        enemies.add( enemy);
+        gameScene.getEnemies().add( enemy);
         systems.get("Collisions").addEntity(enemy);
     }
 
@@ -200,7 +210,7 @@ public class PacmanApp extends Application {
 
 
     private void updateScore() {
-        if( players.get(0).hasCollisions()) {
+        if( gameScene.getPlayers().get(0).hasCollisions()) {
             collisionText.setText("Collision");
         } else {
             collisionText.setText("");

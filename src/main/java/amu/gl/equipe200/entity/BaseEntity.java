@@ -12,31 +12,31 @@ public abstract class BaseEntity {
 
     protected Image image;
     protected ArrayList<Settings.Tag> collisionsCheck;
-    ImageView imageView;
+    private ImageView imageView;
 
-    Pane layer;
+    private Pane layer;
 
-    ASystem collisionLister;
+    private ASystem collisionLister;
 
 
-    public double x;
-    public double y;
-    public double r;
+    private double x;
+    private double y;
+    private double r;
 
-    public double dx;
-    public double dy;
-    public double dr;
+    private double dx;
+    private double dy;
+    private double dr;
 
-    double health;
-    double damage;
+    private double health;
+    private double damage;
 
-    boolean removable = false;
+    private boolean removable = false;
 
-    public double w;
-    public double h;
+    private double w;
+    private double h;
 
-    boolean canMove = true;
-    Settings.Tag tag;
+    private boolean canMove = true;
+    private Settings.Tag tag;
 
     /*** ColiderComponent ***/
     private ArrayList<BaseEntity> collisionManifold;
@@ -209,7 +209,7 @@ public abstract class BaseEntity {
     // TODO: per-pixel-collision
     public boolean collidesWith( BaseEntity otherSprite) {
 
-        return ( otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
+        return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
 
     }
 
