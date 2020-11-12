@@ -10,8 +10,11 @@ import amu.gl.equipe200.system.ASystem;
 import amu.gl.equipe200.system.GraphicalEngine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -40,7 +43,7 @@ public class PacmanApp extends Application {
     //private List<Enemy> enemies = new ArrayList<>();
 
     // Controller d'UI ?
-    private Text collisionText = new Text();
+
 
     private Scene scene;
     private HashMap<String, ASystem> systems;
@@ -73,9 +76,15 @@ public class PacmanApp extends Application {
 
         //loadGame();
         graphicalEngine.loadScene(mainMenuScene.getScene());
-        mainMenuScene.getUIComponents().get("startGameButton").
+        Button startButton = (Button)mainMenuScene.getUIComponents().get("startGameButton");
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                graphicalEngine.loadScene(gameScene.getScene());
+            }
+        });
 
-        createScoreLayer();
+//        createScoreLayer();
         createPlayers();
 
 
@@ -130,28 +139,10 @@ public class PacmanApp extends Application {
         }
     }
 
-    private void createScoreLayer() {
 
-
-        collisionText.setFont( Font.font( null, FontWeight.BOLD, 64));
-        collisionText.setStroke(Color.BLACK);
-        collisionText.setFill(Color.RED);
-
-
-        gameScene.getLayers().get("playerfieldLayer").getChildren().add( collisionText);
-
-        // TODO: quick-hack to ensure the text is centered; usually you don't have that; instead you have a health bar on top
-        collisionText.setText("Collision");
-        double x = (Settings.SCENE_WIDTH - collisionText.getBoundsInLocal().getWidth()) / 2;
-        double y = (Settings.SCENE_HEIGHT - collisionText.getBoundsInLocal().getHeight()) / 2;
-        collisionText.relocate(x, y);
-        collisionText.setText("");
-
-        collisionText.setBoundsType(TextBoundsType.VISUAL);
-    }
     private void createPlayers() {
 
-        Image image = playerImage;
+        Image image = gameScene.getImages().get("playerImage");
 
         // center horizontally, position at 70% vertically
         double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
@@ -173,7 +164,7 @@ public class PacmanApp extends Application {
         }
 
         // image
-        Image image = enemyImage;
+        Image image = gameScene.getImages().get("enemyImage");
 
         // random speed
         double speed = rnd.nextDouble() * 1.0 + 2.0;
@@ -210,6 +201,7 @@ public class PacmanApp extends Application {
 
 
     private void updateScore() {
+        Text collisionText = (Text)gameScene.getUIComponents().get("collisionText");
         if( gameScene.getPlayers().get(0).hasCollisions()) {
             collisionText.setText("Collision");
         } else {

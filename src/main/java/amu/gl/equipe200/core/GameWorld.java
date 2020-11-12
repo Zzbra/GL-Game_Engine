@@ -13,22 +13,30 @@ import java.util.List;
 
 public abstract class GameWorld {
     private Scene scene;
-    private HashMap<String, Node> components;
+    private HashMap<String, Node> UIComponents;
     private HashMap<String, Pane> layers;
+    // TODO: à bouger dans GraphicalEngine
+    private HashMap<String, Image> images;
 
     public HashMap<String, Pane> getLayers() {
         return layers;
     }
 
+    public HashMap<String, Image> getImages() {
+        return images;
+    }
+
     public Scene getScene(){return this.scene;}
     public void setScene(Scene scene){this.scene = scene;}
-    public HashMap<String, Node> getUIComponents(){return this.components;}
+    public HashMap<String, Node> getUIComponents(){return this.UIComponents;}
     private List<Player> players = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
 
 
     public GameWorld() {
-        this.components = new HashMap<>();
+        this.UIComponents = new HashMap<>();
+        this.layers = new HashMap<>();
+        this.images = new HashMap<>();
     }
 
     public List<Player> getPlayers() {
@@ -38,6 +46,8 @@ public abstract class GameWorld {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+
+
 
 
 }

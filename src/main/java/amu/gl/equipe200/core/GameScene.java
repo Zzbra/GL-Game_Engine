@@ -9,21 +9,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 public class GameScene extends GameWorld {
     private Image playerImage;
     private Image enemyImage;
+    private Text collisionText;
 
     public GameScene(){
         super();
         Group root = new Group();
+        collisionText = new Text();
+        getUIComponents().put("collisionText", collisionText);
 
         // create layers
         Pane playfieldLayer = new Pane();
         Pane scoreLayer = new Pane();
         getLayers().put("playerfieldLayer", playfieldLayer);
         getLayers().put("scoreLayer", scoreLayer);
-
+        createScoreLayer();
         root.getChildren().add( playfieldLayer);
         root.getChildren().add( scoreLayer);
         loadGame();
@@ -34,11 +41,13 @@ public class GameScene extends GameWorld {
     private void loadGame() {
         try {
             playerImage = new Image(getClass().getResource("pacman.jpg").toExternalForm());
+            this.getImages().put("playerImage", playerImage);
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
         try {
             enemyImage = new Image( getClass().getResource("ghostRed.jpg").toExternalForm());
+            this.getImages().put("enemyImage", enemyImage);
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
@@ -61,4 +70,26 @@ public class GameScene extends GameWorld {
     public Image getEnemyImage() {
         return enemyImage;
     }
+
+    private void createScoreLayer() {
+
+
+        collisionText.setFont( Font.font( null, FontWeight.BOLD, 64));
+        collisionText.setStroke(Color.BLACK);
+        collisionText.setFill(Color.RED);
+
+
+        getLayers().get("playerfieldLayer").getChildren().add( collisionText);
+
+        // TODO: quick-hack to ensure the text is centered; usually you don't have that; instead you have a health bar on top
+        collisionText.setText("Collision");
+        double x = (Settings.SCENE_WIDTH - collisionText.getBoundsInLocal().getWidth()) / 2;
+        double y = (Settings.SCENE_HEIGHT - collisionText.getBoundsInLocal().getHeight()) / 2;
+        collisionText.relocate(x, y);
+        collisionText.setText("");
+
+        collisionText.setBoundsType(TextBoundsType.VISUAL);
+    }
+
+
 }
