@@ -1,5 +1,5 @@
-package Systems;
-import Message.*;
+package org.example.Systems;
+import org.example.Message.*;
 
 /**
  *  Classe Système GUI.

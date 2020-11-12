@@ -1,14 +1,11 @@
-package GameWorld;
+package org.example.GameWorld;
 
 
-import Entity.Entity;
-import Systems.SystemClass;
+import org.example.Entity.Entity;
+import org.example.Systems.SystemClass;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
-import java.rmi.UnexpectedException;
-import java.security.InvalidKeyException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 
 public class GameWorld {
