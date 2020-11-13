@@ -21,8 +21,10 @@ public class PhysicComponent extends Component {
         entity.addProperty("Y");
         entity.addProperty("SPEEDX");
         entity.addProperty("SPEEDY");
-        entity.addProperty("H");
-        entity.addProperty("W");
+
+        // set the value of the hitbox
+        entity.setProperty("H", this.hitboxSize.first);
+        entity.setProperty("W", this.hitboxSize.second);
     }
 
     protected Double getX() { return (Double) this.getEntity().getProperty("X"); }

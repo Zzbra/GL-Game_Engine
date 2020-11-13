@@ -19,6 +19,7 @@ public class CollidableComponent extends PhysicComponent {
     @Override
     public void onAttach(Entity entity) {
         super.onAttach(entity);
+
         entity.setProperty("IMPASSABLE", this.impassable);
     }
 

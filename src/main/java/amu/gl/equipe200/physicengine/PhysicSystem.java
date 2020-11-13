@@ -59,7 +59,7 @@ public class PhysicSystem
             Double newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
             Double newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
 
-            // If go futher than the windows snap it back
+            // If go further than the windows snap it back
             if (newX + currentMovable.getW() > this.worldWidth) newX -= newX + currentMovable.getW() - this.worldWidth;
             if (newY + currentMovable.getH() > this.worldHeight) newY -= newY + currentMovable.getH() - this.worldHeight;
 
