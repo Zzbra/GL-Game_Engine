@@ -4,20 +4,18 @@ import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.utils.Pair;
 
-public class MovableComponent extends Component {
+public class MovableComponent extends PhysicComponent {
 
     Pair<Float, Float> initialSpeed;
 
-    public MovableComponent (float speedX, float speedY) {
+    public MovableComponent (float speedX, float speedY,
+                             float hitboxW, float hitboxH) {
+        super(hitboxW, hitboxH);
         this.initialSpeed = Pair.create(speedX, speedY);
     }
 
-    /***** Getter and Setter *****/
-    protected float getX() { return (Float) this.getEntity().getProperty("X"); }
-    protected float getY() { return (Float) this.getEntity().getProperty("X"); }
-    protected float getSpeedX() { return (Float) this.getEntity().getProperty("SPEEDX"); }
-    protected float getSpeedY() { return  (Float) this.getEntity().getProperty("SPEEDY"); }
 
+    /***** Getter and Setter *****/
     protected void moveTo(float X, float Y) {
         this.getEntity().setProperty("X", X);
         this.getEntity().setProperty("Y", Y);
@@ -29,11 +27,8 @@ public class MovableComponent extends Component {
 
     @Override
     public void onAttach(Entity entity) {
-        // ensure that all the required properties are defined in the entity
-        entity.addProperty("X");
-        entity.addProperty("Y");
-        entity.addProperty("SPEEDX");
-        entity.addProperty("SPEEDY");
+        // call the general procedure for physical component
+        super.onAttach(entity);
 
         // set the value of the properties
         entity.setProperty("SPEEDX", this.initialSpeed.first);

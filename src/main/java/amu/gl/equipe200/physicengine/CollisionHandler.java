@@ -7,7 +7,7 @@ import java.util.function.Function;
 public abstract class CollisionHandler {
     private CollidableComponent collidableComponent;
 
-    CollisionHandler (CollidableComponent c) { this.collidableComponent =c; }
+    public CollisionHandler (CollidableComponent c) { this.collidableComponent =c; }
 
-    protected abstract void onCollide(CollidableComponent other);
+    public abstract void onCollide(CollidableComponent other);
 }
