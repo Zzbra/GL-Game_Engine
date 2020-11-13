@@ -71,6 +71,8 @@ public abstract class BaseEntity {
 
     }
 
+
+
     public void addToLayer() {
         this.layer.getChildren().add(this.imageView);
     }

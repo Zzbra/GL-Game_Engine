@@ -31,12 +31,12 @@ public class GraphicalEngine {
 
     private void loadImages() {
         try {
-            imageMap.put("playerImage", new Image("pacman.jpg"));
+            imageMap.put("playerImage", new Image("pacman.jpg", 50, 50, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
         try {
-            imageMap.put("enemyImage", new Image( "ghostRed.jpg"));
+            imageMap.put("enemyImage", new Image( "ghostRed.jpg", 50, 50, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
