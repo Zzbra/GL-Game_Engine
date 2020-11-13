@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class GameWorld {
     private Scene scene;
@@ -41,6 +43,9 @@ public abstract class GameWorld {
     }
     public List<BaseEntity> getEnemies() {
         return enemies;
+    }
+    public List<BaseEntity> getEntities() {
+        return Stream.concat(players.stream(), enemies.stream()).collect(Collectors.toList());
     }
 
     // Set la scène du GameWorld
