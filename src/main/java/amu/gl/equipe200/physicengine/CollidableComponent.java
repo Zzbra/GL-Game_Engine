@@ -1,8 +1,6 @@
 package amu.gl.equipe200.physicengine;
 
-import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.core.Entity;
-import amu.gl.equipe200.utils.Pair;
 
 
 public class CollidableComponent extends PhysicComponent {
@@ -10,7 +8,7 @@ public class CollidableComponent extends PhysicComponent {
     private CollisionHandler collisionHandler;
     private boolean impassable;
 
-    public CollidableComponent(float hitboxH, float hitboxW,
+    public CollidableComponent(Double hitboxH, Double hitboxW,
                                CollisionHandler collisionHandler,
                                boolean isImpassable) {
         super(hitboxH, hitboxW);

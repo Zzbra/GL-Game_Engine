@@ -22,10 +22,10 @@ public class PhysicSystem
     private ArrayList<CollidableComponent> collidables;
 
     /** InGame size of the world **/
-    private float worldWidth;
-    private float worldHeight;
+    private Double worldWidth;
+    private Double worldHeight;
 
-    public PhysicSystem(float worldWidth, float worldHeight) {
+    public PhysicSystem(Double worldWidth, Double worldHeight) {
         this.movables = new ArrayList<>();
         this.collidables = new ArrayList<>();
         this.worldWidth = worldWidth;
@@ -56,10 +56,10 @@ public class PhysicSystem
             if (! currentMovable.isEnable()) continue;
 
             // Compute the new position of the entity
-            float newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
-            float newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
+            Double newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
+            Double newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
 
-            Pair<Float, Float> newPosition = Pair.create(newX, newY);
+            Pair<Double, Double> newPosition = Pair.create(newX, newY);
 
             // check if the entities is also collidable
             if (currentMovable.getEntity().hasComponent(MovableComponent.class.getSimpleName())) {
@@ -101,7 +101,7 @@ public class PhysicSystem
      * @return : does the 2 entities collide with each other
      */
     private boolean collide(CollidableComponent A,
-                            Pair<Float, Float> newPosition,
+                            Pair<Double, Double> newPosition,
                             CollidableComponent B) {
         return (B.getX() + B.getW() >= newPosition.first
                 && B.getX() <= newPosition.first + A.getW()
@@ -116,11 +116,11 @@ public class PhysicSystem
      * @param toCheck: entity which the movable entity collide with
      * @return: final position of the movable entity
      */
-    private Pair<Float, Float> computeMovablePosition(CollidableComponent currentCollidable,
-                                                      Pair<Float, Float> newPosition,
+    private Pair<Double, Double> computeMovablePosition(CollidableComponent currentCollidable,
+                                                      Pair<Double, Double> newPosition,
                                                       CollidableComponent toCheck) {
-        float finalX = newPosition.first;
-        float finalY = newPosition.second;
+        Double finalX = newPosition.first;
+        Double finalY = newPosition.second;
 
         // the entity move on the X axis, compute the final X position
         if (currentCollidable.getSpeedX() > 0

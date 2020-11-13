@@ -1,26 +1,24 @@
 package amu.gl.equipe200.physicengine;
 
-import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.utils.Pair;
 
 public class MovableComponent extends PhysicComponent {
 
-    Pair<Float, Float> initialSpeed;
+    Pair<Double, Double> initialSpeed;
 
-    public MovableComponent (float speedX, float speedY,
-                             float hitboxW, float hitboxH) {
+    public MovableComponent (Double speedX, Double speedY,
+                             Double hitboxW, Double hitboxH) {
         super(hitboxW, hitboxH);
         this.initialSpeed = Pair.create(speedX, speedY);
     }
 
-
     /***** Getter and Setter *****/
-    protected void moveTo(float X, float Y) {
+    protected void moveTo(Double X, Double Y) {
         this.getEntity().setProperty("X", X);
         this.getEntity().setProperty("Y", Y);
     }
-    protected void setSpeed(float speedX, float speedY) {
+    protected void setSpeed(Double speedX, Double speedY) {
         this.getEntity().setProperty("SPEEDX", speedX);
         this.getEntity().setProperty("SPEEDY", speedY);
     }

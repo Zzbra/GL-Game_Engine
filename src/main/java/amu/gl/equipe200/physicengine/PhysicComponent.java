@@ -7,9 +7,9 @@ import amu.gl.equipe200.utils.Pair;
 
 public class PhysicComponent extends Component {
 
-    private Pair<Float, Float> hitboxSize;
+    private Pair<Double, Double> hitboxSize;
 
-    public PhysicComponent(float H, float W) {
+    public PhysicComponent(Double H, Double W) {
         super();
         this.hitboxSize = Pair.create(H,W);
     }
@@ -25,10 +25,10 @@ public class PhysicComponent extends Component {
         entity.addProperty("W");
     }
 
-    protected float getX() { return (Float) this.getEntity().getProperty("X"); }
-    protected float getY() { return (Float) this.getEntity().getProperty("Y"); }
-    protected float getSpeedX() { return (Float) this.getEntity().getProperty("SPEEDX"); }
-    protected float getSpeedY() { return (Float) this.getEntity().getProperty("SPEEDY"); }
-    protected float getH() { return (Float) this.getEntity().getProperty("H"); }
-    protected float getW() { return (Float) this.getEntity().getProperty("W"); }
+    protected Double getX() { return (Double) this.getEntity().getProperty("X"); }
+    protected Double getY() { return (Double) this.getEntity().getProperty("Y"); }
+    protected Double getSpeedX() { return (Double) this.getEntity().getProperty("SPEEDX"); }
+    protected Double getSpeedY() { return (Double) this.getEntity().getProperty("SPEEDY"); }
+    protected Double getH() { return (Double) this.getEntity().getProperty("H"); }
+    protected Double getW() { return (Double) this.getEntity().getProperty("W"); }
 }
