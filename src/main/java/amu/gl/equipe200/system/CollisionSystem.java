@@ -7,8 +7,8 @@ public class CollisionSystem extends ASystem {
      * Collision engine
      */
     public void update() {
-        for( BaseEntity entity1: entities) {
-            for( BaseEntity entity2: entities) {
+        for( BaseEntity entity1: getEntities()) {
+            for( BaseEntity entity2: getEntities()) {
                 if(entity1.equals(entity2)) continue;
                 if (entity1.getCollisionsCheck().contains(entity2.getTag())) {
                     if (collidesAB(entity1, entity2)) {

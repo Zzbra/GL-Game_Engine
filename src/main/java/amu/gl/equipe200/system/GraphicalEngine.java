@@ -1,10 +1,13 @@
 package amu.gl.equipe200.system;
 
+import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GraphicalEngine {
     private Stage stage;
@@ -36,6 +39,12 @@ public class GraphicalEngine {
             imageMap.put("enemyImage", new Image( "ghostRed.jpg"));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
+        }
+    }
+
+    public void updateUI(List<BaseEntity> list){
+        for(BaseEntity entity : list){
+            entity.updateUI();
         }
     }
 }

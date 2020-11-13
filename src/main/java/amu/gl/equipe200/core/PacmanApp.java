@@ -8,6 +8,7 @@ import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.CollisionSystem;
 import amu.gl.equipe200.system.ASystem;
 import amu.gl.equipe200.system.GraphicalEngine;
+import amu.gl.equipe200.system.PhysicalEngine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -70,16 +71,22 @@ public class PacmanApp extends Application {
                 spawnEnemies( true);
 
                 // movement
-                gameScene.getPlayers().forEach(entity -> entity.move());
-                gameScene.getEnemies().forEach(entity -> entity.move());
+                // Déplacé dans physicalEngine, la fonction est statique pour le moment
+                //gameScene.getPlayers().forEach(entity -> entity.move());
+                //gameScene.getEnemies().forEach(entity -> entity.move());
+                PhysicalEngine.moveEntity(gameScene.getPlayers());
+                PhysicalEngine.moveEntity(gameScene.getEnemies());
 
                 // update collisions
                 //updateCollisions();
                 systems.get("Collisions").update();
 
                 // update amu.gl.equipe200.entity in scene
-                gameScene.getPlayers().forEach(entity -> entity.updateUI());
-                gameScene.getEnemies().forEach(entity -> entity.updateUI());
+                // Bougé le updateUI dans Graphical engine
+                //gameScene.getPlayers().forEach(entity -> entity.updateUI());
+                //gameScene.getEnemies().forEach(entity -> entity.updateUI());
+                graphicalEngine.updateUI(gameScene.getPlayers());
+                graphicalEngine.updateUI(gameScene.getEnemies());
 
                 // check if amu.gl.equipe200.entity can be removed
                 gameScene.getEnemies().forEach(entity -> entity.checkRemovability());

@@ -1,5 +1,6 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import javafx.scene.Node;
@@ -18,9 +19,9 @@ public abstract class GameWorld {
     // Liste des layers du GameWorld
     private final HashMap<String, Pane> layers;
     // Liste des entitées joueur
-    private final List<Player> players;
+    private final List<BaseEntity> players;
     // Liste des entitées ennemies
-    private final List<Enemy> enemies;
+    private final List<BaseEntity> enemies;
 
 
     public GameWorld() {
@@ -35,10 +36,10 @@ public abstract class GameWorld {
     }
     public Scene getScene(){return this.scene;}
     public HashMap<String, Node> getUIComponents(){return this.UIComponents;}
-    public List<Player> getPlayers() {
+    public List<BaseEntity> getPlayers() {
         return players;
     }
-    public List<Enemy> getEnemies() {
+    public List<BaseEntity> getEnemies() {
         return enemies;
     }
 
