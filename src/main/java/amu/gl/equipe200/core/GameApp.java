@@ -13,6 +13,7 @@ public class GameApp extends Application {
     private GameWorld gameWorld;
 
     private HashMap<String, System> systems;
+    private long lastupdateTime;
 
     /***** Can be overwritten *****/
     /** Initilization fonction **/
@@ -27,16 +28,18 @@ public class GameApp extends Application {
     private AnimationTimer gameLoop = new AnimationTimer() {
         @Override
         public void handle(long now) {
+            long elapsedTime = now - lastupdateTime;
+            lastupdateTime = now;
 
             // spawnEntity
             // AI movement
             // player input
 
             // update the physic
-            systems.get("Physic").onUpdate(now);
+            systems.get("Physic").onUpdate(elapsedTime);
 
             // update graphic
-            systems.get("Graphic").onUpdate(now);
+            systems.get("Graphic").onUpdate(elapsedTime);
 
             // check if amu.gl.equipe200.entity can be removed
             // enemies.forEach(entity -> entity.checkRemovability());
@@ -46,6 +49,8 @@ public class GameApp extends Application {
 
             // update score, health, etc
             // updateScore();
+
+            // Custom system ?
         }
 
     };
@@ -60,11 +65,12 @@ public class GameApp extends Application {
 
         /** Initialize the systems **/
         this.systems = new HashMap<>();
-        this.systems.put("Collisions", new PhysicSystem());
+        this.systems.put("Collisions", new PhysicSystem(GameSettings.SCENE_WIDTH, GameSettings.SCENE_WIDTH));
 
         /** Custom initialisation of the app **/
         this.initApp(primaryStage);
 
+        /** Start  the game loop **/
         this.gameLoop.start();
 
     }

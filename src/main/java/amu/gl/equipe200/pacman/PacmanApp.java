@@ -4,9 +4,9 @@ import amu.gl.equipe200.core.EntityOld;
 import amu.gl.equipe200.core.SystemOld;
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameSettings;
-import amu.gl.equipe200.physicengine.PhysicSystem;
 
-import javafx.animation.AnimationTimer;
+import amu.gl.equipe200.pacman.Entities.Enemy;
+import amu.gl.equipe200.pacman.Entities.Player;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -42,8 +42,9 @@ public class PacmanApp extends GameApp {
     Scene scene;
     HashMap<String, SystemOld> systems;
 
+
     @Override
-    public void start(Stage primaryStage) {
+    public void initApp(Stage primaryStage) {
         Group root = new Group();
 
         // create layers
@@ -79,8 +80,6 @@ public class PacmanApp extends GameApp {
     }
 
     private void createScoreLayer() {
-
-
         collisionText.setFont( Font.font( null, FontWeight.BOLD, 64));
         collisionText.setStroke(Color.BLACK);
         collisionText.setFill(Color.RED);
@@ -97,7 +96,6 @@ public class PacmanApp extends GameApp {
         collisionText.setBoundsType(TextBoundsType.VISUAL);
     }
     private void createPlayers() {
-
         Image image = playerImage;
 
         // center horizontally, position at 70% vertically

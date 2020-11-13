@@ -1,4 +1,4 @@
-package amu.gl.equipe200.pacman;
+package amu.gl.equipe200.pacman.Entities;
 
 import amu.gl.equipe200.core.EntityOld;
 import amu.gl.equipe200.core.GameSettings;

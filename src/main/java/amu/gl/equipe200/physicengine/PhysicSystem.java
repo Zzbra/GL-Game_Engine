@@ -59,6 +59,10 @@ public class PhysicSystem
             Double newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
             Double newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
 
+            // If go futher than the windows snap it back
+            if (newX + currentMovable.getW() > this.worldWidth) newX -= newX + currentMovable.getW() - this.worldWidth;
+            if (newY + currentMovable.getH() > this.worldHeight) newY -= newY + currentMovable.getH() - this.worldHeight;
+
             Pair<Double, Double> newPosition = Pair.create(newX, newY);
 
             // check if the entities is also collidable

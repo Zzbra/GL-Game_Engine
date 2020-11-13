@@ -29,4 +29,12 @@ public abstract class Component {
     public void onCreate() { }
     public void onAttach(Entity entity) { }
     public void onDetach() { }
+
+    @Override
+    public String toString() {
+        return "Component{"
+                + "type:" + this.getClass().getSimpleName()
+                + "; enable=" + enable
+                + "}";
+    }
 }
