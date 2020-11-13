@@ -1,20 +1,21 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.EntityOld;
+import amu.gl.equipe200.core.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Enemy extends BaseEntity {
+public class Enemy extends EntityOld {
+
+    private GameSettings.Tag tag = GameSettings.Tag.ENEMY;
 
     public Enemy(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-        this.tag = Settings.Tag.ENEMY;
     }
 
     @Override
     public void checkRemovability() {
-        if( Double.compare( getY(), Settings.SCENE_HEIGHT) > 0) {
+        if( Double.compare( getY(), GameSettings.SCENE_HEIGHT) > 0) {
             setRemovable(true);
         }
     }
@@ -22,11 +23,11 @@ public class Enemy extends BaseEntity {
 
     /*** Colidable ***/
     @Override
-    public void onCollide(BaseEntity entity) {}
+    public void onCollide(EntityOld entityOld) {}
 
     @Override
-    public void onCollisionStay(BaseEntity entity2) {}
+    public void onCollisionStay(EntityOld entityOld2) {}
 
     @Override
-    public void onExit(BaseEntity entity2) {}
+    public void onExit(EntityOld entityOld2) {}
 }

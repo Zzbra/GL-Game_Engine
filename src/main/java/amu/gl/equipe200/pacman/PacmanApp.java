@@ -1,14 +1,12 @@
-package amu.gl.equipe200.core;
+package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.entity.Enemy;
-import amu.gl.equipe200.entity.Player;
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.EntityOld;
+import amu.gl.equipe200.core.SystemOld;
+import amu.gl.equipe200.core.GameApp;
+import amu.gl.equipe200.core.GameSettings;
+import amu.gl.equipe200.physicengine.PhysicSystem;
 
-import amu.gl.equipe200.system.CollisionSystem;
-import amu.gl.equipe200.system.ASystem;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class PacmanApp extends Application {
+public class PacmanApp extends GameApp {
 
     Random rnd = new Random();
 
@@ -42,14 +40,10 @@ public class PacmanApp extends Application {
     Text collisionText = new Text();
 
     Scene scene;
-    HashMap<String, ASystem> systems;
+    HashMap<String, SystemOld> systems;
 
     @Override
     public void start(Stage primaryStage) {
-        /*** Création des moteurs ***/
-        systems = new HashMap<String, ASystem>();
-        systems.put("Collisions", new CollisionSystem());
-
         Group root = new Group();
 
         // create layers
@@ -59,7 +53,7 @@ public class PacmanApp extends Application {
         root.getChildren().add( playfieldLayer);
         root.getChildren().add( scoreLayer);
 
-        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+        scene = new Scene( root, GameSettings.SCENE_WIDTH, GameSettings.SCENE_HEIGHT);
 
         primaryStage.setScene( scene);
         primaryStage.show();
@@ -68,43 +62,6 @@ public class PacmanApp extends Application {
 
         createScoreLayer();
         createPlayers();
-
-
-        AnimationTimer gameLoop = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-
-                // player input
-                //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
-
-                // add random enemies
-                spawnEnemies( true);
-
-                // movement
-                players.forEach(entity -> entity.move());
-                enemies.forEach(entity -> entity.move());
-
-                // update collisions
-                //updateCollisions();
-                systems.get("Collisions").update();
-
-                // update amu.gl.equipe200.entity in scene
-                players.forEach(entity -> entity.updateUI());
-                enemies.forEach(entity -> entity.updateUI());
-
-                // check if amu.gl.equipe200.entity can be removed
-                enemies.forEach(entity -> entity.checkRemovability());
-
-                // remove removables from list, layer, etc
-                removeEntity( enemies);
-
-                // update score, health, etc
-                updateScore();
-            }
-
-        };
-        gameLoop.start();
 
     }
 
@@ -132,8 +89,8 @@ public class PacmanApp extends Application {
 
         // TODO: quick-hack to ensure the text is centered; usually you don't have that; instead you have a health bar on top
         collisionText.setText("Collision");
-        double x = (Settings.SCENE_WIDTH - collisionText.getBoundsInLocal().getWidth()) / 2;
-        double y = (Settings.SCENE_HEIGHT - collisionText.getBoundsInLocal().getHeight()) / 2;
+        double x = (GameSettings.SCENE_WIDTH - collisionText.getBoundsInLocal().getWidth()) / 2;
+        double y = (GameSettings.SCENE_HEIGHT - collisionText.getBoundsInLocal().getHeight()) / 2;
         collisionText.relocate(x, y);
         collisionText.setText("");
 
@@ -144,11 +101,11 @@ public class PacmanApp extends Application {
         Image image = playerImage;
 
         // center horizontally, position at 70% vertically
-        double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
-        double y = Settings.SCENE_HEIGHT * 0.7;
+        double x = (GameSettings.SCENE_WIDTH - image.getWidth()) / 2.0;
+        double y = GameSettings.SCENE_HEIGHT * 0.7;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED);
+        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, GameSettings.PLAYER_SHIP_HEALTH, 0, GameSettings.PLAYER_SHIP_SPEED);
 
         // register player
         players.add( player);
@@ -158,7 +115,7 @@ public class PacmanApp extends Application {
 
     private void spawnEnemies( boolean random) {
 
-        if( random && rnd.nextInt(Settings.ENEMY_SPAWN_RANDOMNESS) != 0) {
+        if( random && rnd.nextInt(GameSettings.ENEMY_SPAWN_RANDOMNESS) != 0) {
             return;
         }
 
@@ -170,7 +127,7 @@ public class PacmanApp extends Application {
 
         // x position range: enemy is always fully inside the screen, no part of it is outside
         // y position: right on top of the view, so that it becomes visible with the next game iteration
-        double x = rnd.nextDouble() * (Settings.SCENE_WIDTH - image.getWidth());
+        double x = rnd.nextDouble() * (GameSettings.SCENE_WIDTH - image.getWidth());
         double y = -image.getHeight();
 
         // create a sprite
@@ -181,10 +138,10 @@ public class PacmanApp extends Application {
         systems.get("Collisions").addEntity(enemy);
     }
 
-    private void removeEntity(List<? extends BaseEntity> spriteList) {
-        Iterator<? extends BaseEntity> iter = spriteList.iterator();
+    private void removeEntity(List<? extends EntityOld> spriteList) {
+        Iterator<? extends EntityOld> iter = spriteList.iterator();
         while( iter.hasNext()) {
-            BaseEntity sprite = iter.next();
+            EntityOld sprite = iter.next();
 
             if( sprite.isRemovable()) {
 

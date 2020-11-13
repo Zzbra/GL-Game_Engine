@@ -1,4 +1,4 @@
-package amu.gl.equipe200.core;
+package amu.gl.equipe200.graphicengine;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

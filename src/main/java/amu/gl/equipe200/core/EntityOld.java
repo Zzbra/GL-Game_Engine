@@ -1,22 +1,20 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.system.ASystem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public abstract class BaseEntity {
+public abstract class EntityOld {
 
     protected Image image;
-    protected ArrayList<Settings.Tag> collisionsCheck;
+    protected ArrayList<GameSettings.Tag> collisionsCheck;
     ImageView imageView;
 
     Pane layer;
 
-    ASystem collisionLister;
+    SystemOld collisionLister;
 
 
     public double x;
@@ -36,13 +34,13 @@ public abstract class BaseEntity {
     public double h;
 
     boolean canMove = true;
-    Settings.Tag tag;
+    GameSettings.Tag tag;
 
     /*** ColiderComponent ***/
-    private ArrayList<BaseEntity> collisionManifold;
+    private ArrayList<EntityOld> collisionManifold;
     //private HashMap<String, Component> components;
 
-    public BaseEntity(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
+    public EntityOld(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
 
         this.layer = layer;
         this.image = image;
@@ -160,7 +158,7 @@ public abstract class BaseEntity {
         this.removable = removable;
     }
 
-    public Settings.Tag getTag(){
+    public GameSettings.Tag getTag(){
         return this.tag;
     }
 
@@ -207,7 +205,7 @@ public abstract class BaseEntity {
     }
 
     // TODO: per-pixel-collision
-    public boolean collidesWith( BaseEntity otherSprite) {
+    public boolean collidesWith( EntityOld otherSprite) {
 
         return ( otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
 
@@ -217,7 +215,7 @@ public abstract class BaseEntity {
      * Reduce health by the amount of damage that the given sprite can inflict
      * @param sprite
      */
-    public void getDamagedBy( BaseEntity sprite) {
+    public void getDamagedBy( EntityOld sprite) {
         health -= sprite.getDamage();
     }
 
@@ -244,44 +242,44 @@ public abstract class BaseEntity {
 
     public abstract void checkRemovability();
 
-    public ArrayList<Settings.Tag> getCollisionsCheck(){
+    public ArrayList<GameSettings.Tag> getCollisionsCheck(){
         return this.collisionsCheck;
     }
 
 
     /***  Collidable   ***/
-    public void setCollisionLister(ASystem listener){
+    public void setCollisionLister(SystemOld listener){
         this.collisionLister = listener;
     }
 
-    public void addToCollisionManifold(BaseEntity entity){
-        this.collisionManifold.add(entity);
+    public void addToCollisionManifold(EntityOld entityOld){
+        this.collisionManifold.add(entityOld);
     }
 
     public void clearCollisionManifold(){
         this.collisionManifold.clear();
     }
 
-    public boolean collisionStayed(BaseEntity entity){
-        return this.collisionManifold.contains(entity);
+    public boolean collisionStayed(EntityOld entityOld){
+        return this.collisionManifold.contains(entityOld);
     }
 
-    public abstract void onCollide(BaseEntity entity);
+    public abstract void onCollide(EntityOld entityOld);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
     }
 
 
-    public void removeCollision(BaseEntity entity){
-        this.collisionManifold.remove(entity);
+    public void removeCollision(EntityOld entityOld){
+        this.collisionManifold.remove(entityOld);
     }
 
-    public abstract void onCollisionStay(BaseEntity entity2);
+    public abstract void onCollisionStay(EntityOld entityOld2);
 
-    public void setTag(Settings.Tag tag){
+    public void setTag(GameSettings.Tag tag){
         this.tag = tag;
     }
 
-    public abstract void onExit(BaseEntity entity2);
+    public abstract void onExit(EntityOld entityOld2);
 }

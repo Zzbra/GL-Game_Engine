@@ -1,26 +1,27 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.EntityOld;
+import amu.gl.equipe200.core.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Player extends BaseEntity {
+public class Player extends EntityOld {
 
     double playerShipMinX;
     double playerShipMaxX;
     double playerShipMinY;
     double playerShipMaxY;
 
+    private GameSettings.Tag tag = GameSettings.Tag.PLAYER;
 
     double speed;
 
     public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed) {
 
         super(layer, image, x, y, r, dx, dy, dr, health, damage);
-        this.tag = Settings.Tag.PLAYER;
         this.speed = speed;
 
-        collisionsCheck.add(Settings.Tag.ENEMY);
+        collisionsCheck.add(GameSettings.Tag.ENEMY);
         init();
     }
 
@@ -29,9 +30,9 @@ public class Player extends BaseEntity {
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
         playerShipMinX = 0 - image.getWidth() / 2.0;
-        playerShipMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
+        playerShipMaxX = GameSettings.SCENE_WIDTH - image.getWidth() / 2.0;
         playerShipMinY = 0 - image.getHeight() / 2.0;
-        playerShipMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
+        playerShipMaxY = GameSettings.SCENE_HEIGHT -image.getHeight() / 2.0;
 
     }
 
@@ -68,16 +69,16 @@ public class Player extends BaseEntity {
     }
 
     @Override
-    public void onCollisionStay(BaseEntity entity) {
-        System.err.println("Collision stay: " + entity.getTag());
+    public void onCollisionStay(EntityOld entityOld) {
+        System.err.println("Collision stay: " + entityOld.getTag());
     }
 
     @Override
-    public void onCollide(BaseEntity entity) {
-        System.err.println("Collided with: " + entity.getTag());
+    public void onCollide(EntityOld entityOld) {
+        System.err.println("Collided with: " + entityOld.getTag());
     }
 
     @Override
-    public void onExit(BaseEntity entity2) {}
+    public void onExit(EntityOld entityOld2) {}
 
 }

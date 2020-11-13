@@ -1,6 +1,6 @@
-package amu.gl.equipe200.gameworld;
+package amu.gl.equipe200.core;
 
-public class Settings {
+public class GameSettings {
     public static double SCENE_WIDTH = 400;
     public static double SCENE_HEIGHT = 800;
 

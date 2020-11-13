@@ -3,8 +3,8 @@ module amu.gl.equipe200 {
 
     exports amu.gl.equipe200;
     exports amu.gl.equipe200.core;
-    exports amu.gl.equipe200.entity;
-    exports amu.gl.equipe200.gameworld;
-    exports amu.gl.equipe200.system;
-    exports amu.gl.equipe200.UIComponent;
+    exports amu.gl.equipe200.graphicengine;
+    exports amu.gl.equipe200.physicengine;
+
+    exports amu.gl.equipe200.pacman;
 }
