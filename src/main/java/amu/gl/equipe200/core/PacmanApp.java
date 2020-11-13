@@ -27,6 +27,10 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
+/*
+    TODO: Réparer un bug qui à lieux lorsque qu'on entre en colision tout en
+          bas de la map: le texte Collision ne disparait pas
+ */
 public class PacmanApp extends Application {
 
     private Random rnd = new Random();
