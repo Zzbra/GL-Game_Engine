@@ -1,5 +1,6 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.gameworld.Settings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class MainMenuScene extends GameWorld {
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        mainMenuScene = new Scene(panel, 640, 480);
+        mainMenuScene = new Scene(panel, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         mainMenuScene.getStylesheets().add("MainMenuStyleSheet.css");
         super.setScene(mainMenuScene);
     }

@@ -24,6 +24,9 @@ public class Player extends BaseEntity {
         init();
     }
 
+    public double getSpeed() {
+        return speed;
+    }
 
     private void init() {
         // calculate movement bounds of the player ship

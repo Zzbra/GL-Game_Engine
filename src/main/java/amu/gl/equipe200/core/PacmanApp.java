@@ -5,10 +5,7 @@ import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
-import amu.gl.equipe200.system.CollisionSystem;
-import amu.gl.equipe200.system.ASystem;
-import amu.gl.equipe200.system.GraphicalEngine;
-import amu.gl.equipe200.system.PhysicalEngine;
+import amu.gl.equipe200.system.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -17,6 +14,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -34,6 +33,7 @@ public class PacmanApp extends Application {
 
     private GraphicalEngine graphicalEngine;
     private GameWorld mainMenuScene, gameScene;
+    private PlayerController playerController;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
@@ -45,18 +45,6 @@ public class PacmanApp extends Application {
         systems.put("Collisions", new CollisionSystem());
 
         graphicalEngine.loadScene(mainMenuScene.getScene());
-
-        // Définition du callback de startGameButton
-        Button startButton = (Button)mainMenuScene.getUIComponents().get("startGameButton");
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                graphicalEngine.loadScene(gameScene.getScene());
-            }
-        });
-
-
-        createPlayers();
 
 
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -106,12 +94,51 @@ public class PacmanApp extends Application {
             }
 
         };
-        gameLoop.start();
+
+        // Définition du callback de startGameButton
+        Button startButton = (Button)mainMenuScene.getUIComponents().get("startGameButton");
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                graphicalEngine.loadScene(gameScene.getScene());
+                createPlayers();
+                setControls();
+                gameLoop.start();
+            }
+        });
+
 
     }
 
 
-
+    private void setControls(){
+        Player player = (Player)gameScene.getPlayers().get(0);
+        this.playerController = new PlayerController(gameScene.getScene());
+        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.Z){
+                player.setDx(0);
+                player.setDy(-player.getSpeed());
+            }
+        });
+        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.S){
+                player.setDx(0);
+                player.setDy(player.getSpeed());
+            }
+        });
+        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.Q){
+                player.setDx(-player.getSpeed());
+                player.setDy(0);
+            }
+        });
+        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.D){
+                player.setDx(player.getSpeed());
+                player.setDy(0);
+            }
+        });
+    }
 
     private void createPlayers() {
 
