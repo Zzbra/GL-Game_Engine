@@ -68,4 +68,9 @@ public class GameApp extends Application {
         this.gameLoop.start();
 
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }

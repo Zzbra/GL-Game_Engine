@@ -163,9 +163,4 @@ public class PacmanApp extends GameApp {
             collisionText.setText("");
         }
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
 }
