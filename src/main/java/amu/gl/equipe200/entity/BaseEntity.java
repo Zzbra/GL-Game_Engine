@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 
 public abstract class BaseEntity {
-    // Pourquoi protected ?
     protected Image image;
     protected ArrayList<Settings.Tag> collisionsCheck;
     private ImageView imageView;
