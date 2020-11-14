@@ -3,7 +3,8 @@ package amu.gl.equipe200.physicengine;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.utils.Pair;
 
-public class MovableComponent extends PhysicComponent {
+public class MovableComponent
+        extends PhysicComponent {
 
     Pair<Double, Double> initialSpeed;
 

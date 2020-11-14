@@ -1,4 +1,4 @@
-package amu.gl.equipe200.graphicengine;
+package amu.gl.equipe200.graphicengine.old;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;

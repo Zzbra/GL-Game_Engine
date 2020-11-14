@@ -1,6 +1,5 @@
-package amu.gl.equipe200.graphicengine;
+package amu.gl.equipe200.graphicengine.old;
 
-import amu.gl.equipe200.graphicengine.SceneWrapper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
