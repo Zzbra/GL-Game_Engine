@@ -5,6 +5,12 @@ import amu.gl.equipe200.entity.BaseEntity;
 import java.util.List;
 
 public class PhysicalEngine {
+
+    public static void update(List<BaseEntity> entityList){
+        moveEntity(entityList);
+        checkCollision(entityList);
+    }
+
     public static void moveEntity(List<BaseEntity> entityList){
         for(BaseEntity entity : entityList){
             entity.move();

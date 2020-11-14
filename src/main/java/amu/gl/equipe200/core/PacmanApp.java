@@ -66,28 +66,12 @@ public class PacmanApp extends Application {
                 // add random enemies
                 spawnEnemies( true);
 
-                // movement
-                // Déplacé dans physicalEngine, la fonction est statique pour le moment
-                //gameScene.getPlayers().forEach(entity -> entity.move());
-                //gameScene.getEnemies().forEach(entity -> entity.move());
-                PhysicalEngine.moveEntity(gameScene.getEntities());
+                // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
+                PhysicalEngine.update(gameScene.getEntities());
 
-
-                // update collisions
-                //updateCollisions();
-                /*
-                 Déplacé la detection des collision dans PhysicalEngine
-                 Il me semble que le prof à spécifié que le PhysicalEngine
-                 ne devrait pas avoir de référence sur les entitées. Je les
-                 passes donc en argument.
-                 */
-                //systems.get("Collisions").update();
-                PhysicalEngine.checkCollision(gameScene.getEntities());
 
                 // update amu.gl.equipe200.entity in scene
-                // Bougé le updateUI dans Graphical engine
-                //gameScene.getPlayers().forEach(entity -> entity.updateUI());
-                //gameScene.getEnemies().forEach(entity -> entity.updateUI());
+                // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
                 graphicalEngine.updateUI(gameScene.getEntities());
 
 
