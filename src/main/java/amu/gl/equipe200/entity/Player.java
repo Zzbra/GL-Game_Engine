@@ -42,7 +42,7 @@ public class Player extends BaseEntity {
     public void move() {
         super.move();
 
-        // ensure the ship can't move outside of the screen
+        // ensure the player can't move outside of the screen
         checkBounds();
     }
 
