@@ -39,6 +39,8 @@ public class PacmanApp extends Application {
     private GraphicalEngine graphicalEngine;
     private GameWorld mainMenuScene, gameScene;
     private PlayerController playerController;
+    private AnimationTimer gameLoop;
+    private boolean playerIsCreated;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
@@ -50,9 +52,10 @@ public class PacmanApp extends Application {
         systems.put("Collisions", new CollisionSystem());
 
         graphicalEngine.loadScene(mainMenuScene.getScene());
+        playerIsCreated = false;
 
 
-        AnimationTimer gameLoop = new AnimationTimer() {
+        gameLoop = new AnimationTimer() {
 
             @Override
             public void handle(long now) {
@@ -106,7 +109,8 @@ public class PacmanApp extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 graphicalEngine.loadScene(gameScene.getScene());
-                createPlayers();
+                if(!playerIsCreated)
+                    createPlayers();
                 setControls();
                 gameLoop.start();
             }
@@ -147,6 +151,13 @@ public class PacmanApp extends Application {
                 player.setR(0);
             }
         });
+
+        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.P){
+                gameLoop.stop();
+                graphicalEngine.loadScene(mainMenuScene.getScene());
+            }
+        });
     }
 
     private void createPlayers() {
@@ -162,6 +173,7 @@ public class PacmanApp extends Application {
         // register player
         gameScene.getPlayers().add( player);
         systems.get("Collisions").addEntity(player);
+        playerIsCreated = true;
 
     }
 
