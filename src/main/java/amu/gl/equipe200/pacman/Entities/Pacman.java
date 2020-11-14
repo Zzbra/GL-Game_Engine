@@ -11,11 +11,9 @@ class PacmanCollisionHandler extends CollisionHandler {
     }
 
     @Override
-    public void onCollide(CollidableComponent other) {
+    public void onCollide(Entity other) {
         System.out.println("Collide with: " + other.toString());
     }
 }
 
-public class PacmanFactory {
-    public Entity build ()
-}
+public class PacmanFactory { };

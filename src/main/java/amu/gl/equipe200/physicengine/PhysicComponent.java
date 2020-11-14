@@ -9,9 +9,9 @@ public class PhysicComponent extends Component {
 
     private Pair<Double, Double> hitboxSize;
 
-    public PhysicComponent(Double H, Double W) {
+    public PhysicComponent(Double Height, Double Width) {
         super();
-        this.hitboxSize = Pair.create(H,W);
+        this.hitboxSize = Pair.create(Height,Width);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class PhysicComponent extends Component {
         entity.addProperty("SPEEDY");
 
         // set the value of the hitbox
-        entity.setProperty("H", this.hitboxSize.first);
-        entity.setProperty("W", this.hitboxSize.second);
+        entity.setProperty("HEIGHT", this.hitboxSize.first);
+        entity.setProperty("WIDTH", this.hitboxSize.second);
     }
 
-    protected Double getX() { return (Double) this.getEntity().getProperty("X"); }
-    protected Double getY() { return (Double) this.getEntity().getProperty("Y"); }
-    protected Double getSpeedX() { return (Double) this.getEntity().getProperty("SPEEDX"); }
-    protected Double getSpeedY() { return (Double) this.getEntity().getProperty("SPEEDY"); }
-    protected Double getH() { return (Double) this.getEntity().getProperty("H"); }
-    protected Double getW() { return (Double) this.getEntity().getProperty("W"); }
+    protected double getX() { return (double) this.getEntity().getProperty("X"); }
+    protected double getY() { return (double) this.getEntity().getProperty("Y"); }
+    protected double getSpeedX() { return (double) this.getEntity().getProperty("SPEEDX"); }
+    protected double getSpeedY() { return (double) this.getEntity().getProperty("SPEEDY"); }
+    protected double getWidth() { return (double) this.getEntity().getProperty("WIDTH"); }
+    protected double getHeight() { return (double) this.getEntity().getProperty("HEIGHT"); }
 }

@@ -1,6 +1,6 @@
 package amu.gl.equipe200.physicengine;
 
-import amu.gl.equipe200.core.Component;
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.System;
 import amu.gl.equipe200.utils.Pair;
 
@@ -17,30 +17,13 @@ import static java.lang.Math.min;
 public class PhysicSystem
         extends System {
 
-    /** Components linked to the physical system **/
-    private ArrayList<MovableComponent> movables;
-    private ArrayList<CollidableComponent> collidables;
-
     /** InGame size of the world **/
     private Double worldWidth;
     private Double worldHeight;
 
     public PhysicSystem(Double worldWidth, Double worldHeight) {
-        this.movables = new ArrayList<>();
-        this.collidables = new ArrayList<>();
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
-    }
-
-    @Override
-    public void registerComponent(Component component) {
-        // register the component on the right list
-        if (component instanceof MovableComponent) {
-            this.movables.add((MovableComponent) component);
-        }
-        if (component instanceof CollidableComponent) {
-            this.collidables.add((CollidableComponent) component);
-        }
     }
 
     /**
@@ -50,43 +33,48 @@ public class PhysicSystem
      * @param elapsedTime : time elapsed since the last update
      */
     @Override
-    public void onUpdate(long elapsedTime) {
-        for( MovableComponent currentMovable : this.movables) {
+    public void onUpdate(long elapsedTime, ArrayList<Entity> affectedEntity) {
+        for( Entity currentEntity : affectedEntity) {
+            // Check if the entity is movable, as collidable only entities does not require any update
+            if (! currentEntity.hasComponent(MovableComponent.class)) continue;
+            MovableComponent currentMovable = (MovableComponent) currentEntity.getComponent(MovableComponent.class);
             // update the position if the component is enable
             if (! currentMovable.isEnable()) continue;
 
             // Compute the new position of the entity
-            Double newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
-            Double newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
-
+            double newX = currentMovable.getX() + elapsedTime * currentMovable.getSpeedX();
+            double newY = currentMovable.getY() + elapsedTime * currentMovable.getSpeedY();
             // If go further than the windows snap it back
-            if (newX + currentMovable.getW() > this.worldWidth) newX -= newX + currentMovable.getW() - this.worldWidth;
-            if (newY + currentMovable.getH() > this.worldHeight) newY -= newY + currentMovable.getH() - this.worldHeight;
+            if (newX + currentMovable.getWidth() > this.worldWidth) newX -= newX + currentMovable.getWidth() - this.worldWidth;
+            if (newY + currentMovable.getHeight() > this.worldHeight) newY -= newY + currentMovable.getHeight() - this.worldHeight;
 
             Pair<Double, Double> newPosition = Pair.create(newX, newY);
 
             // check if the entities is also collidable
-            if (currentMovable.getEntity().hasComponent(MovableComponent.class)) {
+            if (currentEntity.hasComponent(CollidableComponent.class)) {
                 // Get the collidable component of the entity and continue if it is enable
-                CollidableComponent currentCollidable = (CollidableComponent) currentMovable.getEntity().getComponent(CollidableComponent.class);
-
+                CollidableComponent currentCollidable =
+                        (CollidableComponent) currentEntity.getComponent(CollidableComponent.class);
                 if (currentCollidable.isEnable()) {
                     // The collide component is enable, Check for collisions
-                    for( CollidableComponent toCheck : this.collidables) {
-                        // Don't check disable component or yourself
-                        if(! toCheck.isEnable()) continue;
-                        if(currentCollidable.equals(toCheck)) continue;
+                    for( Entity toCheckEntity : affectedEntity) {
+                        // Don't entity without/wtih disabled CollidableComponant or yourself
+                        if (affectedEntity.equals(toCheckEntity)) continue;
+                        if (! toCheckEntity.hasComponent(CollidableComponent.class)) continue;
+                        CollidableComponent toCheckCollidable =
+                                (CollidableComponent) toCheckEntity.getComponent(CollidableComponent.class);
+                        if (! toCheckCollidable.isEnable()) continue;
 
                         // check if the two entities collide during the movement
-                        if (this.collide(currentCollidable, newPosition, toCheck)) {
+                        if (this.collide(currentCollidable, newPosition, toCheckCollidable)) {
                             // proc the collision trigger
-                            currentCollidable.onCollide(toCheck);
-                            toCheck.onCollide(currentCollidable);
+                            currentCollidable.onCollide(toCheckEntity);
+                            toCheckCollidable.onCollide(currentEntity);
 
                             // check if both entities are solid
-                            if (  currentCollidable.isImpassable() && toCheck.isImpassable()) {
+                            if (  currentCollidable.isImpassable() && toCheckCollidable.isImpassable()) {
                                 // compute the final position of the movable entity
-                                newPosition = this.computeMovablePosition(currentCollidable, newPosition, toCheck);
+                                newPosition = this.computeMovablePosition(currentCollidable, newPosition, toCheckCollidable);
                             }
                         }
                     }
@@ -107,10 +95,10 @@ public class PhysicSystem
     private boolean collide(CollidableComponent A,
                             Pair<Double, Double> newPosition,
                             CollidableComponent B) {
-        return (B.getX() + B.getW() >= newPosition.first
-                && B.getX() <= newPosition.first + A.getW()
-                && B.getY() + B.getH() >= newPosition.second
-                && B.getY() <= newPosition.second + A.getH());
+        return (B.getX() + B.getWidth() >= newPosition.first
+                && B.getX() <= newPosition.first + A.getWidth()
+                && B.getY() + B.getHeight() >= newPosition.second
+                && B.getY() <= newPosition.second + A.getHeight());
     }
 
     /**
@@ -128,26 +116,26 @@ public class PhysicSystem
 
         // the entity move on the X axis, compute the final X position
         if (currentCollidable.getSpeedX() > 0
-            && currentCollidable.getX() + currentCollidable.getW() < toCheck.getX()) {
+            && currentCollidable.getX() + currentCollidable.getWidth() < toCheck.getX()) {
             // the movable is on the right of the obstacle and try to go in (maybe)
-            finalX = min(finalX, toCheck.getX() - currentCollidable.getW());
+            finalX = min(finalX, toCheck.getX() - currentCollidable.getWidth());
         }
         if (currentCollidable.getSpeedX() < 0
-            && toCheck.getX() + toCheck.getW() < currentCollidable.getX()) {
+            && toCheck.getX() + toCheck.getWidth() < currentCollidable.getX()) {
             // the movable is on the left of the obstacle and try to go in (maybe)
-            finalX = max(finalX, toCheck.getX() + toCheck.getW());
+            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
         }
 
         // the entity move on the Y axis, compute the final Y position
         if (currentCollidable.getSpeedY() > 0
-            && currentCollidable.getY() + currentCollidable.getH() < toCheck.getY()) {
+            && currentCollidable.getY() + currentCollidable.getHeight() < toCheck.getY()) {
                 // the movable is on the top of the obstacle and try to go in (maybe)
-                finalY = min(finalY, toCheck.getY() - currentCollidable.getH());
+                finalY = min(finalY, toCheck.getY() - currentCollidable.getHeight());
             }
         if (currentCollidable.getSpeedY() < 0
-            && toCheck.getY() + toCheck.getH() < currentCollidable.getY()) {
+            && toCheck.getY() + toCheck.getHeight() < currentCollidable.getY()) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
-            finalY = max(finalY, toCheck.getY() + toCheck.getH());
+            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
         }
         return Pair.create(finalX, finalY);
     }

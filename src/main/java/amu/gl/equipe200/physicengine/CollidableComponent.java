@@ -26,5 +26,5 @@ public class CollidableComponent extends PhysicComponent {
     protected boolean isImpassable() { return (Boolean) this.getEntity().getProperty("IMPASSABLE"); }
 
     // TODO: je sais pas trop
-    protected void onCollide(CollidableComponent other) { collisionHandler.onCollide(other); }
+    protected void onCollide(Entity other) { collisionHandler.onCollide(other); }
 }
