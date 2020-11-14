@@ -3,7 +3,8 @@ package amu.gl.equipe200.physicengine;
 import amu.gl.equipe200.core.Entity;
 
 
-public class CollidableComponent extends PhysicComponent {
+public class CollidableComponent
+        extends PhysicComponent {
 
     private CollisionHandler collisionHandler;
     private boolean impassable;
@@ -26,5 +27,5 @@ public class CollidableComponent extends PhysicComponent {
     protected boolean isImpassable() { return (Boolean) this.getEntity().getProperty("IMPASSABLE"); }
 
     // TODO: je sais pas trop
-    protected void onCollide(Entity other) { collisionHandler.onCollide(other); }
+    public void onCollide(Entity other) { collisionHandler.onCollide(other); }
 }

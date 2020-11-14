@@ -5,7 +5,8 @@ import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.utils.Pair;
 
 
-public class PhysicComponent extends Component {
+public abstract class PhysicComponent
+        extends Component {
 
     private Pair<Double, Double> hitboxSize;
 
