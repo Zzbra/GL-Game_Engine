@@ -66,9 +66,9 @@ public class PhysicSystem
             Pair<Double, Double> newPosition = Pair.create(newX, newY);
 
             // check if the entities is also collidable
-            if (currentMovable.getEntity().hasComponent(MovableComponent.class.getSimpleName())) {
+            if (currentMovable.getEntity().hasComponent(MovableComponent.class)) {
                 // Get the collidable component of the entity and continue if it is enable
-                CollidableComponent currentCollidable = (CollidableComponent) currentMovable.getEntity().getComponent(MovableComponent.class.getSimpleName());
+                CollidableComponent currentCollidable = (CollidableComponent) currentMovable.getEntity().getComponent(CollidableComponent.class);
 
                 if (currentCollidable.isEnable()) {
                     // The collide component is enable, Check for collisions

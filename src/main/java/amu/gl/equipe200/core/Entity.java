@@ -6,26 +6,23 @@ import java.util.UUID;
 public abstract class Entity {
 
     private String uuid;
-    private HashMap<String, Component> components;
+    private HashMap<Class<? extends Component>, Component> components;
     private HashMap<String, Object> properties;
 
     public Entity () {
         this.uuid = UUID.randomUUID().toString();
     }
 
-    /*****  Getter and setter  *****/
+    /*****  Getter and setter for the components *****/
     public void addComponent(Component component) {
-        this.components.put(component.getClass().toString(), component);
+        // add the component to the entity and notify it
+        this.components.put(component.getClass(), component);
         component.onAttach(this);
     }
-    public boolean hasComponent(String type) { return this.components.containsKey(type); }
-    public Component getComponent(String type) { return this.components.get(type); }
-    public void removeComponent(String type) {
-        Component c = this.components.get(type);
-        this.components.remove(type);
-        c.onDetach();
-    }
-
+    public boolean hasComponent(Class<? extends Component> type) { return this.components.containsKey(type); }
+    public Component getComponent(Class<? extends Component> type) { return this.components.get(type); }
+    public void removeComponent(Class<? extends Component> type) { this.components.remove(type).onDetach(); }
+    /*****  Getter and setter for the properties *****/
     public void addProperty(String name) {
         // we don't want to have multiple time the same properties
         this.properties.putIfAbsent(name, null);
