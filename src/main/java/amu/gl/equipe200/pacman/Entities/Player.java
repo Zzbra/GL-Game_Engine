@@ -1,6 +1,5 @@
 package amu.gl.equipe200.pacman.Entities;
 
-import amu.gl.equipe200.core.EntityOld;
 import amu.gl.equipe200.core.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;

@@ -16,7 +16,7 @@ public abstract class System {
      * Each system update method will be called once each game tick
      * It handles the update procedure of the system
      * @param elapsedTime : time elapsed since the last update
-     * @param affectedEntity : list of the enntiy affected by the system (should have the component managed by the system)
+     * @param activeWorld : active game world
      */
-    public abstract void onUpdate (long elapsedTime, ArrayList<Entity> affectedEntity);
+    public abstract void onUpdate (long elapsedTime, GameWorld activeWorld);
 }

@@ -1,7 +1,5 @@
 package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.core.EntityOld;
-import amu.gl.equipe200.core.SystemOld;
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameSettings;
 

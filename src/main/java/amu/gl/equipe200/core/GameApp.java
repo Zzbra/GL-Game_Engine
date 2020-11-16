@@ -10,11 +10,14 @@ import java.util.HashMap;
 public class GameApp extends Application {
 
     private GameSettings settings;
-    private GameWorld gameWorld;
 
+    private HashMap<String, GameWorld> gameWorlds;
     private HashMap<String, System> systems;
-    private long lastupdateTime;
 
+    private long lastupdateTime;
+    private GameWorld activeWorld;
+
+    /******************************************************************************************************************/
     /***** Can be overwritten *****/
     /** Initilization fonction **/
     public void initSettings(GameSettings settings) { };
@@ -23,7 +26,7 @@ public class GameApp extends Application {
     /** Game loop call **/
     public void spawnEntity() { };
 
-
+    /******************************************************************************************************************/
     /***** Definition of the game loop *****/
     private AnimationTimer gameLoop = new AnimationTimer() {
         @Override
@@ -36,10 +39,10 @@ public class GameApp extends Application {
             // player input
 
             // update the physic
-            systems.get("Physic").onUpdate(elapsedTime);
+            systems.get("Physic").onUpdate(elapsedTime, activeWorld);
 
             // update graphic
-            systems.get("Graphic").onUpdate(elapsedTime);
+            systems.get("Graphic").onUpdate(elapsedTime, activeWorld);
 
             // check if amu.gl.equipe200.entity can be removed
             // enemies.forEach(entity -> entity.checkRemovability());
@@ -54,8 +57,17 @@ public class GameApp extends Application {
         }
 
     };
+    /******************************************************************************************************************/
+    /***** Other *****/
+
+    /**
+     * Change the current to a new one
+     * @param worldName : name of the world to load
+     */
+    public void loadWorld(String worldName) { this.activeWorld = this.gameWorlds.get(worldName); }
 
 
+    /******************************************************************************************************************/
     /***** Entry point for JavaFX *****/
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -66,14 +78,20 @@ public class GameApp extends Application {
         /** Initialize the systems **/
         this.systems = new HashMap<>();
         this.systems.put("Collisions", new PhysicSystem(GameSettings.SCENE_WIDTH, GameSettings.SCENE_WIDTH));
+        this.systems.put("Collisions", new PhysicSystem(GameSettings.SCENE_WIDTH, GameSettings.SCENE_WIDTH));
 
         /** Custom initialisation of the app **/
         this.initApp(primaryStage);
+
+        /** load a game world if none is active **/
+        if (this.activeWorld == null) { this.activeWorld = this.gameWorlds.getOrDefault("Main", new GameWorld()); }
 
         /** Start  the game loop **/
         this.gameLoop.start();
 
     }
+
+
 
     public static void main(String[] args) {
         launch(args);
