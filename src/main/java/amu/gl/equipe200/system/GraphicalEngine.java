@@ -1,12 +1,14 @@
 package amu.gl.equipe200.system;
 
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.Renderable.Renderable;
+import amu.gl.equipe200.core.Component.Renderable.Sprite;
 import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,11 +45,18 @@ public class GraphicalEngine {
         }
     }
 
-    public void updateUI(List<BaseEntity> list){
+    public void update(List<BaseEntity> list){
         for(BaseEntity entity : list){
-            ImageView imageView = entity.getView();
-            imageView.relocate(entity.getX(), entity.getY());
-            imageView.setRotate(entity.getR());
+            Component component = entity.getComponent(Renderable.class);
+            if (component == null) continue;
+            component.updateBy(this);
         }
+    }
+
+    // TODO : Déplacer les systems dans core
+    public void update(Sprite component) {
+        ImageView imageView = component.getView();
+        imageView.relocate(component.getX(), component.getY());
+        imageView.setRotate(component.getR());
     }
 }
