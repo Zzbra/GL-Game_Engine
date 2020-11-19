@@ -112,3 +112,5 @@ hs_err_pid*
 .idea/misc.xml
 .idea/encodings.xml
 .idea/compiler.xml
+GL-Game_Engine.iml
+.idea/modules.xml
