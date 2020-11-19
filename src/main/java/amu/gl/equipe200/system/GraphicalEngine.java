@@ -3,6 +3,7 @@ package amu.gl.equipe200.system;
 import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -44,7 +45,9 @@ public class GraphicalEngine {
 
     public void updateUI(List<BaseEntity> list){
         for(BaseEntity entity : list){
-            entity.updateUI();
+            ImageView imageView = entity.getView();
+            imageView.relocate(entity.getX(), entity.getY());
+            imageView.setRotate(entity.getR());
         }
     }
 }

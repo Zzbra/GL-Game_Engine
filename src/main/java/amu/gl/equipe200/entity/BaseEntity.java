@@ -184,12 +184,7 @@ public abstract class BaseEntity {
         return imageView;
     }
 
-    public void updateUI() {
 
-        imageView.relocate(x, y);
-        imageView.setRotate(r);
-
-    }
 
     public double getWidth() {
         return w;
