@@ -13,10 +13,10 @@ import java.util.List;
 public class GraphicalEngine {
     private Stage stage;
     private Scene currentScene;
-    private HashMap<String, Image> imageMap;
+    private static HashMap<String, Image> IMAGEMAP;
     public GraphicalEngine(Stage stage){
         this.stage = stage;
-        this.imageMap = new HashMap<>();
+        this.IMAGEMAP = new HashMap<>();
         loadImages();
     }
 
@@ -26,18 +26,18 @@ public class GraphicalEngine {
         this.stage.show();
     }
 
-    public HashMap<String, Image> getImages() {
-        return imageMap;
+    public static HashMap<String, Image> getImages() {
+        return IMAGEMAP;
     }
 
     private void loadImages() {
         try {
-            imageMap.put("playerImage", new Image("pacman.jpg", 50, 50, true, true));
+            IMAGEMAP.put("playerImage", new Image("pacman.jpg", 50, 50, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
         try {
-            imageMap.put("enemyImage", new Image( "ghostRed.jpg", 50, 50, true, true));
+            IMAGEMAP.put("enemyImage", new Image( "ghostRed.jpg", 50, 50, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
