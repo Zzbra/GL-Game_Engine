@@ -1,5 +1,8 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.Renderable.Renderable;
+import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -14,28 +17,26 @@ public class Player extends BaseEntity {
 
     private double speed;
 
-    public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed) {
+    public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene) {
 
-        super(layer, image, x, y, r, dx, dy, dr, health, damage);
+        super(x, y, r, dx, dy, dr, health, damage, gameScene);
         this.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
 
         collisionsCheck.add(Settings.Tag.ENEMY);
-        init();
     }
 
     public double getSpeed() {
         return speed;
     }
 
-    private void init() {
+    public void initShip(Renderable component) {
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
-        playerShipMinX = 0 - image.getWidth() / 2.0;
-        playerShipMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
-        playerShipMinY = 0 - image.getHeight() / 2.0;
-        playerShipMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
-
+        playerShipMinX = 0 - component.getWidth() / 2.0;
+        playerShipMaxX = Settings.SCENE_WIDTH - component.getWidth() / 2.0;
+        playerShipMinY = 0 - component.getHeight() / 2.0;
+        playerShipMaxY = Settings.SCENE_HEIGHT -component.getHeight() / 2.0;
     }
 
     @Override

@@ -1,17 +1,23 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class BaseEntity {
+    private String layerName;
     protected Image image;
     protected ArrayList<Settings.Tag> collisionsCheck;
     private ImageView imageView;
+    private GameWorld gameWorld;
 
     private Pane layer;
 
@@ -39,12 +45,10 @@ public abstract class BaseEntity {
 
     /*** ColiderComponent ***/
     private ArrayList<BaseEntity> collisionManifold;
-    //private HashMap<String, Component> components;
+    private HashMap<Class<? extends Component>, Component> components;
 
-    public BaseEntity(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
+    public BaseEntity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
 
-        this.layer = layer;
-        this.image = image;
         this.x = x;
         this.y = y;
         this.r = r;
@@ -55,30 +59,31 @@ public abstract class BaseEntity {
         this.health = health;
         this.damage = damage;
 
-        this.imageView = new ImageView(image);
-        this.imageView.relocate(x, y);
-        this.imageView.setRotate(r);
+        //this.imageView = new ImageView(image);
+        //this.imageView.relocate(x, y);
+        //this.imageView.setRotate(r);
 
-        this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
-        this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
+        //this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
+        //this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
 
+        this.components = new HashMap<>();
         /*** Collidable ***/
         collisionManifold = new ArrayList<>();
         this.collisionsCheck = new ArrayList<>();
 
-        addToLayer();
+        this.gameWorld = gameWorld;
+
+        //addToLayer();
 
     }
 
 
 
-    public void addToLayer() {
-        this.layer.getChildren().add(this.imageView);
+    public void addToLayer(Node node) {
+        this.layer.getChildren().add(node);
     }
 
-    public void removeFromLayer() {
-        this.layer.getChildren().remove(this.imageView);
-    }
+
 
     public Pane getLayer() {
         return layer;
@@ -194,6 +199,12 @@ public abstract class BaseEntity {
         return h;
     }
 
+    public void setWidth(double w) { this.w = w; }
+
+    public void setHeight(double h) {
+        this.h = h;
+    }
+
     public double getCenterX() {
         return x + w * 0.5;
     }
@@ -202,6 +213,13 @@ public abstract class BaseEntity {
         return y + h * 0.5;
     }
 
+    public Component getComponent(Class<? extends Component> type){
+        return this.components.get(type);
+    }
+
+    public void addComponent(Class<? extends Component> type, Component component){
+        this.components.put(type, component);
+    }
     // TODO: per-pixel-collision
     public boolean collidesWith( BaseEntity otherSprite) {
 
@@ -280,4 +298,8 @@ public abstract class BaseEntity {
     }
 
     public abstract void onExit(BaseEntity entity2);
+
+    public GameWorld getGameWorld(){
+        return this.gameWorld;
+    }
 }
