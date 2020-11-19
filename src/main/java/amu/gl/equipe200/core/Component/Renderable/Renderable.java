@@ -1,11 +1,24 @@
-package amu.gl.equipe200.core.Component;
+package amu.gl.equipe200.core.Component.Renderable;
 
+import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.system.GraphicalEngine;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
-public class Renderable extends Component{
+public abstract class Renderable extends Component {
+    Pane layer;
 
-    public Renderable(BaseEntity entity) {
+    public Renderable(BaseEntity entity, String layerName) {
         super(entity);
+        entity.addComponent(Renderable.class, this);
+        layer = getGameWorld().getLayers().get(layerName);
     }
+
+    public void addToLayer(Node node){
+        layer.getChildren().add(node);
+    }
+
+    public abstract double getWidth();
+
+    public abstract double getHeight();
 }
