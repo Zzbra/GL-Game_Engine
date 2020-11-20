@@ -1,4 +1,4 @@
-package amu.gl.equipe200.graphicengine;
+package amu.gl.equipe200.graphicsengine;
 
 import amu.gl.equipe200.core.Component.Component;
 import javafx.scene.Scene;
@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.List;
 
-public class GraphicalEngine {
+public class GraphicsSystem {
     private Stage stage;
     private Scene currentScene;
     private static HashMap<String, Image> IMAGEMAP;
-    public GraphicalEngine(Stage stage){
+    public GraphicsSystem(Stage stage){
         this.stage = stage;
         this.IMAGEMAP = new HashMap<>();
         loadImages();
@@ -58,7 +58,7 @@ public class GraphicalEngine {
     }
 
     // TODO : Déplacer les systems dans core
-    public void update(Sprite component) {
+    public void update(SpriteComponent component) {
         ImageView imageView = component.getView();
         imageView.relocate(component.getX(), component.getY());
         imageView.setRotate(component.getR());

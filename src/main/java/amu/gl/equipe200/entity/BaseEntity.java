@@ -1,7 +1,7 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.physicengine.PhysicalComponent;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
@@ -40,7 +40,7 @@ public abstract class BaseEntity {
     private Settings.Tag tag;
 
     /*** ColiderComponent ***/
-    private ArrayList<PhysicalComponent> collisionManifold;
+    private ArrayList<PhysicsComponent> collisionManifold;
     private HashMap<Class<? extends Component>, Component> components;
 
     public BaseEntity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
@@ -264,36 +264,36 @@ public abstract class BaseEntity {
         this.collisionLister = listener;
     }
 
-    public void addToCollisionManifold(PhysicalComponent physicalComponent){
-        this.collisionManifold.add(physicalComponent);
+    public void addToCollisionManifold(PhysicsComponent physicsComponent){
+        this.collisionManifold.add(physicsComponent);
     }
 
     public void clearCollisionManifold(){
         this.collisionManifold.clear();
     }
 
-    public boolean collisionStayed(PhysicalComponent physicalComponent){
-        return this.collisionManifold.contains(physicalComponent);
+    public boolean collisionStayed(PhysicsComponent physicsComponent){
+        return this.collisionManifold.contains(physicsComponent);
     }
 
-    public abstract void onCollide(PhysicalComponent physicalComponent);
+    public abstract void onCollide(PhysicsComponent physicsComponent);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
     }
 
 
-    public void removeCollision(PhysicalComponent physicalComponent){
-        this.collisionManifold.remove(physicalComponent);
+    public void removeCollision(PhysicsComponent physicsComponent){
+        this.collisionManifold.remove(physicsComponent);
     }
 
-    public abstract void onCollisionStay(PhysicalComponent physicalComponent2);
+    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
 
     public void setTag(Settings.Tag tag){
         this.tag = tag;
     }
 
-    public abstract void onExit(PhysicalComponent physicalComponent2);
+    public abstract void onExit(PhysicsComponent physicsComponent2);
 
     public GameWorld getGameWorld(){
         return this.gameWorld;

@@ -1,17 +1,17 @@
 package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.core.Component.InputComponent;
-import amu.gl.equipe200.physicengine.PhysicalComponent;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.core.Component.PlayerInputComponent;
-import amu.gl.equipe200.graphicengine.Renderable;
-import amu.gl.equipe200.graphicengine.Sprite;
+import amu.gl.equipe200.graphicsengine.RenderableComponent;
+import amu.gl.equipe200.graphicsengine.SpriteComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
-import amu.gl.equipe200.graphicengine.GraphicalEngine;
-import amu.gl.equipe200.physicengine.PhysicalEngine;
+import amu.gl.equipe200.graphicsengine.GraphicsSystem;
+import amu.gl.equipe200.physicsengine.PhysicsSystem;
 import amu.gl.equipe200.system.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -39,25 +39,25 @@ public class PacmanApp extends Application {
     private Random rnd = new Random();
     private HashMap<String, ASystem> systems;
 
-    private GraphicalEngine graphicalEngine;
+    private GraphicsSystem graphicsSystem;
     private GameWorld mainMenuScene, gameScene;
     private PlayerController playerController;
     private AnimationTimer gameLoop;
     private boolean playerIsCreated;
-    private PhysicalEngine physicalEngine;
+    private PhysicsSystem physicsSystem;
     private InputEngine inputEngine;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
-        this.graphicalEngine = new GraphicalEngine(primaryStage);
-        this.physicalEngine = new PhysicalEngine();
+        this.graphicsSystem = new GraphicsSystem(primaryStage);
+        this.physicsSystem = new PhysicsSystem();
         this.mainMenuScene = GameWorldMaker.MakeMenuScene();
         this.gameScene = GameWorldMaker.MakeGameScene();
         this.inputEngine = new InputEngine(gameScene.getScene());
         systems = new HashMap<String, ASystem>();
         systems.put("Collisions", new CollisionSystem());
 
-        graphicalEngine.loadScene(mainMenuScene.getScene());
+        graphicsSystem.loadScene(mainMenuScene.getScene());
         playerIsCreated = false;
 
         createPlayers();
@@ -79,13 +79,13 @@ public class PacmanApp extends Application {
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // PhysicalEngine.update(gameScene.getEntities());
-                physicalEngine.update(gameScene.getComponentsByType(PhysicalComponent.class));
+                physicsSystem.update(gameScene.getComponentsByType(PhysicsComponent.class));
                 //System.out.println(gameScene.getPhysicalComponents().size() == gameScene.getComponentsByType(PhysicalComponent.class).size());
 
 
                 // update amu.gl.equipe200.entity in scene
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
-                graphicalEngine.update(gameScene.getComponentsByType(Renderable.class));
+                graphicsSystem.update(gameScene.getComponentsByType(RenderableComponent.class));
 
 
                 // check if amu.gl.equipe200.entity can be removed
@@ -105,7 +105,7 @@ public class PacmanApp extends Application {
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                graphicalEngine.loadScene(gameScene.getScene());
+                graphicsSystem.loadScene(gameScene.getScene());
                 if(!playerIsCreated)
                     createPlayers();
                 //setControls();
@@ -153,7 +153,7 @@ public class PacmanApp extends Application {
         playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
             if(key.getCode()== KeyCode.P){
                 gameLoop.stop();
-                graphicalEngine.loadScene(mainMenuScene.getScene());
+                graphicsSystem.loadScene(mainMenuScene.getScene());
             }
         });
     }
@@ -165,9 +165,9 @@ public class PacmanApp extends Application {
 
         // create player
         Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene);
-        Renderable sprite = new Sprite(player, "playerImage", "playerfieldLayer");
+        RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
         player.initShip(sprite);
-        PhysicalComponent physicalComponent = new PhysicalComponent(player, true, 0 - sprite.getWidth() / 2.0,
+        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
                 0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
         InputComponent inputComponent = new PlayerInputComponent(player);
         // register player
@@ -193,9 +193,9 @@ public class PacmanApp extends Application {
 
         // create a sprite
         Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene);
-        Renderable sprite = new Sprite(enemy, "enemyImage", "playerfieldLayer");
+        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
         enemy.setY(-sprite.getHeight());
-        enemy.addComponent(PhysicalComponent.class, new PhysicalComponent(enemy));
+        enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
         systems.get("Collisions").addEntity(enemy);
@@ -209,7 +209,7 @@ public class PacmanApp extends Application {
             if( sprite.isRemovable()) {
 
                 // remove from layer
-                sprite.getComponent(Renderable.class).remove();
+                sprite.getComponent(RenderableComponent.class).remove();
                 systems.get("Collisions").removeEntity(sprite);
 
                 // remove from list

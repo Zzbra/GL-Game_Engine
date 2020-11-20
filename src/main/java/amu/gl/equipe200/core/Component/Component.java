@@ -2,9 +2,9 @@ package amu.gl.equipe200.core.Component;
 
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.graphicengine.GraphicalEngine;
+import amu.gl.equipe200.graphicsengine.GraphicsSystem;
 import amu.gl.equipe200.system.InputEngine;
-import amu.gl.equipe200.physicengine.PhysicalEngine;
+import amu.gl.equipe200.physicsengine.PhysicsSystem;
 
 public abstract class Component {
     private BaseEntity entity;
@@ -36,11 +36,11 @@ public abstract class Component {
     }
 
 
-    public void updateBy(GraphicalEngine engine){
+    public void updateBy(GraphicsSystem engine){
         System.err.println(engine.getClass().toString() + " Not implemented");
     }
 
-    public void updateBy(PhysicalEngine engine){
+    public void updateBy(PhysicsSystem engine){
         System.err.println(engine.getClass().toString() + " Not implemented");
     }
 

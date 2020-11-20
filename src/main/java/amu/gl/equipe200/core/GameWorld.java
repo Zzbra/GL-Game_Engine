@@ -1,7 +1,7 @@
 package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.physicengine.PhysicalComponent;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -62,15 +62,15 @@ public abstract class GameWorld {
         return components;
     }
 
-    public List<PhysicalComponent> getPhysicalComponents(){
-        ArrayList<PhysicalComponent> physicalComponents = new ArrayList<>();
+    public List<PhysicsComponent> getPhysicalComponents(){
+        ArrayList<PhysicsComponent> physicsComponents = new ArrayList<>();
         for(BaseEntity entity : getEntities()){
             // J'ai l'impression qu'ici on est obligé de cast.
-            PhysicalComponent physicalComponent = (PhysicalComponent)entity.getComponent(PhysicalComponent.class);
-            physicalComponents.add(physicalComponent);
+            PhysicsComponent physicsComponent = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+            physicsComponents.add(physicsComponent);
         }
 
-        return physicalComponents;
+        return physicsComponents;
     }
 
 }

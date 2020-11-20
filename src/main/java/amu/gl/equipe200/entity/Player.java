@@ -1,7 +1,7 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.physicengine.PhysicalComponent;
-import amu.gl.equipe200.graphicengine.Renderable;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
+import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
@@ -28,7 +28,7 @@ public class Player extends BaseEntity {
         return speed;
     }
 
-    public void initShip(Renderable component) {
+    public void initShip(RenderableComponent component) {
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
         playerShipMinX = 0 - component.getWidth() / 2.0;
@@ -70,16 +70,16 @@ public class Player extends BaseEntity {
     }
 
     @Override
-    public void onCollisionStay(PhysicalComponent physicalComponent) {
-        System.err.println("Collision stay: " + physicalComponent.getTag());
+    public void onCollisionStay(PhysicsComponent physicsComponent) {
+        System.err.println("Collision stay: " + physicsComponent.getTag());
     }
 
     @Override
-    public void onCollide(PhysicalComponent physicalComponent) {
-        System.err.println("Collided with: " + physicalComponent.getTag());
+    public void onCollide(PhysicsComponent physicsComponent) {
+        System.err.println("Collided with: " + physicsComponent.getTag());
     }
 
     @Override
-    public void onExit(PhysicalComponent physicalComponent2) {}
+    public void onExit(PhysicsComponent physicsComponent2) {}
 
 }
