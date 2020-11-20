@@ -1,12 +1,12 @@
-package amu.gl.equipe200.core.Component;
+package amu.gl.equipe200.physicengine;
 
+import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.system.PhysicalEngine;
 
 import java.util.ArrayList;
 
-public class PhysicalComponent extends Component{
+public class PhysicalComponent extends Component {
     private boolean isBounded = false;
     private double minX, minY, maxX, maxY;
     public PhysicalComponent(BaseEntity entity, Boolean isBounded, double minX, double minY, double maxX, double maxY){

@@ -1,13 +1,11 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.physicengine.PhysicalComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;

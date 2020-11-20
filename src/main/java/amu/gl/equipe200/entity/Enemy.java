@@ -1,11 +1,8 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.physicengine.PhysicalComponent;
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 public class Enemy extends BaseEntity {
 

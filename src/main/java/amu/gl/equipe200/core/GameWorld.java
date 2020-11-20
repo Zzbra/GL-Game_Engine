@@ -1,7 +1,7 @@
 package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.physicengine.PhysicalComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Node;
 import javafx.scene.Scene;

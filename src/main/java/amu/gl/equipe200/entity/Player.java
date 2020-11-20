@@ -1,6 +1,6 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.physicengine.PhysicalComponent;
 import amu.gl.equipe200.graphicengine.Renderable;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;

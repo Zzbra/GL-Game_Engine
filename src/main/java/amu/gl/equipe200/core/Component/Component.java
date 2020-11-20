@@ -4,7 +4,7 @@ import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.graphicengine.GraphicalEngine;
 import amu.gl.equipe200.system.InputEngine;
-import amu.gl.equipe200.system.PhysicalEngine;
+import amu.gl.equipe200.physicengine.PhysicalEngine;
 
 public abstract class Component {
     private BaseEntity entity;
