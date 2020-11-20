@@ -14,10 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class BaseEntity {
-    private String layerName;
-    protected Image image;
     protected ArrayList<Settings.Tag> collisionsCheck;
-    private ImageView imageView;
     private GameWorld gameWorld;
 
     private Pane layer;
@@ -188,9 +185,7 @@ public abstract class BaseEntity {
         return Double.compare(health, 0) > 0;
     }
 
-    public ImageView getView() {
-        return imageView;
-    }
+
 
 
 
