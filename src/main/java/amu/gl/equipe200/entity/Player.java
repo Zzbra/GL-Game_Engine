@@ -1,11 +1,12 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
-public class Player extends BaseEntity {
+public class Player extends Entity {
 
     private double playerShipMinX;
     private double playerShipMaxX;
