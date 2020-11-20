@@ -36,11 +36,17 @@ public abstract class Component {
     }
 
 
-    public void updateBy(GraphicalEngine engine){}
+    public void updateBy(GraphicalEngine engine){
+        System.err.println(engine.getClass().toString() + " Not implemented");
+    }
 
-    public void updateBy(PhysicalEngine engine){}
+    public void updateBy(PhysicalEngine engine){
+        System.err.println(engine.getClass().toString() + " Not implemented");
+    }
 
-    public void updateBy(InputEngine engine){}
+    public void updateBy(InputEngine engine){
+        System.err.println(engine.getClass().toString() + " Not implemented");
+    }
 
     public abstract void remove();
 }

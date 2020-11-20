@@ -77,7 +77,8 @@ public class PacmanApp extends Application {
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // PhysicalEngine.update(gameScene.getEntities());
-                physicalEngine.update(gameScene.getPhysicalComponents());
+                physicalEngine.update(gameScene.getComponentsByType(PhysicalComponent.class));
+                //System.out.println(gameScene.getPhysicalComponents().size() == gameScene.getComponentsByType(PhysicalComponent.class).size());
 
 
                 // update amu.gl.equipe200.entity in scene

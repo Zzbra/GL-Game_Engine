@@ -57,6 +57,7 @@ public class GraphicalEngine {
         for(Component component : componentList){
             component.updateBy(this);
         }
+
     }
 
     // TODO : Déplacer les systems dans core

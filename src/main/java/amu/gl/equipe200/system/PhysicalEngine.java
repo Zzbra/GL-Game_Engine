@@ -4,20 +4,34 @@ import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicalEngine {
 
-    public void update(List<PhysicalComponent> componentList){
-       for(PhysicalComponent physicalComponent : componentList){
-           moveComponent(physicalComponent);
-       }
-       checkCollision(componentList);
+    private ArrayList<PhysicalComponent> physicalComponents;
+
+//    public void update(List<PhysicalComponent> componentList){
+//       for(PhysicalComponent physicalComponent : componentList){
+//           moveComponent(physicalComponent);
+//       }
+//       checkCollision(componentList);
+//    }
+
+
+
+    public void update(List<Component> componentList){
+        physicalComponents = new ArrayList<>();
+        for(Component component : componentList){
+            component.updateBy(this);
+        }
+        System.out.println(physicalComponents.size()==componentList.size());
+        checkCollision(physicalComponents);
     }
 
     public void update(PhysicalComponent physicalComponent){
         moveComponent(physicalComponent);
-
+        physicalComponents.add(physicalComponent);
     }
 
     public void moveComponent(PhysicalComponent component){
