@@ -1,11 +1,10 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.Component.InputComponent;
+import amu.gl.equipe200.inputengine.InputComponent;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
-import amu.gl.equipe200.core.Component.PlayerInputComponent;
+import amu.gl.equipe200.inputengine.PlayerInputComponent;
 import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.graphicsengine.SpriteComponent;
-import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
@@ -201,10 +200,10 @@ public class PacmanApp extends Application {
         systems.get("Collisions").addEntity(enemy);
     }
 
-    private void removeEntity(List<? extends BaseEntity> spriteList) {
-        Iterator<? extends BaseEntity> iter = spriteList.iterator();
+    private void removeEntity(List<? extends Entity> spriteList) {
+        Iterator<? extends Entity> iter = spriteList.iterator();
         while( iter.hasNext()) {
-            BaseEntity sprite = iter.next();
+            Entity sprite = iter.next();
 
             if( sprite.isRemovable()) {
 

@@ -1,6 +1,6 @@
 package amu.gl.equipe200.system;
 
-import amu.gl.equipe200.entity.BaseEntity;
+import amu.gl.equipe200.core.Entity;
 
 public class CollisionSystem extends ASystem {
     /**
@@ -27,7 +27,7 @@ public class CollisionSystem extends ASystem {
 //        }
     }
 
-    public boolean collidesAB(BaseEntity A, BaseEntity B) {
+    public boolean collidesAB(Entity A, Entity B) {
         return ( B.getX() + B.getWidth() >= A.getX() && B.getY() + B.getHeight() >= A.getY() && B.getX() <= A.getX() + A.getWidth() && B.getY() <= A.getY() + A.getHeight());
 
     }

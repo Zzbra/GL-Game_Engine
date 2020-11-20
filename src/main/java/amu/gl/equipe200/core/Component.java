@@ -1,19 +1,17 @@
-package amu.gl.equipe200.core.Component;
+package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.graphicsengine.GraphicsSystem;
 import amu.gl.equipe200.system.InputEngine;
 import amu.gl.equipe200.physicsengine.PhysicsSystem;
 
 public abstract class Component {
-    private BaseEntity entity;
+    private Entity entity;
 
-    public Component(BaseEntity entity){
+    public Component(Entity entity){
         this.entity = entity;
     }
 
-    public BaseEntity getEntity(){
+    public Entity getEntity(){
         return this.entity;
     }
 

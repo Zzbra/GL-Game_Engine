@@ -1,6 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component;
 
 import java.util.ArrayList;
 import java.util.List;

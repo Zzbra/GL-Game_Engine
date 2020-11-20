@@ -1,7 +1,7 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.entity.BaseEntity;
+import amu.gl.equipe200.core.Component;
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.gameworld.Settings;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PhysicsComponent extends Component {
     private boolean isBounded = false;
     private double minX, minY, maxX, maxY;
-    public PhysicsComponent(BaseEntity entity, Boolean isBounded, double minX, double minY, double maxX, double maxY){
+    public PhysicsComponent(Entity entity, Boolean isBounded, double minX, double minY, double maxX, double maxY){
         super(entity);
         this.minX = minX;
         this.minY = minY;
@@ -19,7 +19,7 @@ public class PhysicsComponent extends Component {
         entity.addComponent(PhysicsComponent.class, this);
     }
 
-    public PhysicsComponent(BaseEntity entity){
+    public PhysicsComponent(Entity entity){
         super(entity);
         entity.addComponent(PhysicsComponent.class, this);
     }

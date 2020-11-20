@@ -1,10 +1,11 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
-public class Enemy extends BaseEntity {
+public class Enemy extends Entity {
 
     public Enemy(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gamescene) {
         super(x, y, r, dx, dy, dr, health, damage, gamescene);

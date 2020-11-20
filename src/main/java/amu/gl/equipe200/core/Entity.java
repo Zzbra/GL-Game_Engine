@@ -1,8 +1,6 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
-import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
 import javafx.scene.Node;
@@ -11,7 +9,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class BaseEntity {
+public abstract class Entity {
     protected ArrayList<Settings.Tag> collisionsCheck;
     private GameWorld gameWorld;
 
@@ -43,7 +41,7 @@ public abstract class BaseEntity {
     private ArrayList<PhysicsComponent> collisionManifold;
     private HashMap<Class<? extends Component>, Component> components;
 
-    public BaseEntity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
+    public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
 
         this.x = x;
         this.y = y;
@@ -217,7 +215,7 @@ public abstract class BaseEntity {
         this.components.put(type, component);
     }
     // TODO: per-pixel-collision
-    public boolean collidesWith( BaseEntity otherSprite) {
+    public boolean collidesWith( Entity otherSprite) {
 
         return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
 
@@ -227,7 +225,7 @@ public abstract class BaseEntity {
      * Reduce health by the amount of damage that the given sprite can inflict
      * @param sprite
      */
-    public void getDamagedBy( BaseEntity sprite) {
+    public void getDamagedBy( Entity sprite) {
         health -= sprite.getDamage();
     }
 

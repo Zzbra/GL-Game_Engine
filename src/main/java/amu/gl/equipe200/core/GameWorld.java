@@ -1,8 +1,6 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
-import amu.gl.equipe200.entity.BaseEntity;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,9 +19,9 @@ public abstract class GameWorld {
     // Liste des layers du GameWorld
     private final HashMap<String, Pane> layers;
     // Liste des entitées joueur
-    private final List<BaseEntity> players;
+    private final List<Entity> players;
     // Liste des entitées ennemies
-    private final List<BaseEntity> enemies;
+    private final List<Entity> enemies;
 
 
     public GameWorld() {
@@ -38,13 +36,13 @@ public abstract class GameWorld {
     }
     public Scene getScene(){return this.scene;}
     public HashMap<String, Node> getUIComponents(){return this.UIComponents;}
-    public List<BaseEntity> getPlayers() {
+    public List<Entity> getPlayers() {
         return players;
     }
-    public List<BaseEntity> getEnemies() {
+    public List<Entity> getEnemies() {
         return enemies;
     }
-    public List<BaseEntity> getEntities() {
+    public List<Entity> getEntities() {
         return Stream.concat(players.stream(), enemies.stream()).collect(Collectors.toList());
     }
 
@@ -53,7 +51,7 @@ public abstract class GameWorld {
 
     public List<Component> getComponentsByType(Class<? extends Component> c){
         List<Component> components = new LinkedList<>();
-        for(BaseEntity entity : getEntities()){
+        for(Entity entity : getEntities()){
             Component component = entity.getComponent(c);
             if(component != null) {
                 components.add(component);
@@ -64,7 +62,7 @@ public abstract class GameWorld {
 
     public List<PhysicsComponent> getPhysicalComponents(){
         ArrayList<PhysicsComponent> physicsComponents = new ArrayList<>();
-        for(BaseEntity entity : getEntities()){
+        for(Entity entity : getEntities()){
             // J'ai l'impression qu'ici on est obligé de cast.
             PhysicsComponent physicsComponent = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
             physicsComponents.add(physicsComponent);
