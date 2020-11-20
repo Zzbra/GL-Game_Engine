@@ -1,4 +1,4 @@
-package amu.gl.equipe200.core.Component.Renderable;
+package amu.gl.equipe200.graphicengine;
 
 import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.entity.BaseEntity;

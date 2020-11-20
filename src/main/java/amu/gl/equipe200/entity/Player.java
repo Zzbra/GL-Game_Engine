@@ -1,12 +1,9 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component.Component;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
-import amu.gl.equipe200.core.Component.Renderable.Renderable;
+import amu.gl.equipe200.graphicengine.Renderable;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 public class Player extends BaseEntity {
 

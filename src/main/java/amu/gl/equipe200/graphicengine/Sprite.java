@@ -1,7 +1,6 @@
-package amu.gl.equipe200.core.Component.Renderable;
+package amu.gl.equipe200.graphicengine;
 
 import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.system.GraphicalEngine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

@@ -3,13 +3,14 @@ package amu.gl.equipe200.core;
 import amu.gl.equipe200.core.Component.InputComponent;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.Component.PlayerInputComponent;
-import amu.gl.equipe200.core.Component.Renderable.Renderable;
-import amu.gl.equipe200.core.Component.Renderable.Sprite;
+import amu.gl.equipe200.graphicengine.Renderable;
+import amu.gl.equipe200.graphicengine.Sprite;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
+import amu.gl.equipe200.graphicengine.GraphicalEngine;
 import amu.gl.equipe200.system.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
