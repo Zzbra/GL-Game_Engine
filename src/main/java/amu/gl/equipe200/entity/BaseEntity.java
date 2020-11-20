@@ -1,6 +1,7 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
@@ -44,7 +45,7 @@ public abstract class BaseEntity {
     private Settings.Tag tag;
 
     /*** ColiderComponent ***/
-    private ArrayList<BaseEntity> collisionManifold;
+    private ArrayList<PhysicalComponent> collisionManifold;
     private HashMap<Class<? extends Component>, Component> components;
 
     public BaseEntity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
@@ -181,6 +182,8 @@ public abstract class BaseEntity {
 
     }
 
+    public boolean canMove(){ return canMove;}
+
     public boolean isAlive() {
         return Double.compare(health, 0) > 0;
     }
@@ -268,36 +271,36 @@ public abstract class BaseEntity {
         this.collisionLister = listener;
     }
 
-    public void addToCollisionManifold(BaseEntity entity){
-        this.collisionManifold.add(entity);
+    public void addToCollisionManifold(PhysicalComponent physicalComponent){
+        this.collisionManifold.add(physicalComponent);
     }
 
     public void clearCollisionManifold(){
         this.collisionManifold.clear();
     }
 
-    public boolean collisionStayed(BaseEntity entity){
-        return this.collisionManifold.contains(entity);
+    public boolean collisionStayed(PhysicalComponent physicalComponent){
+        return this.collisionManifold.contains(physicalComponent);
     }
 
-    public abstract void onCollide(BaseEntity entity);
+    public abstract void onCollide(PhysicalComponent physicalComponent);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
     }
 
 
-    public void removeCollision(BaseEntity entity){
-        this.collisionManifold.remove(entity);
+    public void removeCollision(PhysicalComponent physicalComponent){
+        this.collisionManifold.remove(physicalComponent);
     }
 
-    public abstract void onCollisionStay(BaseEntity entity2);
+    public abstract void onCollisionStay(PhysicalComponent physicalComponent2);
 
     public void setTag(Settings.Tag tag){
         this.tag = tag;
     }
 
-    public abstract void onExit(BaseEntity entity2);
+    public abstract void onExit(PhysicalComponent physicalComponent2);
 
     public GameWorld getGameWorld(){
         return this.gameWorld;

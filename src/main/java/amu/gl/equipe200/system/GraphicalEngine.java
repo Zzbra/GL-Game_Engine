@@ -45,10 +45,16 @@ public class GraphicalEngine {
         }
     }
 
-    public void update(List<BaseEntity> list){
-        for(BaseEntity entity : list){
-            Component component = entity.getComponent(Renderable.class);
-            if (component == null) continue;
+//    public void update(List<BaseEntity> list){
+//        for(BaseEntity entity : list){
+//            Component component = entity.getComponent(Renderable.class);
+//            if (component == null) continue;
+//            component.updateBy(this);
+//        }
+//    }
+
+    public void update(List<Component> componentList){
+        for(Component component : componentList){
             component.updateBy(this);
         }
     }

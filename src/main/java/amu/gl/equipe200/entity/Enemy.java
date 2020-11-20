@@ -1,5 +1,6 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.gameworld.Settings;
@@ -23,11 +24,11 @@ public class Enemy extends BaseEntity {
 
     /*** Colidable ***/
     @Override
-    public void onCollide(BaseEntity entity) {}
+    public void onCollide(PhysicalComponent physicalComponent) {}
 
     @Override
-    public void onCollisionStay(BaseEntity entity2) {}
+    public void onCollisionStay(PhysicalComponent physicalComponent) {}
 
     @Override
-    public void onExit(BaseEntity entity2) {}
+    public void onExit(PhysicalComponent physicalComponent) {}
 }

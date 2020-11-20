@@ -1,5 +1,8 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
@@ -10,6 +13,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,6 +55,26 @@ public abstract class GameWorld {
     // Set la scène du GameWorld
     public void setScene(Scene scene){this.scene = scene;}
 
+    public List<Component> getComponentsByType(Class<? extends Component> c){
+        List<Component> components = new LinkedList<>();
+        for(BaseEntity entity : getEntities()){
+            Component component = entity.getComponent(c);
+            if(component != null) {
+                components.add(component);
+            }
+        }
+        return components;
+    }
 
+    public List<PhysicalComponent> getPhysicalComponents(){
+        ArrayList<PhysicalComponent> physicalComponents = new ArrayList<>();
+        for(BaseEntity entity : getEntities()){
+            // J'ai l'impression qu'ici on est obligé de cast.
+            PhysicalComponent physicalComponent = (PhysicalComponent)entity.getComponent(PhysicalComponent.class);
+            physicalComponents.add(physicalComponent);
+        }
+
+        return physicalComponents;
+    }
 
 }

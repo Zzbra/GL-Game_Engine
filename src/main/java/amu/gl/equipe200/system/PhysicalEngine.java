@@ -1,37 +1,70 @@
 package amu.gl.equipe200.system;
 
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 
 import java.util.List;
 
 public class PhysicalEngine {
 
-    public static void update(List<BaseEntity> entityList){
-        moveEntity(entityList);
-        checkCollision(entityList);
+    public void update(List<PhysicalComponent> componentList){
+       for(PhysicalComponent physicalComponent : componentList){
+           moveComponent(physicalComponent);
+       }
+       checkCollision(componentList);
     }
 
-    public static void moveEntity(List<BaseEntity> entityList){
-        for(BaseEntity entity : entityList){
-            entity.move();
+    public void update(PhysicalComponent physicalComponent){
+        moveComponent(physicalComponent);
+
+    }
+
+    public void moveComponent(PhysicalComponent component){
+
+        if( !component.canMove())
+            return;
+        component.setX(component.getX() + component.getDx());
+        component.setY(component.getY() + component.getDy());
+        component.setR(component.getR() + component.getDr());
+        if(component.getIsBounded()){
+            checkBounds(component);
         }
     }
 
-    public static void checkCollision(List<BaseEntity> entityList) {
-        for (BaseEntity entity1 : entityList) {
-            for (BaseEntity entity2 : entityList) {
-                if (entity1.equals(entity2)) continue;
-                if (entity1.getCollisionsCheck().contains(entity2.getTag())) {
-                    if (collidesAB(entity1, entity2)) {
-                        if (entity1.collisionStayed(entity2)) {
-                            entity1.onCollisionStay(entity2);
+    private void checkBounds(PhysicalComponent physicalComponent) {
+
+        // vertical
+        if( Double.compare( physicalComponent.getY(), physicalComponent.getMinY()) < 0) {
+            physicalComponent.setY(physicalComponent.getMinY());
+        } else if( Double.compare(physicalComponent.getY(), physicalComponent.getMaxY()) > 0) {
+            physicalComponent.setY(physicalComponent.getMaxY());
+        }
+
+        // horizontal
+        if( Double.compare( physicalComponent.getX(), physicalComponent.getMinX()) < 0) {
+            physicalComponent.setX(physicalComponent.getMinX());
+        } else if( Double.compare(physicalComponent.getX(), physicalComponent.getMaxX()) > 0) {
+            physicalComponent.setX(physicalComponent.getMaxX());
+        }
+
+    }
+
+    public void checkCollision(List<PhysicalComponent> componentList) {
+        for (PhysicalComponent physicalComponent1 : componentList) {
+            for (PhysicalComponent physicalComponent2 : componentList) {
+                if (physicalComponent1.equals(physicalComponent2)) continue;
+                if (physicalComponent1.getCollisionsCheck().contains(physicalComponent2.getTag())) {
+                    if (collidesAB(physicalComponent1, physicalComponent2)) {
+                        if (physicalComponent1.collisionStayed(physicalComponent2)) {
+                            physicalComponent1.onCollisionStay(physicalComponent2);
                             continue;
                         }
-                        entity1.addToCollisionManifold(entity2);
-                        entity1.onCollide(entity2);
+                        physicalComponent1.addToCollisionManifold(physicalComponent2);
+                        physicalComponent1.onCollide(physicalComponent2);
                     } else {
-                        entity1.removeCollision(entity2);
-                        entity1.onExit(entity2);
+                        physicalComponent1.removeCollision(physicalComponent2);
+                        physicalComponent1.onExit(physicalComponent2);
                     }
                 }
             }
@@ -39,7 +72,7 @@ public class PhysicalEngine {
         }
     }
 
-        public static boolean collidesAB(BaseEntity A, BaseEntity B) {
+        public static boolean collidesAB(PhysicalComponent A, PhysicalComponent B) {
             return ( B.getX() + B.getWidth() >= A.getX() && B.getY() + B.getHeight() >= A.getY() && B.getX() <= A.getX() + A.getWidth() && B.getY() <= A.getY() + A.getHeight());
 
         }

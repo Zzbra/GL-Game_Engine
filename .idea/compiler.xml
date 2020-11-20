@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="GL-Game_Engine" />
         <module name="Pacman" />
+        <module name="GL-Game_Engine" />
+        <module name="gameengine" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gameengine" target="14" />
       <module name="GL-Game_Engine" target="1.14" />
       <module name="Pacman" target="14" />
     </bytecodeTargetLevel>

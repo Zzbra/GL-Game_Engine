@@ -1,5 +1,8 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.core.Component.InputComponent;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.core.Component.PlayerInputComponent;
 import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.core.Component.Renderable.Sprite;
 import amu.gl.equipe200.entity.BaseEntity;
@@ -23,6 +26,11 @@ import java.util.*;
 /*
     TODO: Réparer un bug qui à lieux lorsque qu'on entre en colision tout en
           bas de la map: le texte Collision ne disparait pas
+
+    Pour l'instant, tout ce qui est collision est géré au niveau de l'entité.
+    On pourrait peut-être declarer PhysicalComponent comme classe abstraite et demander
+    à l'utilisateur de créer des custom PhysicalComponent qui redéfinissent les
+    méthodes liées à la collision.
  */
 public class PacmanApp extends Application {
 
@@ -34,18 +42,24 @@ public class PacmanApp extends Application {
     private PlayerController playerController;
     private AnimationTimer gameLoop;
     private boolean playerIsCreated;
+    private PhysicalEngine physicalEngine;
+    private InputEngine inputEngine;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
         this.graphicalEngine = new GraphicalEngine(primaryStage);
+        this.physicalEngine = new PhysicalEngine();
         this.mainMenuScene = GameWorldMaker.MakeMenuScene();
         this.gameScene = GameWorldMaker.MakeGameScene();
-
+        this.inputEngine = new InputEngine(gameScene.getScene());
         systems = new HashMap<String, ASystem>();
         systems.put("Collisions", new CollisionSystem());
 
         graphicalEngine.loadScene(mainMenuScene.getScene());
         playerIsCreated = false;
+
+        createPlayers();
+
 
 
         gameLoop = new AnimationTimer() {
@@ -56,16 +70,19 @@ public class PacmanApp extends Application {
                 // player input
                 //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 
+                inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
+
                 // add random enemies
                 spawnEnemies( true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
-                PhysicalEngine.update(gameScene.getEntities());
+                // PhysicalEngine.update(gameScene.getEntities());
+                physicalEngine.update(gameScene.getPhysicalComponents());
 
 
                 // update amu.gl.equipe200.entity in scene
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
-                graphicalEngine.update(gameScene.getEntities());
+                graphicalEngine.update(gameScene.getComponentsByType(Renderable.class));
 
 
                 // check if amu.gl.equipe200.entity can be removed
@@ -88,7 +105,8 @@ public class PacmanApp extends Application {
                 graphicalEngine.loadScene(gameScene.getScene());
                 if(!playerIsCreated)
                     createPlayers();
-                setControls();
+                //setControls();
+
                 gameLoop.start();
             }
         });
@@ -146,6 +164,9 @@ public class PacmanApp extends Application {
         Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene);
         Renderable sprite = new Sprite(player, "playerImage", "playerfieldLayer");
         player.initShip(sprite);
+        PhysicalComponent physicalComponent = new PhysicalComponent(player, true, 0 - sprite.getWidth() / 2.0,
+                0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
+        InputComponent inputComponent = new PlayerInputComponent(player);
         // register player
         gameScene.getPlayers().add( player);
         systems.get("Collisions").addEntity(player);
@@ -171,7 +192,7 @@ public class PacmanApp extends Application {
         Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene);
         Renderable sprite = new Sprite(enemy, "enemyImage", "playerfieldLayer");
         enemy.setY(-sprite.getHeight());
-
+        enemy.addComponent(PhysicalComponent.class, new PhysicalComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
         systems.get("Collisions").addEntity(enemy);

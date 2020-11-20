@@ -1,6 +1,7 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
@@ -72,16 +73,16 @@ public class Player extends BaseEntity {
     }
 
     @Override
-    public void onCollisionStay(BaseEntity entity) {
-        System.err.println("Collision stay: " + entity.getTag());
+    public void onCollisionStay(PhysicalComponent physicalComponent) {
+        System.err.println("Collision stay: " + physicalComponent.getTag());
     }
 
     @Override
-    public void onCollide(BaseEntity entity) {
-        System.err.println("Collided with: " + entity.getTag());
+    public void onCollide(PhysicalComponent physicalComponent) {
+        System.err.println("Collided with: " + physicalComponent.getTag());
     }
 
     @Override
-    public void onExit(BaseEntity entity2) {}
+    public void onExit(PhysicalComponent physicalComponent2) {}
 
 }
