@@ -9,17 +9,9 @@ public interface PhysicsInterface {
 
     // Getter and setter for the speed
     double getXSpeed();
-    void setXspeed(double xSpeed);
+    void setXSpeed(double xSpeed);
     double getYSpeed();
-    void setYspeed(double ySpeed);
-
-    // Getter and setter for the rotation of the entity
-    // TODO: does it goes here ?
-    // TODO: and do we need a speed
-    double getR();
-    void setR(double r);
-    double getRSpeed();
-    void setRSpeed(double rSpeed);
+    void setYSpeed(double ySpeed);
 
     // Getter and setter for the hitbox of the entity
     double getWidth();

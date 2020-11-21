@@ -1,5 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
+import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashSet;
@@ -7,12 +8,13 @@ import java.util.HashSet;
 import static java.lang.Double.max;
 import static java.lang.Double.min;
 
-public class PhysicsEngine {
+public class PhysicsEngine
+        extends Engine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
 
-    // Size of the world in wich the entities move
+    // Size of the world in which the entities move
     private double worldHeight;
     private double worldWidth;
 

@@ -1,12 +1,13 @@
 package amu.gl.equipe200.system;
 
 import amu.gl.equipe200.core.Entity;
+import amu.gl.equipe200.core.Engine;
 
-public class CollisionSystem extends ASystem {
+public class CollisionEngine extends Engine {
     /**
      * Collision engine
      */
-    public void update() {
+    public void update(long ellpasedTime) {
 //        for( BaseEntity entity1: getEntities()) {
 //            for( BaseEntity entity2: getEntities()) {
 //                if(entity1.equals(entity2)) continue;

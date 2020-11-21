@@ -53,11 +53,11 @@ public class Enemy
     public String getLayerName(){return this.layerName;}
 
     /*** Colidable ***/
-    @Override
-    public void onCollide(PhysicsComponent physicsComponent) {}
-
-    @Override
-    public void onCollisionStay(PhysicsComponent physicsComponent) {}
+//    @Override
+//    public void onCollide(PhysicsComponent physicsComponent) { }
+//
+//    @Override
+//    public void onCollisionStay(PhysicsComponent physicsComponent) { }
 
     @Override
     public void onExit(PhysicsComponent physicsComponent) {}
@@ -82,15 +82,11 @@ public class Enemy
     @Override
     public double getXSpeed() { return this.xSpeed; }
     @Override
-    public void setXspeed(double xSpeed) { this.xSpeed = xSpeed; }
+    public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
     @Override
     public double getYSpeed() { return this.ySpeed; }
     @Override
-    public void setYspeed(double ySpeed) { this.ySpeed = ySpeed; }
-    @Override
-    public double getRSpeed() { return this.rSpeed; }
-    @Override
-    public void setRSpeed(double rSpeed) { this.rSpeed = rSpeed; }
+    public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
     @Override
     public boolean isWorldBounded() { return true; }
     @Override

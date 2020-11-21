@@ -71,17 +71,17 @@ public class PhysicsComponent extends Component {
     public boolean collisionStayed(PhysicsComponent physicsComponent){
         return getEntity().collisionStayed(physicsComponent);
     }
-    public void onCollisionStay(PhysicsComponent physicsComponent2){
-        getEntity().onCollisionStay(physicsComponent2);
-    }
+//    public void onCollisionStay(PhysicsComponent physicsComponent2){
+//        getEntity().onCollisionStay(physicsComponent2);
+//    }
 
     public void addToCollisionManifold(PhysicsComponent physicsComponent2){
         getEntity().addToCollisionManifold(physicsComponent2);
     }
 
-    public void onCollide(PhysicsComponent physicsComponent2){
-        getEntity().onCollide(physicsComponent2);
-    }
+//    public void onCollide(PhysicsComponent physicsComponent2){
+//        getEntity().onCollide(physicsComponent2);
+//    }
 
     public void removeCollision(PhysicsComponent physicsComponent2){
         getEntity().removeCollision(physicsComponent2);
