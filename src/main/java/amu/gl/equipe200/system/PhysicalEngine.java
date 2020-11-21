@@ -1,24 +1,47 @@
 package amu.gl.equipe200.system;
 
 import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.Interfaces.Movable;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.entity.BaseEntity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class PhysicalEngine {
 
     private ArrayList<PhysicalComponent> physicalComponents;
-
+    private HashSet<Movable> movables;
 //    public void update(List<PhysicalComponent> componentList){
 //       for(PhysicalComponent physicalComponent : componentList){
 //           moveComponent(physicalComponent);
 //       }
 //       checkCollision(componentList);
 //    }
+    public PhysicalEngine(){
+        this.movables = new HashSet<>();
+    }
 
 
+    public void addMovable(Movable movable){
+        this.movables.add(movable);
+    }
+
+    public void update(){
+        for(Movable movable : movables){
+            if( !movable.canMove())
+                return;
+            move(movable);
+            movable.checkBounds();
+        }
+    }
+
+    private void move(Movable movable){
+        movable.setX(movable.getX() + movable.getDx());
+        movable.setY(movable.getY() + movable.getDy());
+        movable.setR(movable.getR() + movable.getDr());
+    }
 
     public void update(List<Component> componentList){
         physicalComponents = new ArrayList<>();

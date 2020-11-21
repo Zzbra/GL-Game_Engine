@@ -1,6 +1,9 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component.Interfaces.IOInterface;
+import amu.gl.equipe200.core.Component.Interfaces.Movable;
+import amu.gl.equipe200.core.Component.Interfaces.RenderableInterface;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.core.GameWorld;
@@ -8,24 +11,30 @@ import amu.gl.equipe200.gameworld.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Player extends BaseEntity {
+import java.util.Map;
+
+public class Player extends BaseEntity implements Movable, RenderableInterface, IOInterface {
 
     private double playerShipMinX;
     private double playerShipMaxX;
     private double playerShipMinY;
     private double playerShipMaxY;
-
+    private String imagePath;
+    private String layerName;
 
     private double speed;
 
-    public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene) {
+    public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene, String imagePath, String layerName) {
 
         super(x, y, r, dx, dy, dr, health, damage, gameScene);
         this.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
-
+        this.imagePath = imagePath;
+        this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
     }
+
+    public String getLayerName(){return this.layerName;}
 
     public double getSpeed() {
         return speed;
@@ -40,6 +49,34 @@ public class Player extends BaseEntity {
         playerShipMaxY = Settings.SCENE_HEIGHT -component.getHeight() / 2.0;
     }
 
+    public void reactToInput(String key) {
+        key = key.toUpperCase();
+        switch (key){
+            case "Z":
+                setDx(0);
+                setDy(-Settings.PLAYER_SHIP_SPEED);
+                setR(270);
+                break;
+            case "S":
+                setDx(0);
+                setDy(Settings.PLAYER_SHIP_SPEED);
+                setR(90);
+                break;
+            case "Q":
+                setDx(-Settings.PLAYER_SHIP_SPEED);
+                setDy(0);
+                setR(180);
+                break;
+            case "D":
+                setDx(Settings.PLAYER_SHIP_SPEED);
+                setDy(0);
+                setR(0);
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void move() {
         super.move();
@@ -48,7 +85,7 @@ public class Player extends BaseEntity {
         checkBounds();
     }
 
-    private void checkBounds() {
+    public void checkBounds() {
 
         // vertical
         if( Double.compare( getY(), playerShipMinY) < 0) {
@@ -66,6 +103,12 @@ public class Player extends BaseEntity {
 
     }
 
+    public void setBounds(double minX, double maxX, double minY, double maxY){
+        this.playerShipMinX = minX;
+        this.playerShipMaxX = maxX;
+        this.playerShipMinY = minY;
+        this.playerShipMaxY = maxY;
+    }
 
     @Override
     public void checkRemovability() {
@@ -85,4 +128,8 @@ public class Player extends BaseEntity {
     @Override
     public void onExit(PhysicalComponent physicalComponent2) {}
 
+    @Override
+    public String getImageName() {
+        return this.imagePath;
+    }
 }

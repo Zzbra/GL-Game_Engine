@@ -30,7 +30,7 @@ public abstract class Component {
     }
 
 
-
+    // Les entitées doivent elles référencer le gameWorld()?
     public GameWorld getGameWorld(){
         return entity.getGameWorld();
     }
