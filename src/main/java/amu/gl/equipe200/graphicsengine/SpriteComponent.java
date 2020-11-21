@@ -1,18 +1,17 @@
-package amu.gl.equipe200.core.Component.Renderable;
+package amu.gl.equipe200.graphicsengine;
 
-import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.system.GraphicalEngine;
+import amu.gl.equipe200.core.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Sprite extends Renderable {
+public class SpriteComponent extends RenderableComponent {
     private Image image;
     private ImageView imageView;
 
-    public Sprite(BaseEntity entity, String imagePath, String layerName) {
+    public SpriteComponent(Entity entity, String imagePath, String layerName) {
         super(entity, layerName);
 
-        this.image = GraphicalEngine.getImages().get(imagePath);
+        this.image = GraphicsSystem.getImages().get(imagePath);
         this.imageView = new ImageView(image);
         super.addToLayer(imageView);
         entity.setWidth(image.getWidth());
@@ -21,7 +20,7 @@ public class Sprite extends Renderable {
 
     }
 
-    public void updateBy(GraphicalEngine engine){
+    public void updateBy(GraphicsSystem engine){
         engine.update(this);
     }
 

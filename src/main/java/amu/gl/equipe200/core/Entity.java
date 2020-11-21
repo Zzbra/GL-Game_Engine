@@ -1,19 +1,15 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
-import amu.gl.equipe200.core.GameWorld;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.system.ASystem;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class BaseEntity {
+public abstract class Entity {
     protected ArrayList<Settings.Tag> collisionsCheck;
     private GameWorld gameWorld;
 
@@ -42,10 +38,10 @@ public abstract class BaseEntity {
     private Settings.Tag tag;
 
     /*** ColiderComponent ***/
-    private ArrayList<PhysicalComponent> collisionManifold;
+    private ArrayList<PhysicsComponent> collisionManifold;
     private HashMap<Class<? extends Component>, Component> components;
 
-    public BaseEntity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
+    public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
 
         this.x = x;
         this.y = y;
@@ -219,7 +215,7 @@ public abstract class BaseEntity {
         this.components.put(type, component);
     }
     // TODO: per-pixel-collision
-    public boolean collidesWith( BaseEntity otherSprite) {
+    public boolean collidesWith( Entity otherSprite) {
 
         return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
 
@@ -229,7 +225,7 @@ public abstract class BaseEntity {
      * Reduce health by the amount of damage that the given sprite can inflict
      * @param sprite
      */
-    public void getDamagedBy( BaseEntity sprite) {
+    public void getDamagedBy( Entity sprite) {
         health -= sprite.getDamage();
     }
 
@@ -266,36 +262,36 @@ public abstract class BaseEntity {
         this.collisionLister = listener;
     }
 
-    public void addToCollisionManifold(PhysicalComponent physicalComponent){
-        this.collisionManifold.add(physicalComponent);
+    public void addToCollisionManifold(PhysicsComponent physicsComponent){
+        this.collisionManifold.add(physicsComponent);
     }
 
     public void clearCollisionManifold(){
         this.collisionManifold.clear();
     }
 
-    public boolean collisionStayed(PhysicalComponent physicalComponent){
-        return this.collisionManifold.contains(physicalComponent);
+    public boolean collisionStayed(PhysicsComponent physicsComponent){
+        return this.collisionManifold.contains(physicsComponent);
     }
 
-    public abstract void onCollide(PhysicalComponent physicalComponent);
+    public abstract void onCollide(PhysicsComponent physicsComponent);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
     }
 
 
-    public void removeCollision(PhysicalComponent physicalComponent){
-        this.collisionManifold.remove(physicalComponent);
+    public void removeCollision(PhysicsComponent physicsComponent){
+        this.collisionManifold.remove(physicsComponent);
     }
 
-    public abstract void onCollisionStay(PhysicalComponent physicalComponent2);
+    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
 
     public void setTag(Settings.Tag tag){
         this.tag = tag;
     }
 
-    public abstract void onExit(PhysicalComponent physicalComponent2);
+    public abstract void onExit(PhysicsComponent physicsComponent2);
 
     public GameWorld getGameWorld(){
         return this.gameWorld;

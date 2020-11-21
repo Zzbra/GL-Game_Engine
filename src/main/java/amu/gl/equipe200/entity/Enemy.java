@@ -1,22 +1,15 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component.Interfaces.Movable;
-import amu.gl.equipe200.core.Component.Interfaces.RenderableInterface;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.core.Entity;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.entity.BaseEntity;
 import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
-public class Enemy extends BaseEntity implements Movable, RenderableInterface {
+public class Enemy extends Entity {
 
-    private String imageName, layerName;
-    public Enemy(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gamescene, String imageName, String layerName) {
+    public Enemy(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gamescene) {
         super(x, y, r, dx, dy, dr, health, damage, gamescene);
         this.setTag(Settings.Tag.ENEMY);
-        this.imageName = imageName;
-        this.layerName = layerName;
     }
 
     @Override
@@ -26,25 +19,14 @@ public class Enemy extends BaseEntity implements Movable, RenderableInterface {
         }
     }
 
-    public String getLayerName(){return this.layerName;}
 
     /*** Colidable ***/
     @Override
-    public void onCollide(PhysicalComponent physicalComponent) {}
+    public void onCollide(PhysicsComponent physicsComponent) {}
 
     @Override
-    public void onCollisionStay(PhysicalComponent physicalComponent) {}
+    public void onCollisionStay(PhysicsComponent physicsComponent) {}
 
     @Override
-    public void onExit(PhysicalComponent physicalComponent) {}
-
-    @Override
-    public void checkBounds() {
-
-    }
-
-    @Override
-    public String getImageName() {
-        return this.imageName;
-    }
+    public void onExit(PhysicsComponent physicsComponent) {}
 }

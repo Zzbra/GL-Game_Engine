@@ -1,14 +1,8 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
-import amu.gl.equipe200.core.Component.Renderable.Renderable;
-import amu.gl.equipe200.entity.BaseEntity;
-import amu.gl.equipe200.entity.Enemy;
-import amu.gl.equipe200.entity.Player;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -25,9 +19,9 @@ public abstract class GameWorld {
     // Liste des layers du GameWorld
     private final HashMap<String, Pane> layers;
     // Liste des entitées joueur
-    private final List<BaseEntity> players;
+    private final List<Entity> players;
     // Liste des entitées ennemies
-    private final List<BaseEntity> enemies;
+    private final List<Entity> enemies;
 
 
     public GameWorld() {
@@ -42,13 +36,13 @@ public abstract class GameWorld {
     }
     public Scene getScene(){return this.scene;}
     public HashMap<String, Node> getUIComponents(){return this.UIComponents;}
-    public List<BaseEntity> getPlayers() {
+    public List<Entity> getPlayers() {
         return players;
     }
-    public List<BaseEntity> getEnemies() {
+    public List<Entity> getEnemies() {
         return enemies;
     }
-    public List<BaseEntity> getEntities() {
+    public List<Entity> getEntities() {
         return Stream.concat(players.stream(), enemies.stream()).collect(Collectors.toList());
     }
 
@@ -57,7 +51,7 @@ public abstract class GameWorld {
 
     public List<Component> getComponentsByType(Class<? extends Component> c){
         List<Component> components = new LinkedList<>();
-        for(BaseEntity entity : getEntities()){
+        for(Entity entity : getEntities()){
             Component component = entity.getComponent(c);
             if(component != null) {
                 components.add(component);
@@ -66,15 +60,15 @@ public abstract class GameWorld {
         return components;
     }
 
-    public List<PhysicalComponent> getPhysicalComponents(){
-        ArrayList<PhysicalComponent> physicalComponents = new ArrayList<>();
-        for(BaseEntity entity : getEntities()){
+    public List<PhysicsComponent> getPhysicalComponents(){
+        ArrayList<PhysicsComponent> physicsComponents = new ArrayList<>();
+        for(Entity entity : getEntities()){
             // J'ai l'impression qu'ici on est obligé de cast.
-            PhysicalComponent physicalComponent = (PhysicalComponent)entity.getComponent(PhysicalComponent.class);
-            physicalComponents.add(physicalComponent);
+            PhysicsComponent physicsComponent = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+            physicsComponents.add(physicsComponent);
         }
 
-        return physicalComponents;
+        return physicsComponents;
     }
 
 }

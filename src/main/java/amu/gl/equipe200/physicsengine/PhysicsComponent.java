@@ -1,27 +1,27 @@
-package amu.gl.equipe200.core.Component;
+package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.entity.BaseEntity;
+import amu.gl.equipe200.core.Component;
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.system.PhysicalEngine;
 
 import java.util.ArrayList;
 
-public class PhysicalComponent extends Component{
+public class PhysicsComponent extends Component {
     private boolean isBounded = false;
     private double minX, minY, maxX, maxY;
-    public PhysicalComponent(BaseEntity entity, Boolean isBounded, double minX, double minY, double maxX, double maxY){
+    public PhysicsComponent(Entity entity, Boolean isBounded, double minX, double minY, double maxX, double maxY){
         super(entity);
         this.minX = minX;
         this.minY = minY;
         this.maxX = maxX;
         this.maxY = maxY;
         this.isBounded = isBounded;
-        entity.addComponent(PhysicalComponent.class, this);
+        entity.addComponent(PhysicsComponent.class, this);
     }
 
-    public PhysicalComponent(BaseEntity entity){
+    public PhysicsComponent(Entity entity){
         super(entity);
-        entity.addComponent(PhysicalComponent.class, this);
+        entity.addComponent(PhysicsComponent.class, this);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PhysicalComponent extends Component{
 
     public boolean canMove(){ return getEntity().canMove();}
 
-    public void updateBy(PhysicalEngine engine){engine.update(this);}
+    public void updateBy(PhysicsSystem engine){engine.update(this);}
 
     public void setX(double x){ getEntity().setX(x);}
     public void setY(double y){ getEntity().setY(y);}
@@ -68,27 +68,27 @@ public class PhysicalComponent extends Component{
 
     public ArrayList<Settings.Tag> getCollisionsCheck(){return getEntity().getCollisionsCheck();}
     public Settings.Tag getTag(){return getEntity().getTag();}
-    public boolean collisionStayed(PhysicalComponent physicalComponent){
-        return getEntity().collisionStayed(physicalComponent);
+    public boolean collisionStayed(PhysicsComponent physicsComponent){
+        return getEntity().collisionStayed(physicsComponent);
     }
-    public void onCollisionStay(PhysicalComponent physicalComponent2){
-        getEntity().onCollisionStay(physicalComponent2);
-    }
-
-    public void addToCollisionManifold(PhysicalComponent physicalComponent2){
-        getEntity().addToCollisionManifold(physicalComponent2);
+    public void onCollisionStay(PhysicsComponent physicsComponent2){
+        getEntity().onCollisionStay(physicsComponent2);
     }
 
-    public void onCollide(PhysicalComponent physicalComponent2){
-        getEntity().onCollide(physicalComponent2);
+    public void addToCollisionManifold(PhysicsComponent physicsComponent2){
+        getEntity().addToCollisionManifold(physicsComponent2);
     }
 
-    public void removeCollision(PhysicalComponent physicalComponent2){
-        getEntity().removeCollision(physicalComponent2);
+    public void onCollide(PhysicsComponent physicsComponent2){
+        getEntity().onCollide(physicsComponent2);
     }
 
-    public void onExit(PhysicalComponent physicalComponent2){
-        getEntity().onExit(physicalComponent2);
+    public void removeCollision(PhysicsComponent physicsComponent2){
+        getEntity().removeCollision(physicsComponent2);
+    }
+
+    public void onExit(PhysicsComponent physicsComponent2){
+        getEntity().onExit(physicsComponent2);
     }
 
 
