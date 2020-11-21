@@ -1,41 +1,75 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Entity;
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
-import amu.gl.equipe200.graphicsengine.RenderableComponent;
+import amu.gl.equipe200.Interfaces.IOInterface;
+import amu.gl.equipe200.Interfaces.Movable;
+import amu.gl.equipe200.Interfaces.RenderableInterface;
+import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
-public class Player extends Entity {
+public class Player extends BaseEntity implements Movable, RenderableInterface, IOInterface {
 
     private double playerShipMinX;
     private double playerShipMaxX;
     private double playerShipMinY;
     private double playerShipMaxY;
-
+    private String imagePath;
+    private String layerName;
 
     private double speed;
 
-    public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene) {
+    public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene, String imagePath, String layerName) {
 
         super(x, y, r, dx, dy, dr, health, damage, gameScene);
         this.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
-
+        this.imagePath = imagePath;
+        this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
     }
+
+    public String getLayerName(){return this.layerName;}
 
     public double getSpeed() {
         return speed;
     }
 
-    public void initShip(RenderableComponent component) {
+    public void initShip(Renderable component) {
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
         playerShipMinX = 0 - component.getWidth() / 2.0;
         playerShipMaxX = Settings.SCENE_WIDTH - component.getWidth() / 2.0;
         playerShipMinY = 0 - component.getHeight() / 2.0;
         playerShipMaxY = Settings.SCENE_HEIGHT -component.getHeight() / 2.0;
+    }
+
+    public void reactToInput(String key) {
+        key = key.toUpperCase();
+        switch (key){
+            case "Z":
+                setDx(0);
+                setDy(-Settings.PLAYER_SHIP_SPEED);
+                setR(270);
+                break;
+            case "S":
+                setDx(0);
+                setDy(Settings.PLAYER_SHIP_SPEED);
+                setR(90);
+                break;
+            case "Q":
+                setDx(-Settings.PLAYER_SHIP_SPEED);
+                setDy(0);
+                setR(180);
+                break;
+            case "D":
+                setDx(Settings.PLAYER_SHIP_SPEED);
+                setDy(0);
+                setR(0);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -46,7 +80,7 @@ public class Player extends Entity {
         checkBounds();
     }
 
-    private void checkBounds() {
+    public void checkBounds() {
 
         // vertical
         if( Double.compare( getY(), playerShipMinY) < 0) {
@@ -64,6 +98,12 @@ public class Player extends Entity {
 
     }
 
+    public void setBounds(double minX, double maxX, double minY, double maxY){
+        this.playerShipMinX = minX;
+        this.playerShipMaxX = maxX;
+        this.playerShipMinY = minY;
+        this.playerShipMaxY = maxY;
+    }
 
     @Override
     public void checkRemovability() {
@@ -71,16 +111,20 @@ public class Player extends Entity {
     }
 
     @Override
-    public void onCollisionStay(PhysicsComponent physicsComponent) {
-        System.err.println("Collision stay: " + physicsComponent.getTag());
+    public void onCollisionStay(PhysicalComponent physicalComponent) {
+        System.err.println("Collision stay: " + physicalComponent.getTag());
     }
 
     @Override
-    public void onCollide(PhysicsComponent physicsComponent) {
-        System.err.println("Collided with: " + physicsComponent.getTag());
+    public void onCollide(PhysicalComponent physicalComponent) {
+        System.err.println("Collided with: " + physicalComponent.getTag());
     }
 
     @Override
-    public void onExit(PhysicsComponent physicsComponent2) {}
+    public void onExit(PhysicalComponent physicalComponent2) {}
 
+    @Override
+    public String getImageName() {
+        return this.imagePath;
+    }
 }

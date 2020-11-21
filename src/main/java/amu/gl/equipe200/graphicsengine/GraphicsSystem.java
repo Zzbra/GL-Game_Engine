@@ -1,22 +1,44 @@
-package amu.gl.equipe200.graphicsengine;
+package amu.gl.equipe200.system;
 
-import amu.gl.equipe200.core.Component;
+import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.Interfaces.RenderableInterface;
+import amu.gl.equipe200.core.Component.Renderable.Sprite;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class GraphicsSystem {
+public class GraphicalEngine {
     private Stage stage;
     private Scene currentScene;
     private static HashMap<String, Image> IMAGEMAP;
-    public GraphicsSystem(Stage stage){
+    private HashMap<RenderableInterface, ImageView> renderables;
+    private HashMap<String, Pane> layers;
+    public GraphicalEngine(Stage stage){
         this.stage = stage;
         this.IMAGEMAP = new HashMap<>();
+        this.renderables = new HashMap<>();
+        this.layers = new HashMap<>();
         loadImages();
+    }
+
+    public void setLayers(HashMap<String, Pane> layers){
+        this.layers = layers;
+    }
+
+    public void addLayer(String layerName){
+        layers.put(layerName, new Pane());
+    }
+
+
+    public void addRenderable(RenderableInterface renderable){
+        renderables.put(renderable, new ImageView(IMAGEMAP.get(renderable.getImageName())));
+        layers.get(renderable.getLayerName()).getChildren().add(renderables.get(renderable));
+        //updateRenderable(renderable);
     }
 
     public void loadScene(Scene scene){
@@ -57,8 +79,19 @@ public class GraphicsSystem {
 
     }
 
+    public void update(){
+        for(RenderableInterface renderable : renderables.keySet()){
+            updateRenderable(renderable);
+        }
+    }
+
+    private void updateRenderable(RenderableInterface renderable){
+        renderables.get(renderable).relocate(renderable.getX(), renderable.getY());
+        renderables.get(renderable).setRotate(renderable.getR());
+    }
+
     // TODO : Déplacer les systems dans core
-    public void update(SpriteComponent component) {
+    public void update(Sprite component) {
         ImageView imageView = component.getView();
         imageView.relocate(component.getX(), component.getY());
         imageView.setRotate(component.getR());
