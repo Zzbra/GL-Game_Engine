@@ -1,4 +1,4 @@
-package amu.gl.equipe200.system;
+package amu.gl.equipe200.graphicsengine;
 
 import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.Interfaces.RenderableInterface;
@@ -19,11 +19,11 @@ public class GraphicsEngine {
     private static HashMap<String, Image> IMAGEMAP;
     private HashMap<RenderableInterface, ImageView> renderables;
     private HashMap<String, Pane> layers;
-    public GraphicsEngine(Stage stage){
+    public GraphicsEngine(Stage stage, HashMap<String, Pane> layers){
         this.stage = stage;
         this.IMAGEMAP = new HashMap<>();
         this.renderables = new HashMap<>();
-        this.layers = new HashMap<>();
+        this.layers = layers;
         loadImages();
     }
 

@@ -36,14 +36,14 @@ public class Player extends Entity implements Movable, RenderableInterface, IOIn
         return speed;
     }
 
-    public void initShip(Renderable component) {
-        // calculate movement bounds of the player ship
-        // allow half of the ship to be outside of the screen
-        playerShipMinX = 0 - component.getWidth() / 2.0;
-        playerShipMaxX = Settings.SCENE_WIDTH - component.getWidth() / 2.0;
-        playerShipMinY = 0 - component.getHeight() / 2.0;
-        playerShipMaxY = Settings.SCENE_HEIGHT -component.getHeight() / 2.0;
-    }
+//    public void initShip(Renderable component) {
+//        // calculate movement bounds of the player ship
+//        // allow half of the ship to be outside of the screen
+//        playerShipMinX = 0 - component.getWidth() / 2.0;
+//        playerShipMaxX = Settings.SCENE_WIDTH - component.getWidth() / 2.0;
+//        playerShipMinY = 0 - component.getHeight() / 2.0;
+//        playerShipMaxY = Settings.SCENE_HEIGHT -component.getHeight() / 2.0;
+//    }
 
     public void reactToInput(String key) {
         key = key.toUpperCase();

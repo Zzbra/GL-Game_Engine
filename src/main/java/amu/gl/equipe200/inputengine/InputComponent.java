@@ -14,7 +14,7 @@ public abstract class InputComponent extends Component {
     public abstract void reactToInput(String input);
 
 
-    public void updateBy(InputEngine inputEngine){ inputEngine.update(this); }
+//    public void updateBy(InputEngine inputEngine){ inputEngine.update(this); }
 
 
 }

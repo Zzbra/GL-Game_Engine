@@ -1,6 +1,6 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.graphicsengine.GraphicsSystem;
+import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.system.InputEngine;
 import amu.gl.equipe200.physicsengine.PhysicsSystem;
 
@@ -34,7 +34,7 @@ public abstract class Component {
     }
 
 
-    public void updateBy(GraphicsSystem engine){
+    public void updateBy(GraphicsEngine engine){
         System.err.println(engine.getClass().toString() + " Not implemented");
     }
 

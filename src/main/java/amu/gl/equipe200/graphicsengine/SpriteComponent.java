@@ -11,7 +11,7 @@ public class SpriteComponent extends RenderableComponent {
     public SpriteComponent(Entity entity, String imagePath, String layerName) {
         super(entity, layerName);
 
-        this.image = GraphicsSystem.getImages().get(imagePath);
+        this.image = GraphicsEngine.getImages().get(imagePath);
         this.imageView = new ImageView(image);
         super.addToLayer(imageView);
         entity.setWidth(image.getWidth());
@@ -20,7 +20,7 @@ public class SpriteComponent extends RenderableComponent {
 
     }
 
-    public void updateBy(GraphicsSystem engine){
+    public void updateBy(GraphicsEngine engine){
         engine.update(this);
     }
 

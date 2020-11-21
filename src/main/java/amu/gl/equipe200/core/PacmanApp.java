@@ -1,24 +1,21 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.inputengine.InputComponent;
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
-import amu.gl.equipe200.inputengine.PlayerInputComponent;
+import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.graphicsengine.SpriteComponent;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
-import amu.gl.equipe200.graphicsengine.GraphicsSystem;
+
 import amu.gl.equipe200.physicsengine.PhysicsSystem;
 import amu.gl.equipe200.system.*;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,7 +35,7 @@ public class PacmanApp extends Application {
     private Random rnd = new Random();
     private HashMap<String, ASystem> systems;
 
-    private GraphicsSystem graphicsSystem;
+    private GraphicsEngine graphicsEngine;
     private GameWorld mainMenuScene, gameScene;
 
     private AnimationTimer gameLoop;
@@ -48,15 +45,16 @@ public class PacmanApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
-        this.graphicsSystem = new GraphicsSystem(primaryStage);
+
         this.physicsSystem = new PhysicsSystem();
         this.mainMenuScene = GameWorldMaker.MakeMenuScene();
         this.gameScene = GameWorldMaker.MakeGameScene();
+        this.graphicsEngine = new GraphicsEngine(primaryStage, gameScene.getLayers());
         this.inputEngine = new InputEngine(gameScene.getScene());
         systems = new HashMap<String, ASystem>();
         systems.put("Collisions", new CollisionSystem());
 
-        graphicsSystem.loadScene(mainMenuScene.getScene());
+        graphicsEngine.loadScene(mainMenuScene.getScene());
         playerIsCreated = false;
 
         createPlayers();
@@ -84,7 +82,7 @@ public class PacmanApp extends Application {
 
                 // update amu.gl.equipe200.entity in scene
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
-                graphicsSystem.update(gameScene.getComponentsByType(RenderableComponent.class));
+                graphicsEngine.update();
 
 
                 // check if amu.gl.equipe200.entity can be removed
@@ -104,7 +102,7 @@ public class PacmanApp extends Application {
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                graphicsSystem.loadScene(gameScene.getScene());
+                graphicsEngine.loadScene(gameScene.getScene());
                 if(!playerIsCreated)
                     createPlayers();
                 //setControls();
@@ -126,6 +124,8 @@ public class PacmanApp extends Application {
 
         // create player
         Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        graphicsEngine.addRenderable(player);
+        inputEngine.addIOEntity(player);
         //RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
         //player.initShip(sprite);
 //        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
@@ -154,8 +154,9 @@ public class PacmanApp extends Application {
 
         // create a sprite
         Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene,"enemyImage", "playerfieldLayer" );
-        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
-        enemy.setY(-sprite.getHeight());
+        graphicsEngine.addRenderable(enemy);
+//        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
+//        enemy.setY(-sprite.getHeight());
         //enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
