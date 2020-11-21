@@ -1,9 +1,5 @@
 package amu.gl.equipe200.graphicsengine;
 
-import amu.gl.equipe200.core.Component;
-import amu.gl.equipe200.Interfaces.RenderableInterface;
-
-import amu.gl.equipe200.graphicsengine.SpriteComponent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,7 +7,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class GraphicsEngine {
     private Stage stage;

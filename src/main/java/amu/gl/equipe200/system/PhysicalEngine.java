@@ -1,12 +1,10 @@
 package amu.gl.equipe200.system;
 
 
-import amu.gl.equipe200.Interfaces.Movable;
+import amu.gl.equipe200.physicsengine.Movable;
 
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class PhysicalEngine {
 

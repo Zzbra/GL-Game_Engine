@@ -1,4 +1,4 @@
-package amu.gl.equipe200.Interfaces;
+package amu.gl.equipe200.graphicsengine;
 
 public interface RenderableInterface {
     public double getX();

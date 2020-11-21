@@ -1,4 +1,4 @@
-package amu.gl.equipe200.Interfaces;
+package amu.gl.equipe200.physicsengine;
 
 public interface Movable {
     public double getX();
