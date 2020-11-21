@@ -165,11 +165,11 @@ public class Player extends Entity implements PhysicsInterface, RenderableInterf
     @Override
     public void setRSpeed(double rSpeed) { this.rSpeed = rSpeed; }
     @Override
-    public boolean isBounded() { return true; }
+    public boolean isWorldBounded() { return true; }
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isPermeable() { return false; }
+    public boolean isSolid() { return false; }
 
     @Override
     public void onWorldEnds() {

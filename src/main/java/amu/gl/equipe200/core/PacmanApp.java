@@ -2,13 +2,12 @@ package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.RenderableComponent;
-import amu.gl.equipe200.graphicsengine.SpriteComponent;
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
 
-import amu.gl.equipe200.physicsengine.PhysicsSystem;
+import amu.gl.equipe200.physicsengine.PhysicsEngine;
 import amu.gl.equipe200.system.*;
 
 import javafx.animation.AnimationTimer;
@@ -40,13 +39,13 @@ public class PacmanApp extends Application {
 
     private AnimationTimer gameLoop;
     private boolean playerIsCreated;
-    private PhysicsSystem physicsSystem;
+    private PhysicsEngine physicsEngine;
     private InputEngine inputEngine;
     @Override
     public void start(Stage primaryStage) {
         /*** Création des moteurs ***/
 
-        this.physicsSystem = new PhysicsSystem();
+        this.physicsEngine = new PhysicsEngine(100, 100); //TODO: world size
         this.mainMenuScene = GameWorldMaker.MakeMenuScene();
         this.gameScene = GameWorldMaker.MakeGameScene();
         this.graphicsEngine = new GraphicsEngine(primaryStage, gameScene.getLayers());

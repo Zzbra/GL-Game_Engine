@@ -1,44 +1,59 @@
 package amu.gl.equipe200.system;
 
 
-import amu.gl.equipe200.physicsengine.Movable;
-
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
 import java.util.HashSet;
 
+
 public class PhysicalEngine {
 
-//  private ArrayList<PhysicalComponent> physicalComponents;
-    private HashSet<Movable> movables;
-//    public void update(List<PhysicalComponent> componentList){
-//       for(PhysicalComponent physicalComponent : componentList){
-//           moveComponent(physicalComponent);
-//       }
-//       checkCollision(componentList);
+//    // List of the entity to update
+//    private HashSet<PhysicsInterface> physicsEntities;
+//
+//    // Size of the world in wich the entities move
+//    private double worldHeight;
+//    private double worldWidth;
+//
+////      public void update(List<PhysicalComponent> componentList){
+////       for(PhysicalComponent physicalComponent : componentList){
+////           moveComponent(physicalComponent);
+////       }
+////       checkCollision(componentList);
+////    }
+//
+//    public PhysicalEngine(double worldWidth, double worldHeight){
+//        this.physicsEntities = new HashSet<>();
+//        this.worldWidth = worldWidth;
+//        this.worldHeight = worldHeight;
 //    }
-    public PhysicalEngine(){
-        this.movables = new HashSet<>();
-    }
+//
+//    public void registerEntity(PhysicsInterface entity){
+//        this.physicsEntities.add(entity);
+//    }
+//
+//    public void removeEntity(PhysicsInterface entity) {
+//        this.physicsEntities.remove(entity);
+//    }
+//
+//    public void update(){
+//        for(PhysicsInterface entity : this.physicsEntities) {
+//            // Check if the entity is movable, as collidable only entities does not require any update
+//            if( !entity.isMovable()) continue;
+//
+//            move(physicsInterface);
+//            physicsInterface.checkBounds();
+//        }
+//    }
+//
+//
+//
+//    private void move(PhysicsInterface physicsInterface){
+//        physicsInterface.setX(physicsInterface.getX() + physicsInterface.getXSpeed());
+//        physicsInterface.setY(physicsInterface.getY() + physicsInterface.getYSpeed());
+//        physicsInterface.setR(physicsInterface.getR() + physicsInterface.get());
+//    }
 
-
-    public void addMovable(Movable movable){
-        this.movables.add(movable);
-    }
-
-    public void update(){
-        for(Movable movable : movables){
-            if( !movable.canMove())
-                return;
-            move(movable);
-            movable.checkBounds();
-        }
-    }
-
-    private void move(Movable movable){
-        movable.setX(movable.getX() + movable.getDx());
-        movable.setY(movable.getY() + movable.getDy());
-        movable.setR(movable.getR() + movable.getDr());
-    }
 
 //    public void update(List<Component> componentList){
 //        physicalComponents = new ArrayList<>();

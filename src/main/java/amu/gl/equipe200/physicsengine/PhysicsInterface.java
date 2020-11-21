@@ -27,9 +27,9 @@ public interface PhysicsInterface {
 
     // Getter and setter for the physics behaviour of the entity
     default boolean isMovable() { return false;};
-    default boolean isBounded() { return false; };
+    default boolean isWorldBounded() { return false; };
     default boolean isCollidable() { return false; };
-    default boolean isPermeable() { return true; };
+    default boolean isSolid() { return false; };
 
     // Callback of the physics engine
     default void onWorldEnds() {};

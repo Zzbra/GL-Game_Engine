@@ -49,7 +49,7 @@ public class PhysicsComponent extends Component {
 
     public boolean canMove(){ return getEntity().isMovable();}
 
-    public void updateBy(PhysicsSystem engine){engine.update(this);}
+//    public void updateBy(PhysicsEngine engine){engine.update(this);}
 
     public void setX(double x){ getEntity().setX(x);}
     public void setY(double y){ getEntity().setY(y);}
