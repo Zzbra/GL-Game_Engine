@@ -2,7 +2,6 @@ package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.system.ASystem;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -15,7 +14,7 @@ public abstract class Entity {
 
     private Pane layer;
 
-    private ASystem collisionLister;
+    private Engine collisionLister;
 
 
     private double x;
@@ -175,7 +174,7 @@ public abstract class Entity {
 
     }
 
-    public boolean canMove(){ return canMove;}
+    public boolean isMovable(){ return canMove;}
 
     public boolean isAlive() {
         return Double.compare(health, 0) > 0;
@@ -258,7 +257,7 @@ public abstract class Entity {
 
 
     /***  Collidable   ***/
-    public void setCollisionLister(ASystem listener){
+    public void setCollisionLister(Engine listener){
         this.collisionLister = listener;
     }
 
@@ -274,7 +273,7 @@ public abstract class Entity {
         return this.collisionManifold.contains(physicsComponent);
     }
 
-    public abstract void onCollide(PhysicsComponent physicsComponent);
+//    public abstract void onCollide(PhysicsComponent physicsComponent);
 
     public boolean hasCollisions(){
         return !this.collisionManifold.isEmpty();
@@ -285,7 +284,7 @@ public abstract class Entity {
         this.collisionManifold.remove(physicsComponent);
     }
 
-    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
+//    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
 
     public void setTag(Settings.Tag tag){
         this.tag = tag;

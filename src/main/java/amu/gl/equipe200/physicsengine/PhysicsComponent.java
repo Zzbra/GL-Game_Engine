@@ -47,9 +47,9 @@ public class PhysicsComponent extends Component {
 
     public boolean getIsBounded(){ return  isBounded;}
 
-    public boolean canMove(){ return getEntity().canMove();}
+    public boolean canMove(){ return getEntity().isMovable();}
 
-    public void updateBy(PhysicsSystem engine){engine.update(this);}
+//    public void updateBy(PhysicsEngine engine){engine.update(this);}
 
     public void setX(double x){ getEntity().setX(x);}
     public void setY(double y){ getEntity().setY(y);}
@@ -71,17 +71,17 @@ public class PhysicsComponent extends Component {
     public boolean collisionStayed(PhysicsComponent physicsComponent){
         return getEntity().collisionStayed(physicsComponent);
     }
-    public void onCollisionStay(PhysicsComponent physicsComponent2){
-        getEntity().onCollisionStay(physicsComponent2);
-    }
+//    public void onCollisionStay(PhysicsComponent physicsComponent2){
+//        getEntity().onCollisionStay(physicsComponent2);
+//    }
 
     public void addToCollisionManifold(PhysicsComponent physicsComponent2){
         getEntity().addToCollisionManifold(physicsComponent2);
     }
 
-    public void onCollide(PhysicsComponent physicsComponent2){
-        getEntity().onCollide(physicsComponent2);
-    }
+//    public void onCollide(PhysicsComponent physicsComponent2){
+//        getEntity().onCollide(physicsComponent2);
+//    }
 
     public void removeCollision(PhysicsComponent physicsComponent2){
         getEntity().removeCollision(physicsComponent2);
