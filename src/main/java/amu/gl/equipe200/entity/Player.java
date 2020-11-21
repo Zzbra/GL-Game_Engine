@@ -1,17 +1,12 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.Interfaces.IOInterface;
-import amu.gl.equipe200.core.Component.Interfaces.Movable;
-import amu.gl.equipe200.core.Component.Interfaces.RenderableInterface;
+import amu.gl.equipe200.Interfaces.IOInterface;
+import amu.gl.equipe200.Interfaces.Movable;
+import amu.gl.equipe200.Interfaces.RenderableInterface;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
 import amu.gl.equipe200.core.Component.Renderable.Renderable;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-
-import java.util.Map;
 
 public class Player extends BaseEntity implements Movable, RenderableInterface, IOInterface {
 

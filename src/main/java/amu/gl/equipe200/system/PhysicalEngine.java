@@ -1,9 +1,8 @@
 package amu.gl.equipe200.system;
 
 import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.Interfaces.Movable;
+import amu.gl.equipe200.Interfaces.Movable;
 import amu.gl.equipe200.core.Component.PhysicalComponent;
-import amu.gl.equipe200.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
