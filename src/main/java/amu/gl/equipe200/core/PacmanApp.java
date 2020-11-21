@@ -40,7 +40,7 @@ public class PacmanApp extends Application {
 
     private GraphicsSystem graphicsSystem;
     private GameWorld mainMenuScene, gameScene;
-    private PlayerController playerController;
+
     private AnimationTimer gameLoop;
     private boolean playerIsCreated;
     private PhysicsSystem physicsSystem;
@@ -117,45 +117,7 @@ public class PacmanApp extends Application {
     }
 
 
-    private void setControls(){
-        Player player = (Player)gameScene.getPlayers().get(0);
-        this.playerController = new PlayerController(gameScene.getScene());
-        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.Z){
-                player.setDx(0);
-                player.setDy(-player.getSpeed());
-                player.setR(270);
-            }
-        });
-        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.S){
-                player.setDx(0);
-                player.setDy(player.getSpeed());
-                player.setR(90);
-            }
-        });
-        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.Q){
-                player.setDx(-player.getSpeed());
-                player.setDy(0);
-                player.setR(180);
-            }
-        });
-        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.D){
-                player.setDx(player.getSpeed());
-                player.setDy(0);
-                player.setR(0);
-            }
-        });
 
-        playerController.addAction(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.P){
-                gameLoop.stop();
-                graphicsSystem.loadScene(mainMenuScene.getScene());
-            }
-        });
-    }
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
