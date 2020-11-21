@@ -175,7 +175,7 @@ public abstract class Entity {
 
     }
 
-    public boolean canMove(){ return canMove;}
+    public boolean isMovable(){ return canMove;}
 
     public boolean isAlive() {
         return Double.compare(health, 0) > 0;

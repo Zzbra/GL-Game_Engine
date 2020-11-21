@@ -47,7 +47,7 @@ public class PhysicsComponent extends Component {
 
     public boolean getIsBounded(){ return  isBounded;}
 
-    public boolean canMove(){ return getEntity().canMove();}
+    public boolean canMove(){ return getEntity().isMovable();}
 
     public void updateBy(PhysicsSystem engine){engine.update(this);}
 

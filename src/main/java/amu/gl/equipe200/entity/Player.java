@@ -1,7 +1,7 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.inputengine.IOInterface;
-import amu.gl.equipe200.physicsengine.Movable;
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.graphicsengine.RenderableInterface;
 
 import amu.gl.equipe200.core.Entity;
@@ -9,7 +9,7 @@ import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.physicsengine.PhysicsComponent;
 
-public class Player extends Entity implements Movable, RenderableInterface, IOInterface {
+public class Player extends Entity implements PhysicsInterface, RenderableInterface, IOInterface {
 
     private double playerShipMinX;
     private double playerShipMaxX;
@@ -19,6 +19,16 @@ public class Player extends Entity implements Movable, RenderableInterface, IOIn
     private String layerName;
 
     private double speed;
+
+    /**
+     * Physics variables
+     */
+    private double x, y;
+    private double xSpeed, ySpeed;
+    private double r, rSpeed;                   // WARNING:it's an angle not a position
+    private double width = 10, height = 10;
+
+
 
     public Player(double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, GameWorld gameScene, String imagePath, String layerName) {
 
@@ -127,5 +137,49 @@ public class Player extends Entity implements Movable, RenderableInterface, IOIn
     @Override
     public String getImageName() {
         return this.imagePath;
+    }
+
+
+    /**
+     * Physics Behaviour overwrite
+     */
+
+    @Override
+    public double getX() { return this.x; }
+    @Override
+    public void setX(double x) { this.x = x; }
+    @Override
+    public double getY() { return this.y; }
+    @Override
+    public void setY(double y) { this.y = y; }
+    @Override
+    public double getXSpeed() { return this.xSpeed; }
+    @Override
+    public void setXspeed(double xSpeed) { this.xSpeed = xSpeed; }
+    @Override
+    public double getYSpeed() { return this.ySpeed; }
+    @Override
+    public void setYspeed(double ySpeed) { this.ySpeed = ySpeed; }
+    @Override
+    public double getRSpeed() { return this.rSpeed; }
+    @Override
+    public void setRSpeed(double rSpeed) { this.rSpeed = rSpeed; }
+    @Override
+    public boolean isBounded() { return true; }
+    @Override
+    public boolean isCollidable() { return true; }
+    @Override
+    public boolean isPermeable() { return false; }
+
+    @Override
+    public void onWorldEnds() {
+        // TODO
+        System.out.println(this.toString() + " has reach the end of the world");
+    }
+
+    @Override
+    public void onCollide(PhysicsInterface others) {
+        // TODO
+        System.out.println(this.toString() + " has collide with " + others.toString());
     }
 }
