@@ -5,7 +5,6 @@ import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
 
 public class Enemy
         extends Entity
@@ -59,8 +58,8 @@ public class Enemy
 //    @Override
 //    public void onCollisionStay(PhysicsComponent physicsComponent) { }
 
-    @Override
-    public void onExit(PhysicsComponent physicsComponent) {}
+//    @Override
+//    public void onExit(PhysicsComponent physicsComponent) {}
 
     @Override
     public String getImageName() {

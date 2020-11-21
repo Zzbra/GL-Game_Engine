@@ -7,7 +7,6 @@ import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
 
 public class Player
         extends Entity
@@ -128,8 +127,8 @@ public class Player
         // TODO Auto-generated method stub
     }
 
-    @Override
-    public void onExit(PhysicsComponent physicsComponent) { }
+//    @Override
+//    public void onExit(PhysicsComponent physicsComponent) { }
 
     @Override
     public String getImageName() {

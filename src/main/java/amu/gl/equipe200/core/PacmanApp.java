@@ -178,12 +178,12 @@ public class PacmanApp extends Application {
 
 
     private void updateScore() {
-        Text collisionText = (Text)gameScene.getUIComponents().get("collisionText");
-        if( gameScene.getPlayers().get(0).hasCollisions()) {
-            collisionText.setText("Collision");
-        } else {
-            collisionText.setText("");
-        }
+//        Text collisionText = (Text)gameScene.getUIComponents().get("collisionText");
+//        if( gameScene.getPlayers().get(0).hasCollisions()) {
+//            collisionText.setText("Collision");
+//        } else {
+//            collisionText.setText("");
+//        }
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,5 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -58,17 +57,6 @@ public abstract class GameWorld {
             }
         }
         return components;
-    }
-
-    public List<PhysicsComponent> getPhysicalComponents(){
-        ArrayList<PhysicsComponent> physicsComponents = new ArrayList<>();
-        for(Entity entity : getEntities()){
-            // J'ai l'impression qu'ici on est obligé de cast.
-            PhysicsComponent physicsComponent = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-            physicsComponents.add(physicsComponent);
-        }
-
-        return physicsComponents;
     }
 
 }

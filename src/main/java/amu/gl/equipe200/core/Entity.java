@@ -1,6 +1,5 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.physicsengine.PhysicsComponent;
 import amu.gl.equipe200.gameworld.Settings;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -37,7 +36,7 @@ public abstract class Entity {
     private Settings.Tag tag;
 
     /*** ColiderComponent ***/
-    private ArrayList<PhysicsComponent> collisionManifold;
+//    private ArrayList<PhysicsComponent> collisionManifold;
     private HashMap<Class<? extends Component>, Component> components;
 
     public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
@@ -61,7 +60,7 @@ public abstract class Entity {
 
         this.components = new HashMap<>();
         /*** Collidable ***/
-        collisionManifold = new ArrayList<>();
+//        collisionManifold = new ArrayList<>();
         this.collisionsCheck = new ArrayList<>();
 
         this.gameWorld = gameWorld;
@@ -261,28 +260,28 @@ public abstract class Entity {
         this.collisionLister = listener;
     }
 
-    public void addToCollisionManifold(PhysicsComponent physicsComponent){
-        this.collisionManifold.add(physicsComponent);
-    }
+//    public void addToCollisionManifold(PhysicsComponent physicsComponent){
+//        this.collisionManifold.add(physicsComponent);
+//    }
 
-    public void clearCollisionManifold(){
-        this.collisionManifold.clear();
-    }
+//    public void clearCollisionManifold(){
+//        this.collisionManifold.clear();
+//    }
 
-    public boolean collisionStayed(PhysicsComponent physicsComponent){
-        return this.collisionManifold.contains(physicsComponent);
-    }
+//    public boolean collisionStayed(PhysicsComponent physicsComponent){
+//        return this.collisionManifold.contains(physicsComponent);
+//    }
 
 //    public abstract void onCollide(PhysicsComponent physicsComponent);
 
-    public boolean hasCollisions(){
-        return !this.collisionManifold.isEmpty();
-    }
+//    public boolean hasCollisions(){
+//        return !this.collisionManifold.isEmpty();
+//    }
 
 
-    public void removeCollision(PhysicsComponent physicsComponent){
-        this.collisionManifold.remove(physicsComponent);
-    }
+//    public void removeCollision(PhysicsComponent physicsComponent){
+//        this.collisionManifold.remove(physicsComponent);
+//    }
 
 //    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
 
@@ -290,7 +289,7 @@ public abstract class Entity {
         this.tag = tag;
     }
 
-    public abstract void onExit(PhysicsComponent physicsComponent2);
+//    public abstract void onExit(PhysicsComponent physicsComponent2);
 
     public GameWorld getGameWorld(){
         return this.gameWorld;
