@@ -1,5 +1,7 @@
 package amu.gl.equipe200.gameworld;
 
+import amu.gl.equipe200.utils.Pair;
+
 public class Settings {
     public static double SCENE_WIDTH = 800;
     public static double SCENE_HEIGHT = 800;
@@ -13,5 +15,10 @@ public class Settings {
     public static int ENEMY_SPAWN_RANDOMNESS = 100;
 
     public static enum Tag {PLAYER, ENEMY} ;
+
+    // Size of the physical world in which the entities are
+    private Pair<Double, Double> worldSize = Pair.create(100d, 100d);
+    public void setWorldSize(double width, double height) { this.worldSize = Pair.create(width, height); }
+    public Pair<Double, Double> getWorldSize() { return this.worldSize; }
 
 }
