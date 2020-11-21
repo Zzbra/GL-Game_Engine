@@ -1,8 +1,9 @@
 package amu.gl.equipe200.system;
 
-import amu.gl.equipe200.core.Component.Component;
+import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.Interfaces.RenderableInterface;
-import amu.gl.equipe200.core.Component.Renderable.Sprite;
+
+import amu.gl.equipe200.graphicsengine.SpriteComponent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,13 +13,13 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.List;
 
-public class GraphicalEngine {
+public class GraphicsEngine {
     private Stage stage;
     private Scene currentScene;
     private static HashMap<String, Image> IMAGEMAP;
     private HashMap<RenderableInterface, ImageView> renderables;
     private HashMap<String, Pane> layers;
-    public GraphicalEngine(Stage stage){
+    public GraphicsEngine(Stage stage){
         this.stage = stage;
         this.IMAGEMAP = new HashMap<>();
         this.renderables = new HashMap<>();
@@ -72,12 +73,12 @@ public class GraphicalEngine {
 //        }
 //    }
 
-    public void update(List<Component> componentList){
-        for(Component component : componentList){
-            component.updateBy(this);
-        }
-
-    }
+//    public void update(List<Component> componentList){
+//        for(Component component : componentList){
+//            component.updateBy(this);
+//        }
+//
+//    }
 
     public void update(){
         for(RenderableInterface renderable : renderables.keySet()){
@@ -91,7 +92,7 @@ public class GraphicalEngine {
     }
 
     // TODO : Déplacer les systems dans core
-    public void update(Sprite component) {
+    public void update(SpriteComponent component) {
         ImageView imageView = component.getView();
         imageView.relocate(component.getX(), component.getY());
         imageView.setRotate(component.getR());

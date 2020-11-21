@@ -71,14 +71,14 @@ public class PacmanApp extends Application {
                 // player input
                 //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 
-                inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
-
+                //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
+                inputEngine.update();
                 // add random enemies
                 spawnEnemies( true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // PhysicalEngine.update(gameScene.getEntities());
-                physicsSystem.update(gameScene.getComponentsByType(PhysicsComponent.class));
+                //physicsSystem.update(gameScene.getComponentsByType(PhysicsComponent.class));
                 //System.out.println(gameScene.getPhysicalComponents().size() == gameScene.getComponentsByType(PhysicalComponent.class).size());
 
 
@@ -125,14 +125,14 @@ public class PacmanApp extends Application {
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player
-        Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene);
-        RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
-        player.initShip(sprite);
-        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
-                0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
-        InputComponent inputComponent = new PlayerInputComponent(player);
+        Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        //RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
+        //player.initShip(sprite);
+//        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
+//                0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
+//        InputComponent inputComponent = new PlayerInputComponent(player);
         // register player
-        gameScene.getPlayers().add( player);
+        gameScene.getPlayers().add(player);
         systems.get("Collisions").addEntity(player);
         playerIsCreated = true;
 
@@ -153,10 +153,10 @@ public class PacmanApp extends Application {
         double y = 0;
 
         // create a sprite
-        Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene);
+        Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene,"enemyImage", "playerfieldLayer" );
         RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
         enemy.setY(-sprite.getHeight());
-        enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
+        //enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
         systems.get("Collisions").addEntity(enemy);

@@ -1,7 +1,6 @@
 package amu.gl.equipe200.system;
 
-import amu.gl.equipe200.core.Component.Component;
-import amu.gl.equipe200.core.Component.InputComponent;
+
 import amu.gl.equipe200.Interfaces.IOInterface;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -40,17 +39,17 @@ public class InputEngine {
           });
       }
 
-      public void update(List<Component> componentList){
-          for(Component component : componentList){
-              component.updateBy(this);
-          }
-          pressedKeys.clear();
-      }
-
-      public void update(InputComponent inputComponent){
-          for(String key : pressedKeys){
-              inputComponent.reactToInput(key);
-          }
-      }
+//      public void update(List<Component> componentList){
+//          for(Component component : componentList){
+//              component.updateBy(this);
+//          }
+//          pressedKeys.clear();
+//      }
+//
+//      public void update(InputComponent inputComponent){
+//          for(String key : pressedKeys){
+//              inputComponent.reactToInput(key);
+//          }
+//      }
 
 }

@@ -2,11 +2,12 @@ package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.Interfaces.Movable;
 import amu.gl.equipe200.Interfaces.RenderableInterface;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 
-public class Enemy extends BaseEntity implements Movable, RenderableInterface {
+public class Enemy extends Entity implements Movable, RenderableInterface {
 
     private String imageName, layerName;
     public Enemy(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gamescene, String imageName, String layerName) {
@@ -27,13 +28,13 @@ public class Enemy extends BaseEntity implements Movable, RenderableInterface {
 
     /*** Colidable ***/
     @Override
-    public void onCollide(PhysicalComponent physicalComponent) {}
+    public void onCollide(PhysicsComponent physicsComponent) {}
 
     @Override
-    public void onCollisionStay(PhysicalComponent physicalComponent) {}
+    public void onCollisionStay(PhysicsComponent physicsComponent) {}
 
     @Override
-    public void onExit(PhysicalComponent physicalComponent) {}
+    public void onExit(PhysicsComponent physicsComponent) {}
 
     @Override
     public void checkBounds() {

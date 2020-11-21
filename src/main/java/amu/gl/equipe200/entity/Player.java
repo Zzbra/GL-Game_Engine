@@ -3,12 +3,13 @@ package amu.gl.equipe200.entity;
 import amu.gl.equipe200.Interfaces.IOInterface;
 import amu.gl.equipe200.Interfaces.Movable;
 import amu.gl.equipe200.Interfaces.RenderableInterface;
-import amu.gl.equipe200.core.Component.PhysicalComponent;
-import amu.gl.equipe200.core.Component.Renderable.Renderable;
+
+import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.physicsengine.PhysicsComponent;
 
-public class Player extends BaseEntity implements Movable, RenderableInterface, IOInterface {
+public class Player extends Entity implements Movable, RenderableInterface, IOInterface {
 
     private double playerShipMinX;
     private double playerShipMaxX;
@@ -111,17 +112,17 @@ public class Player extends BaseEntity implements Movable, RenderableInterface, 
     }
 
     @Override
-    public void onCollisionStay(PhysicalComponent physicalComponent) {
-        System.err.println("Collision stay: " + physicalComponent.getTag());
+    public void onCollisionStay(PhysicsComponent physicsComponent) {
+        System.err.println("Collision stay: " + physicsComponent.getTag());
     }
 
     @Override
-    public void onCollide(PhysicalComponent physicalComponent) {
-        System.err.println("Collided with: " + physicalComponent.getTag());
+    public void onCollide(PhysicsComponent physicsComponent) {
+        System.err.println("Collided with: " + physicsComponent.getTag());
     }
 
     @Override
-    public void onExit(PhysicalComponent physicalComponent2) {}
+    public void onExit(PhysicsComponent physicsComponent) {}
 
     @Override
     public String getImageName() {
