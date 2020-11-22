@@ -16,12 +16,12 @@ public interface PhysicsInterface {
     double getHeight();
 
     // Physics behaviour of the entity
-    default boolean isMovable() { return false;};
-    default boolean isWorldBounded() { return false; };
-    default boolean isCollidable() { return false; };
-    default boolean isSolid() { return false; };
+    default boolean isMovable() { return false;}
+    default boolean isWorldBounded() { return false; }
+    default boolean isCollidable() { return false; }
+    default boolean isSolid() { return false; }
 
     // Callback of the physics engine
-    default void onWorldEnds() {};
-    default void onCollide(PhysicsInterface others) {};
+    default void onWorldEnds() {}
+    default void onCollide(PhysicsInterface others) {}
 }

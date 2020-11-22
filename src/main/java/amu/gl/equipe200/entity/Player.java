@@ -22,7 +22,7 @@ public class Player
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double width = 250, height = 250;
+    private double width = 50, height = 50;
 
 
 

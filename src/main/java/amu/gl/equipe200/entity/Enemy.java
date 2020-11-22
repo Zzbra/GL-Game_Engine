@@ -18,7 +18,7 @@ public class Enemy
     private double x, y;
     private double xSpeed, ySpeed;
     private double r, rSpeed;                   // WARNING:it's an angle not a position
-    private double width = 10, height = 10;
+    private double width = 50, height = 50;
 
 
 
@@ -106,7 +106,7 @@ public class Enemy
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isSolid() { return false; }
+    public boolean isSolid() { return true; }
     @Override
     public void onWorldEnds() {
         // TODO
