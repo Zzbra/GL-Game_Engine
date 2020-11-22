@@ -7,19 +7,15 @@ public interface PhysicsInterface {
     double getY();
     void setY(double y);
 
-    // Getter and setter for the speed
+    // Getter for the speed
     double getXSpeed();
-    void setXSpeed(double xSpeed);
     double getYSpeed();
-    void setYSpeed(double ySpeed);
 
-    // Getter and setter for the hitbox of the entity
+    // Getter for the hitbox size of the entity
     double getWidth();
-    void setWidth(double width);
     double getHeight();
-    void setHeight(double height);
 
-    // Getter and setter for the physics behaviour of the entity
+    // Physics behaviour of the entity
     default boolean isMovable() { return false;};
     default boolean isWorldBounded() { return false; };
     default boolean isCollidable() { return false; };
