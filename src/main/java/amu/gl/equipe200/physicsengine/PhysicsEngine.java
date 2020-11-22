@@ -156,11 +156,10 @@ public class PhysicsEngine
 
         // the entity move on the X axis, compute the final X position
         if (Double.compare(entity.getXSpeed(), eps) > 0
-//            && Double.compare(entity.getX(), toCheck.getX()) <= 0
             && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
-            finalX = min(finalX, toCheck.getX() - entity.getWidth());
-//            finalX = entity.getX();
+//            finalX = min(finalX, toCheck.getX() - entity.getWidth());
+            finalX = entity.getX();
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)

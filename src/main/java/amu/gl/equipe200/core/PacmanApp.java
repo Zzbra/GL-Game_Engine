@@ -118,25 +118,27 @@ public class PacmanApp extends Application {
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
-        double x = Settings.SCENE_WIDTH / 2.0;
+        double x = Settings.SCENE_WIDTH / 3.0;
         double y = Settings.SCENE_HEIGHT * 0.7;
 
-        // create player
-        Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
-        player.setX(x);
-        player.setY(y);
-        physicsEngine.registerEntity(player);
-        graphicsEngine.addRenderable(player);
-        inputEngine.addIOEntity(player);
-        //RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
-        //player.initShip(sprite);
-//        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
-//                0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
-//        InputComponent inputComponent = new PlayerInputComponent(player);
-        // register player
-        gameScene.getPlayers().add(player);
-        playerIsCreated = true;
+        // create player1
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        player1.setX(x);
+        player1.setY(y);
+        player1.setControls("Z", "S", "Q", "D");
+        physicsEngine.registerEntity(player1);
+        graphicsEngine.addRenderable(player1);
+        inputEngine.addIOEntity(player1);
+        gameScene.getPlayers().add(player1);
 
+        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        player2.setX(2 * x);
+        player2.setY(y);
+        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
+        physicsEngine.registerEntity(player2);
+        graphicsEngine.addRenderable(player2);
+        inputEngine.addIOEntity(player2);
+        gameScene.getPlayers().add(player2);
     }
 
     private void spawnEnemies( boolean random) {
@@ -174,7 +176,7 @@ public class PacmanApp extends Application {
             if( sprite.isRemovable()) {
                 physicsEngine.removeEntity((PhysicsInterface) iter);
                 // remove from layer
-                sprite.getComponent(RenderableComponent.class).remove();
+//                sprite.getComponent(RenderableComponent.class).remove();
                 // remove from list
                 iter.remove();
             }

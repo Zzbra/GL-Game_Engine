@@ -24,6 +24,10 @@ public class Player
     private double xSpeed, ySpeed;
     private double width = 50, height = 50;
 
+    /**
+     * Input variables
+     */
+    private String upKey, downKey, leftKey, rightKey;
 
 
     public Player(double x, double y, double r,
@@ -70,6 +74,14 @@ public class Player
         this.height = height;
     }
 
+    public void setControls(String up, String down, String left, String right) {
+        this.upKey = up.toUpperCase();
+        this.downKey = down.toUpperCase();
+        this.leftKey = left.toUpperCase();
+        this.rightKey = right.toUpperCase();
+    }
+
+
     public String getLayerName(){return this.layerName;}
 
 
@@ -99,30 +111,28 @@ public class Player
      ********************************/
     public void reactToInput(String key) {
         key = key.toUpperCase();
-        switch (key){
-            case "Z":
-                setXSpeed(0);
-                setYSpeed(-Settings.PLAYER_SHIP_SPEED);
-                setR(270);
-                break;
-            case "S":
+        System.out.println(this + "recieved input " + key);
+        if (key.equals(upKey)) {
+            setXSpeed(0);
+            setYSpeed(-Settings.PLAYER_SHIP_SPEED);
+            setR(270);
+        }
+        if (key.equals(downKey)) {
                 setXSpeed(0);
                 setYSpeed(Settings.PLAYER_SHIP_SPEED);
                 setR(90);
-                break;
-            case "Q":
+        }
+        if (key.equals(leftKey)) {
                 setXSpeed(-Settings.PLAYER_SHIP_SPEED);
                 setYSpeed(0);
                 setR(180);
-                break;
-            case "D":
+        }
+        if (key.equals(rightKey)) {
                 setXSpeed(Settings.PLAYER_SHIP_SPEED);
                 setYSpeed(0);
                 setR(0);
-                break;
-            default:
-                break;
         }
+
     }
 
     /****************
