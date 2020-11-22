@@ -66,10 +66,10 @@ public class Enemy
         return this.imageName;
     }
 
-    /**
-     * Physics Behaviour overwrite
-     */
 
+    /****************************
+     *   Getters and Setters    *
+     ****************************/
     @Override
     public double getX() { return this.x; }
     @Override
@@ -87,22 +87,39 @@ public class Enemy
     @Override
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
     @Override
+    public double getWidth() {
+        return this.width;
+    }
+    @Override
+    public void setWidth(double width) { this.width = width; }
+    @Override
+    public double getHeight() {
+        return this.height;
+    }
+    @Override
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+
+    /**********************************
+     *    Physics Engine behaviour    *
+     **********************************/
+    @Override
     public boolean isWorldBounded() { return true; }
     @Override
     public boolean isCollidable() { return true; }
     @Override
     public boolean isSolid() { return false; }
-
     @Override
     public void onWorldEnds() {
         // TODO
         System.out.println(this.toString() + " has reach the end of the world");
     }
-
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collide with " + others.toString());
+        System.out.println(this.toString() + " has collided with " + others.toString());
     }
 
 

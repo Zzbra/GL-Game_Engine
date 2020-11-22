@@ -1,9 +1,9 @@
 package amu.gl.equipe200.graphicsengine;
 
 public interface RenderableInterface {
-    public double getX();
-    public double getY();
-    public double getR();
-    public String getImageName();
-    public String getLayerName();
+    double getX();
+    double getY();
+    double getR();
+    String getImageName();
+    String getLayerName();
 }

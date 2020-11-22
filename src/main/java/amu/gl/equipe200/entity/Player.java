@@ -22,8 +22,7 @@ public class Player
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double r, rSpeed;                   // WARNING:it's an angle not a position
-    private double width = 10, height = 10;
+    private double width = 250, height = 250;
 
 
 
@@ -42,7 +41,7 @@ public class Player
 
 
     /****************************
-     *    Getter and Setters    *
+     *   Getters and Setters    *
      ****************************/
     @Override
     public double getX() { return this.x; }
@@ -60,7 +59,20 @@ public class Player
     public double getYSpeed() { return this.ySpeed; }
     @Override
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
-
+    @Override
+    public double getWidth() {
+        return this.width;
+    }
+    @Override
+    public void setWidth(double width) { this.width = width; }
+    @Override
+    public double getHeight() {
+        return this.height;
+    }
+    @Override
+    public void setHeight(double height) {
+        this.height = height;
+    }
 
     public String getLayerName(){return this.layerName;}
 
@@ -74,13 +86,11 @@ public class Player
     public boolean isCollidable() { return true; }
     @Override
     public boolean isSolid() { return true; }
-
     @Override
     public void onWorldEnds() {
         // TODO
         System.out.println(this.toString() + " has reach the end of the world");
     }
-
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO

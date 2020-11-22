@@ -1,5 +1,6 @@
 package amu.gl.equipe200.graphicsengine;
 
+import amu.gl.equipe200.core.Engine;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,18 +9,28 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-public class GraphicsEngine {
+public class GraphicsEngine
+        extends Engine {
+
     private Stage stage;
     private Scene currentScene;
+
     private static HashMap<String, Image> IMAGEMAP;
     private HashMap<RenderableInterface, ImageView> renderables;
     private HashMap<String, Pane> layers;
+
     public GraphicsEngine(Stage stage, HashMap<String, Pane> layers){
         this.stage = stage;
         this.IMAGEMAP = new HashMap<>();
         this.renderables = new HashMap<>();
         this.layers = layers;
         loadImages();
+    }
+
+    public void update(long ellapsedTime){
+        for(RenderableInterface renderable : renderables.keySet()){
+            updateRenderable(renderable);
+        }
     }
 
     public void setLayers(HashMap<String, Pane> layers){
@@ -60,26 +71,7 @@ public class GraphicsEngine {
         }
     }
 
-//    public void update(List<BaseEntity> list){
-//        for(BaseEntity entity : list){
-//            Component component = entity.getComponent(Renderable.class);
-//            if (component == null) continue;
-//            component.updateBy(this);
-//        }
-//    }
 
-//    public void update(List<Component> componentList){
-//        for(Component component : componentList){
-//            component.updateBy(this);
-//        }
-//
-//    }
-
-    public void update(){
-        for(RenderableInterface renderable : renderables.keySet()){
-            updateRenderable(renderable);
-        }
-    }
 
     private void updateRenderable(RenderableInterface renderable){
         renderables.get(renderable).relocate(renderable.getX(), renderable.getY());

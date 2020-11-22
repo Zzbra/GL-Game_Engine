@@ -15,7 +15,9 @@ public interface PhysicsInterface {
 
     // Getter and setter for the hitbox of the entity
     double getWidth();
+    void setWidth(double width);
     double getHeight();
+    void setHeight(double height);
 
     // Getter and setter for the physics behaviour of the entity
     default boolean isMovable() { return false;};

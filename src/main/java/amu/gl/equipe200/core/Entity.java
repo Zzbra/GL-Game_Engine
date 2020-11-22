@@ -183,19 +183,19 @@ public abstract class Entity {
 
 
 
-    public double getWidth() {
-        return w;
-    }
-
-    public double getHeight() {
-        return h;
-    }
-
-    public void setWidth(double w) { this.w = w; }
-
-    public void setHeight(double h) {
-        this.h = h;
-    }
+//    public double getWidth() {
+//        return w;
+//    }
+//
+//    public double getHeight() {
+//        return h;
+//    }
+//
+//    public void setWidth(double w) { this.w = w; }
+//
+//    public void setHeight(double h) {
+//        this.h = h;
+//    }
 
     public double getCenterX() {
         return x + w * 0.5;
@@ -213,11 +213,11 @@ public abstract class Entity {
         this.components.put(type, component);
     }
     // TODO: per-pixel-collision
-    public boolean collidesWith( Entity otherSprite) {
-
-        return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
-
-    }
+//    public boolean collidesWith( Entity otherSprite) {
+//
+//        return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
+//
+//    }
 
     /**
      * Reduce health by the amount of damage that the given sprite can inflict

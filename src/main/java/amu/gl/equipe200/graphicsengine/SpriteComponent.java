@@ -14,10 +14,8 @@ public class SpriteComponent extends RenderableComponent {
         this.image = GraphicsEngine.getImages().get(imagePath);
         this.imageView = new ImageView(image);
         super.addToLayer(imageView);
-        entity.setWidth(image.getWidth());
-        entity.setHeight(image.getWidth());
-
-
+//        entity.setWidth(image.getWidth());
+//        entity.setHeight(image.getWidth());
     }
 
     public void updateBy(GraphicsEngine engine){

@@ -80,7 +80,8 @@ public class PacmanApp extends Application {
 
                 // update amu.gl.equipe200.entity in scene
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
-                graphicsEngine.update();
+                // TODO: compute the ellapsed time to send it to the engines
+                graphicsEngine.update(1);
 
 
                 // check if amu.gl.equipe200.entity can be removed
