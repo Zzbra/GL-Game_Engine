@@ -123,6 +123,8 @@ public class PacmanApp extends Application {
 
         // create player
         Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        player.setX(x);
+        player.setY(y);
         physicsEngine.registerEntity(player);
         graphicsEngine.addRenderable(player);
         inputEngine.addIOEntity(player);
@@ -153,6 +155,8 @@ public class PacmanApp extends Application {
 
         // create a sprite
         Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene,"enemyImage", "playerfieldLayer" );
+        enemy.setX(x);
+        enemy.setY(y);
         physicsEngine.registerEntity(enemy);
         graphicsEngine.addRenderable(enemy);
 //        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
