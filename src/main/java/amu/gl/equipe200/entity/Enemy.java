@@ -80,23 +80,19 @@ public class Enemy
     public void setY(double y) { this.y = y; }
     @Override
     public double getXSpeed() { return this.xSpeed; }
-    @Override
     public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
     @Override
     public double getYSpeed() { return this.ySpeed; }
-    @Override
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
     @Override
     public double getWidth() {
         return this.width;
     }
-    @Override
     public void setWidth(double width) { this.width = width; }
     @Override
     public double getHeight() {
         return this.height;
     }
-    @Override
     public void setHeight(double height) {
         this.height = height;
     }
