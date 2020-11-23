@@ -1,5 +1,6 @@
 package amu.gl.equipe200.graphicsengine;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -15,15 +16,27 @@ public class LayerManager {
         this.layersByDepth = new ArrayList<>();
     }
 
-    public void addLayer(String name, int depth) {
-        RenderLayer layer = new RenderLayer(name);
+    public void add(int depth, String name) {
+        RenderLayer layer = new RenderLayer(name, depth);
         this.layersByName.put(name, layer);
         this.layersByDepth.add(depth, layer);
-
+        for (int i = depth + 1; i < this.layersByDepth.size(); i++){
+            this.layersByDepth.get(i).setDepth(i+1);
+        }
+    }
+    public void add(String name) {
+        RenderLayer layer = new RenderLayer(name, this.layersByDepth.size());
+        this.layersByName.put(name, layer);
+        this.layersByDepth.add(layer);
     }
 
-    public RenderLayer getLayer(String name) { return this.layersByName.get(name); }
-    public RenderLayer getLayer(int depth) { return this.layersByDepth.get(depth); }
-    public RenderLayer getLayerDepth(String name) { for(int i=0; i < this.layerBy) }
+    public RenderLayer get(String name) { return this.layersByName.get(name); }
+    public RenderLayer get(int depth) { return this.layersByDepth.get(depth); }
 
+    public void addNodeToLayer(String name, Node node) {
+        this.layersByName.get(name).getChildren().add(node);
+    }
+    public void addNodeAtDepth(int depth, Node node) {
+        this.layersByName.get(depth).getChildren().add(node);
+    }
 }
