@@ -98,7 +98,7 @@ public class Enemy
     @Override
     public String getID() { return null; }
     @Override
-    public String getImageName(long ellapsedTime) { return null; }@Override
+    public String getImageName(long elapsedTime) { return null; }@Override
     public String getImageName() {
         return this.imageName;
     }
