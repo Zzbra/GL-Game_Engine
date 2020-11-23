@@ -1,14 +1,14 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.graphicsengine.RenderableInterface;
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
 public class Enemy
         extends Entity
-        implements PhysicsInterface, RenderableInterface {
+        implements PhysicsInterface, GraphicsInterface {
 
     private String imageName, layerName;
 
@@ -61,10 +61,7 @@ public class Enemy
 //    @Override
 //    public void onExit(PhysicsComponent physicsComponent) {}
 
-    @Override
-    public String getImageName() {
-        return this.imageName;
-    }
+
 
 
     /****************************
@@ -80,25 +77,30 @@ public class Enemy
     public void setY(double y) { this.y = y; }
     @Override
     public double getXSpeed() { return this.xSpeed; }
-    @Override
     public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
     @Override
     public double getYSpeed() { return this.ySpeed; }
-    @Override
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
+    @Override
+    public double getR() { return this.r; }
     @Override
     public double getWidth() {
         return this.width;
     }
-    @Override
     public void setWidth(double width) { this.width = width; }
     @Override
     public double getHeight() {
         return this.height;
     }
-    @Override
     public void setHeight(double height) {
         this.height = height;
+    }
+    @Override
+    public String getID() { return null; }
+    @Override
+    public String getImageName(long ellapsedTime) { return null; }@Override
+    public String getImageName() {
+        return this.imageName;
     }
 
 
@@ -122,6 +124,9 @@ public class Enemy
         System.out.println(this.toString() + " has collided with " + others.toString());
     }
 
+    /**********************************
+     *    Physics Engine behaviour    *
+     **********************************/
 
 
 

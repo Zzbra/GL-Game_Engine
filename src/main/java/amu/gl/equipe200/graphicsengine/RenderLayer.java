@@ -5,5 +5,9 @@ import javafx.scene.layout.Pane;
 public class RenderLayer {
     public String name;
     public Pane pane;
-    public int depth;
+
+    public RenderLayer(String name) {
+        this.name = name;
+        this.pane = new Pane();
+    }
 }
