@@ -10,7 +10,7 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
 
     private String imageName;
     private String layerName;
-    private double width = 50, height = 50;
+    private double width = 35, height = 35;
 
     public SuperFruit(double x, double y,
                       GameWorld gamescene,

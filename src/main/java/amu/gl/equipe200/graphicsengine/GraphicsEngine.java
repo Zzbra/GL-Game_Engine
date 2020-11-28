@@ -81,7 +81,7 @@ public class GraphicsEngine
             java.lang.System.err.println("Pas trouve");
         }
         try {
-            IMAGEMAP.put("SuperFruit", new Image( "SuperFruit.jpg", 50, 50, true, true));
+            IMAGEMAP.put("SuperFruit", new Image( "SuperFruit.jpg", 35, 35, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }

@@ -109,23 +109,26 @@ public class Player
         // TODO
         //System.out.println(this.toString() + " has collided with " + others.toString());
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
-            new Thread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    isSolid = false;
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    isSolid = true;
-                }
-            }).start();
+            superPowerActive();
         }
     }
 
+    public void superPowerActive(){
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                isSolid = false;
+                    long startTime=System.currentTimeMillis();
+                    long time=System.currentTimeMillis();
+                    while (time<(startTime+5000)) {
+                        time=System.currentTimeMillis();
+                    }
+                isSolid = true;
+            }
+        }).start();
+    }
 
     /********************************
      *    Input Engine Behaviour    *
