@@ -8,13 +8,15 @@ import amu.gl.equipe200.physicsengine.PhysicsInterface;
 public class Block extends Entity implements RenderableInterface, PhysicsInterface {
 
     private String imageName, layerName;
+    private double width, height;
 
-    public Block(double x, double y, String imageName, String layerName) {
+    public Block(double x, double y, String imageName, String layerName, double width, double height) {
         this.setX(x);
         this.setY(y);
         this.imageName = imageName;
         this.layerName = layerName;
-
+        this.width = width;
+        this.height = height;
     }
 
 
@@ -34,13 +36,11 @@ public class Block extends Entity implements RenderableInterface, PhysicsInterfa
     }
 
     @Override
-    public double getWidth() {
-        return 0;
-    }
+    public double getWidth() { return width; }
 
     @Override
     public double getHeight() {
-        return 0;
+        return height;
     }
 
     @Override
@@ -52,6 +52,8 @@ public class Block extends Entity implements RenderableInterface, PhysicsInterfa
     public void checkRemovability() {
 
     }
+
+
 
     @Override
     public String getImageName() {
