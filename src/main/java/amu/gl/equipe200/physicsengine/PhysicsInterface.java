@@ -1,5 +1,7 @@
 package amu.gl.equipe200.physicsengine;
 
+import amu.gl.equipe200.gameworld.Settings;
+
 public interface PhysicsInterface {
     // Getter and setter for the position
     double getX();
@@ -20,6 +22,8 @@ public interface PhysicsInterface {
     default boolean isWorldBounded() { return false; }
     default boolean isCollidable() { return false; }
     default boolean isSolid() { return false; }
+
+    Settings.Tag getTag();
 
     // Callback of the physics engine
     default void onWorldEnds() {}
