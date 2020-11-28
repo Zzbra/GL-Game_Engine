@@ -15,7 +15,7 @@ public class Player
 
     private String imagePath;
     private String layerName;
-    private boolean isSolid;
+    private volatile boolean isSolid;
 
     private double speed;
 
@@ -122,10 +122,10 @@ public class Player
             @Override
             public void run()
             {
-                isSolid = false;
                     long startTime=System.currentTimeMillis();
                     long time=System.currentTimeMillis();
                     while (time<(startTime+5000)) {
+                        isSolid = false;
                         time=System.currentTimeMillis();
                     }
                 isSolid = true;
