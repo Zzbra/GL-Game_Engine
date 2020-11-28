@@ -171,7 +171,7 @@ public class PacmanApp extends Application {
     }
 
     private void spawnSuperFruit(boolean random){
-        if( random && rnd.nextInt(Settings.ENEMY_SPAWN_RANDOMNESS) != 0) {
+        if( random && rnd.nextInt(Settings.SUPERFRUIT_SPAWN_RANDOMNESS) != 0) {
             return;
         }
 

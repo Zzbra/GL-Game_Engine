@@ -109,7 +109,20 @@ public class Player
         // TODO
         //System.out.println(this.toString() + " has collided with " + others.toString());
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
-            this.isSolid=false;
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    isSolid = false;
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    isSolid = true;
+                }
+            }).start();
         }
     }
 
@@ -119,7 +132,7 @@ public class Player
      ********************************/
     public void reactToInput(String key) {
         key = key.toUpperCase();
-        System.out.println(this + "recieved input " + key);
+        //System.out.println(this + "recieved input " + key);
         if (key.equals(upKey)) {
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SHIP_SPEED);

@@ -13,6 +13,7 @@ public class Settings {
     public static double PLAYER_MISSILE_HEALTH = 200.0;
 
     public static int ENEMY_SPAWN_RANDOMNESS = 100;
+    public static int SUPERFRUIT_SPAWN_RANDOMNESS = 400;
 
     public static enum Tag {PLAYER, ENEMY, FRUIT};
 
