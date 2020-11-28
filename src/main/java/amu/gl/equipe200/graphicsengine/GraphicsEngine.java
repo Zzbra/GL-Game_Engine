@@ -70,7 +70,7 @@ public class GraphicsEngine
             java.lang.System.err.println("Pas trouve");
         }
         try {
-            IMAGEMAP.put("BlockImage", new Image( "Block.jpg", 50, 50, true, true));
+            IMAGEMAP.put("blockImage", new Image( "Block.jpg", 50, 50, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }

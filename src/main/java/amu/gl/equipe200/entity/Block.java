@@ -7,30 +7,21 @@ import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
 public class Block extends Entity implements RenderableInterface, PhysicsInterface {
 
-    public Block(double x, double y) {
+    private String imageName, layerName;
+
+    public Block(double x, double y, String imageName, String layerName) {
         this.setX(x);
         this.setY(y);
-    }
-
-    @Override
-    public double getX() {
-        return 0;
-    }
-
-    @Override
-    public void setX(double x) {
+        this.imageName = imageName;
+        this.layerName = layerName;
 
     }
 
-    @Override
-    public double getY() {
-        return 0;
-    }
 
-    @Override
-    public void setY(double y) {
 
-    }
+
+    public boolean isSolid() { return true; }
+    public boolean isCollidable() { return true; }
 
     @Override
     public double getXSpeed() {
@@ -64,11 +55,11 @@ public class Block extends Entity implements RenderableInterface, PhysicsInterfa
 
     @Override
     public String getImageName() {
-        return null;
+        return this.imageName;
     }
 
     @Override
     public String getLayerName() {
-        return null;
+        return this.layerName;
     }
 }

@@ -1,5 +1,6 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
@@ -19,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 /*
@@ -58,6 +61,7 @@ public class PacmanApp extends Application {
         playerIsCreated = false;
         createPlayers();
         playerIsCreated = true;
+        createMap("src\\main\\resources\\Map1.txt");
 
 
         gameLoop = new AnimationTimer() {
@@ -139,6 +143,42 @@ public class PacmanApp extends Application {
         graphicsEngine.addRenderable(player2);
         inputEngine.addIOEntity(player2);
         gameScene.getPlayers().add(player2);
+    }
+
+    private void createMap(String mapName){
+        int[][] mapGrid = getMapGrid(mapName);
+        double offset = Settings.SCENE_HEIGHT/16.0;
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                if(mapGrid[i][j] == 1) {
+                    Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer");
+                    block.setWidth(offset);
+                    block.setHealth(offset);
+                    graphicsEngine.addRenderable(block);
+                    physicsEngine.registerEntity(block);
+                }
+            }
+        }
+    }
+
+    private int[][] getMapGrid(String mapName){
+        File file = new File(mapName);
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int[][] mapTab = new int[16][16];
+        int i = 0;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            for (int j = 0; j < 16; j++) {
+                mapTab[i][j] = (int) line.charAt(j) - (int)'0' ;
+            }
+            i++;
+        }
+        return mapTab;
     }
 
     private void spawnEnemies( boolean random) {
