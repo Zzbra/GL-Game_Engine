@@ -1,7 +1,8 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.entity.Entity;
+import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
-import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 import amu.gl.equipe200.entity.Enemy;
@@ -16,7 +17,6 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -72,6 +72,7 @@ public class PacmanApp extends Application {
                 inputEngine.update();
                 // add random enemies
                 spawnEnemies( true);
+                spawnSuperFruit(true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
@@ -85,7 +86,7 @@ public class PacmanApp extends Application {
 
 
                 // check if amu.gl.equipe200.entity can be removed
-                gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
+                //gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
 
                 // remove removables from list, layer, etc
                 removeEntity( gameScene.getEnemies());
@@ -148,7 +149,8 @@ public class PacmanApp extends Application {
         }
 
         // random speed
-        double speed = rnd.nextDouble() * 1.0 + 2.0;
+        //double speed = rnd.nextDouble() * 1.0 + 2.0;
+        double speed = 1.0;
 
         // x position range: enemy is always fully inside the screen, no part of it is outside
         // y position: right on top of the view, so that it becomes visible with the next game iteration
@@ -166,6 +168,19 @@ public class PacmanApp extends Application {
         //enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
+    }
+
+    private void spawnSuperFruit(boolean random){
+        if( random && rnd.nextInt(Settings.ENEMY_SPAWN_RANDOMNESS) != 0) {
+            return;
+        }
+
+        double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
+        double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
+
+        SuperFruit superFruit = new SuperFruit(x,y,gameScene,"SuperFruit", "playerfieldLayer");
+        physicsEngine.registerEntity(superFruit);
+        graphicsEngine.addRenderable(superFruit);
     }
 
     private void removeEntity(List<? extends Entity> spriteList) {

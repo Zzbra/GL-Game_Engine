@@ -6,4 +6,5 @@ public interface RenderableInterface {
     double getR();
     String getImageName();
     String getLayerName();
+    boolean isRemovable();
 }

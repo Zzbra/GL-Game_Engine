@@ -3,8 +3,6 @@ package amu.gl.equipe200.entity;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.graphicsengine.RenderableInterface;
-
-import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
@@ -14,6 +12,7 @@ public class Player
 
     private String imagePath;
     private String layerName;
+    private boolean isSolid;
 
     private double speed;
 
@@ -29,6 +28,9 @@ public class Player
      */
     private String upKey, downKey, leftKey, rightKey;
 
+    public Player(){
+
+    }
 
     public Player(double x, double y, double r,
                   double dx, double dy, double dr,
@@ -41,6 +43,7 @@ public class Player
         this.imagePath = imagePath;
         this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
+        isSolid=true;
     }
 
 
@@ -95,7 +98,7 @@ public class Player
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isSolid() { return true; }
+    public boolean isSolid() { return isSolid; }
     @Override
     public void onWorldEnds() {
         // TODO
@@ -106,7 +109,7 @@ public class Player
         // TODO
         System.out.println(this.toString() + " has collided with " + others.toString());
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
-
+            this.isSolid=false;
         }
     }
 
