@@ -69,6 +69,7 @@ public abstract class Entity {
 
     }
 
+    public Entity(){};
 
 
     public void addToLayer(Node node) {
@@ -212,6 +213,9 @@ public abstract class Entity {
     public void addComponent(Class<? extends Component> type, Component component){
         this.components.put(type, component);
     }
+
+
+
     // TODO: per-pixel-collision
 //    public boolean collidesWith( Entity otherSprite) {
 //

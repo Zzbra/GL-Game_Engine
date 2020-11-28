@@ -14,7 +14,7 @@ public class Settings {
 
     public static int ENEMY_SPAWN_RANDOMNESS = 100;
 
-    public static enum Tag {PLAYER, ENEMY} ;
+    public static enum Tag {PLAYER, ENEMY, FRUIT};
 
     // Size of the physical world in which the entities are
     private Pair<Double, Double> worldSize = Pair.create(100d, 100d);
