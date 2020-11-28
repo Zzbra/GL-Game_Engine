@@ -69,6 +69,7 @@ public abstract class Entity {
 
     }
 
+    public Entity(){};
 
 
     public void addToLayer(Node node) {
