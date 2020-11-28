@@ -36,6 +36,11 @@ public class PhysicsEngine
 
     public void update(long ellapsedTime){
         for(PhysicsInterface entity : this.physicsEntities) {
+            if(entity.isRemovable()){
+                physicsEntities.remove(entity);
+                continue;
+            }
+
             // Check if the entity is movable, as collidable only entities does not require any update
             if(!entity.isMovable()) continue;
 
@@ -116,7 +121,9 @@ public class PhysicsEngine
             if (collide(entity, newPosition, toCheck)) {
                 // trigger the collision call back
                 entity.onCollide(toCheck);
-                toCheck.onCollide(entity);
+
+                //En a t'on vraiment besoin ?
+                //toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
                 if (entity.isSolid() && toCheck.isSolid()) newPosition = computeCollidedPosition(entity, newPosition, toCheck);

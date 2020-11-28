@@ -3,8 +3,6 @@ package amu.gl.equipe200.entity;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.graphicsengine.RenderableInterface;
-
-import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
@@ -17,6 +15,7 @@ public class Player
 
     private String imagePath;
     private String layerName;
+    private boolean isSolid;
 
     private double speed;
 
@@ -32,6 +31,9 @@ public class Player
      */
     private String upKey, downKey, leftKey, rightKey;
 
+    public Player(){
+
+    }
 
     public Player(double x, double y, double r,
                   double dx, double dy, double dr,
@@ -44,6 +46,7 @@ public class Player
         this.imagePath = imagePath;
         this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
+        isSolid=true;
     }
 
 
@@ -98,28 +101,44 @@ public class Player
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isSolid() { return true; }
+    public boolean isSolid() { return isSolid; }
     @Override
     public void onWorldEnds() {
         // TODO
-        System.out.println(this.toString() + " has reach the end of the world");
+        //System.out.println(this.toString() + " has reach the end of the world");
     }
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collided with " + others.toString());
+        //System.out.println(this.toString() + " has collided with " + others.toString());
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
-
+            superPowerActive();
         }
     }
 
+    public void superPowerActive(){
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                isSolid = false;
+                    long startTime=System.currentTimeMillis();
+                    long time=System.currentTimeMillis();
+                    while (time<(startTime+5000)) {
+                        time=System.currentTimeMillis();
+                    }
+                isSolid = true;
+            }
+        }).start();
+    }
 
     /********************************
      *    Input Engine Behaviour    *
      ********************************/
     public void reactToInput(String key) {
         key = key.toUpperCase();
-        System.out.println(this + "recieved input " + key);
+        //System.out.println(this + "recieved input " + key);
         if (key.equals(upKey)) {
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SHIP_SPEED);

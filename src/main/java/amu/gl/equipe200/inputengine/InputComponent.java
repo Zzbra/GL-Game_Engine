@@ -1,8 +1,7 @@
 package amu.gl.equipe200.inputengine;
 
 import amu.gl.equipe200.core.Component;
-import amu.gl.equipe200.core.Entity;
-import amu.gl.equipe200.system.InputEngine;
+import amu.gl.equipe200.entity.Entity;
 
 public abstract class InputComponent extends Component {
 

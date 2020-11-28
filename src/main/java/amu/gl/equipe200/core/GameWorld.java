@@ -1,5 +1,6 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.entity.Entity;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

@@ -1,6 +1,6 @@
 package amu.gl.equipe200.graphicsengine;
 
-import amu.gl.equipe200.core.Entity;
+import amu.gl.equipe200.entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

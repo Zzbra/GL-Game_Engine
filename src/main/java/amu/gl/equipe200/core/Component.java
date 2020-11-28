@@ -1,5 +1,6 @@
 package amu.gl.equipe200.core;
 
+import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.system.InputEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;

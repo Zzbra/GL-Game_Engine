@@ -2,7 +2,6 @@ package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.graphicsengine.RenderableInterface;
-import amu.gl.equipe200.core.Entity;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
@@ -110,12 +109,12 @@ public class Enemy
     @Override
     public void onWorldEnds() {
         // TODO
-        System.out.println(this.toString() + " has reach the end of the world");
+        //System.out.println(this.toString() + " has reach the end of the world");
     }
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collided with " + others.toString());
+        //System.out.println(this.toString() + " has collided with " + others.toString());
     }
 
 

@@ -1,8 +1,7 @@
 package amu.gl.equipe200.inputengine;
 
-import amu.gl.equipe200.core.Entity;
+import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.gameworld.Settings;
-import amu.gl.equipe200.inputengine.InputComponent;
 
 public class PlayerInputComponent extends InputComponent {
 
