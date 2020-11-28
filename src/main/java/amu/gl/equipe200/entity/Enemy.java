@@ -109,12 +109,12 @@ public class Enemy
     @Override
     public void onWorldEnds() {
         // TODO
-        System.out.println(this.toString() + " has reach the end of the world");
+        //System.out.println(this.toString() + " has reach the end of the world");
     }
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collided with " + others.toString());
+        //System.out.println(this.toString() + " has collided with " + others.toString());
     }
 
 

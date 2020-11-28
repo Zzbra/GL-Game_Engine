@@ -68,7 +68,7 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
 
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collided with " + others.toString());
+       // System.out.println(this.toString() + " has collided with " + others.toString());
 
         if(others.getTag() == Settings.Tag.valueOf("PLAYER")){
             setRemovable(true);
