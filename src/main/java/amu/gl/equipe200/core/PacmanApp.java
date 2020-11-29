@@ -77,7 +77,7 @@ public class PacmanApp extends Application {
                 //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
                 inputEngine.update();
                 // add random enemies
-                spawnEnemies( true);
+                //spawnEnemies( true);
               //  spawnSuperFruit(true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
@@ -125,7 +125,7 @@ public class PacmanApp extends Application {
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
-        double x = Settings.SCENE_WIDTH / 3.0;
+        double x = Settings.SCENE_WIDTH / 6.0;
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player1
@@ -139,7 +139,7 @@ public class PacmanApp extends Application {
         gameScene.getPlayers().add(player1);
 
         Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
-        player2.setX(2 * x);
+        player2.setX(5 * x);
         player2.setY(y);
         player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
         physicsEngine.registerEntity(player2);
@@ -157,6 +157,11 @@ public class PacmanApp extends Application {
                     Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer", offset, offset);
                     graphicsEngine.addRenderable(block);
                     physicsEngine.registerEntity(block);
+                }
+                if(mapGrid[i][j] == 2){
+                    SuperFruit superFruit = new SuperFruit(j * offset, i * offset,gameScene,"SuperFruit", "playerfieldLayer");
+                    physicsEngine.registerEntity(superFruit);
+                    graphicsEngine.addRenderable(superFruit);
                 }
             }
         }
