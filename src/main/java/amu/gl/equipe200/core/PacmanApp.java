@@ -1,18 +1,12 @@
 package amu.gl.equipe200.core;
-
-
 import amu.gl.equipe200.entity.Block;
-
 import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
-
 import amu.gl.equipe200.entity.Enemy;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
-
-
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.system.InputEngine;
 import javafx.animation.AnimationTimer;
@@ -21,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;

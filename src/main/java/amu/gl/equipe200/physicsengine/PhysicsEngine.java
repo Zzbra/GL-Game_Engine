@@ -123,7 +123,7 @@ public class PhysicsEngine
                 entity.onCollide(toCheck);
 
                 //En a t'on vraiment besoin ?
-                toCheck.onCollide(entity);
+                //toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
                 if (entity.isSolid() && toCheck.isSolid()) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
