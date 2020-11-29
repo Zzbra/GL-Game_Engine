@@ -78,7 +78,7 @@ public class PacmanApp extends Application {
                 inputEngine.update();
                 // add random enemies
                 spawnEnemies( true);
-                spawnSuperFruit(true);
+              //  spawnSuperFruit(true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
