@@ -78,7 +78,7 @@ public class PacmanApp extends Application {
                 inputEngine.update();
                 // add random enemies
                 spawnEnemies( true);
-                spawnSuperFruit(true);
+              //  spawnSuperFruit(true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
@@ -154,7 +154,7 @@ public class PacmanApp extends Application {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
                 if(mapGrid[i][j] == 1) {
-                    Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer", offset-10, offset-10);
+                    Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer", offset, offset);
                     graphicsEngine.addRenderable(block);
                     physicsEngine.registerEntity(block);
                 }

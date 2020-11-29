@@ -16,7 +16,6 @@ public class Player
     private String imagePath;
     private String layerName;
     private volatile boolean isSolid;
-
     private double speed;
 
     /**
@@ -24,7 +23,7 @@ public class Player
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double width = 50, height = 50;
+    private double width = 40, height = 40;
 
     /**
      * Input variables
@@ -99,7 +98,10 @@ public class Player
     @Override
     public boolean isWorldBounded() { return true; }
     @Override
-    public boolean isCollidable() { return true; }
+    public boolean isCollidable() { return true;}
+
+    public void setIsSolid(boolean isSolid) {this.isSolid=isSolid;}
+
     @Override
     public boolean isSolid() { return isSolid; }
     @Override
@@ -139,6 +141,9 @@ public class Player
     public void reactToInput(String key) {
         key = key.toUpperCase();
         //System.out.println(this + "recieved input " + key);
+        if(key.equals("K")) {
+           setIsSolid(!isSolid);
+        }
         if (key.equals(upKey)) {
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SHIP_SPEED);
