@@ -66,7 +66,7 @@ public class GraphicsEngine
 
     private void loadImages() {
         try {
-            IMAGEMAP.put("playerImage", new Image("pacman.jpg", 50, 50, true, true));
+            IMAGEMAP.put("playerImage", new Image("pacman.jpg", 40, 40, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
