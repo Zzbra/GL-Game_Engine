@@ -49,15 +49,4 @@ public abstract class GameWorld {
     // Set la scène du GameWorld
     public void setScene(Scene scene){this.scene = scene;}
 
-    public List<Component> getComponentsByType(Class<? extends Component> c){
-        List<Component> components = new LinkedList<>();
-        for(Entity entity : getEntities()){
-            Component component = entity.getComponent(c);
-            if(component != null) {
-                components.add(component);
-            }
-        }
-        return components;
-    }
-
 }

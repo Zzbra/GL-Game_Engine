@@ -1,6 +1,5 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Component;
 import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
@@ -8,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class Entity {
     protected ArrayList<Settings.Tag> collisionsCheck;
@@ -38,9 +36,8 @@ public abstract class Entity {
     private boolean canMove = true;
     private Settings.Tag tag;
 
-    /*** ColiderComponent ***/
-//    private ArrayList<PhysicsComponent> collisionManifold;
-    private HashMap<Class<? extends Component>, Component> components;
+
+
 
     public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
 
@@ -61,7 +58,6 @@ public abstract class Entity {
         //this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
         //this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
 
-        this.components = new HashMap<>();
         /*** Collidable ***/
 //        collisionManifold = new ArrayList<>();
         this.collisionsCheck = new ArrayList<>();
@@ -217,13 +213,6 @@ public abstract class Entity {
         return y + h * 0.5;
     }
 
-    public Component getComponent(Class<? extends Component> type){
-        return this.components.get(type);
-    }
-
-    public void addComponent(Class<? extends Component> type, Component component){
-        this.components.put(type, component);
-    }
 
 
 
