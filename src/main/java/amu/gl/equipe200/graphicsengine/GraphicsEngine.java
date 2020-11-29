@@ -94,10 +94,6 @@ public class GraphicsEngine
         renderables.get(renderable).setRotate(renderable.getR());
     }
 
-    // TODO : Déplacer les systems dans core
-    public void update(SpriteComponent component) {
-        ImageView imageView = component.getView();
-        imageView.relocate(component.getX(), component.getY());
-        imageView.setRotate(component.getR());
-    }
+
+
 }
