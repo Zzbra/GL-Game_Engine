@@ -89,6 +89,14 @@ public abstract class Entity {
         this.layer = layer;
     }
 
+    public double getW() { return w; }
+
+    public double getH() { return h; }
+
+    public void setW(double w) { this.w = w; }
+
+    public void setH(double h) { this.h = h; }
+
     public double getX() {
         return x;
     }

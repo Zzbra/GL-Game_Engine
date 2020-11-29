@@ -6,6 +6,9 @@ import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
+/**
+ *  La super class Entity a des paramètres w et h qui sont aussi width et height. A changer du coup.
+ */
 public class Player
         extends Entity
         implements PhysicsInterface, RenderableInterface, IOInterface {
