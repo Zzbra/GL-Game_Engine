@@ -24,7 +24,7 @@ public class Player
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double width = 50, height = 50;
+    private double width = 40, height = 40;
 
     /**
      * Input variables
@@ -145,19 +145,19 @@ public class Player
             setR(270);
         }
         if (key.equals(downKey)) {
-                setXSpeed(0);
-                setYSpeed(Settings.PLAYER_SHIP_SPEED);
-                setR(90);
+            setXSpeed(0);
+            setYSpeed(Settings.PLAYER_SHIP_SPEED);
+            setR(90);
         }
         if (key.equals(leftKey)) {
-                setXSpeed(-Settings.PLAYER_SHIP_SPEED);
-                setYSpeed(0);
-                setR(180);
+            setXSpeed(-Settings.PLAYER_SHIP_SPEED);
+            setYSpeed(0);
+            setR(180);
         }
         if (key.equals(rightKey)) {
-                setXSpeed(Settings.PLAYER_SHIP_SPEED);
-                setYSpeed(0);
-                setR(0);
+            setXSpeed(Settings.PLAYER_SHIP_SPEED);
+            setYSpeed(0);
+            setR(0);
         }
 
     }
