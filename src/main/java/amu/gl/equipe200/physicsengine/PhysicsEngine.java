@@ -18,7 +18,7 @@ public class PhysicsEngine
     private double worldHeight;
     private double worldWidth;
 
-    private static double eps = -0.5;
+    private static double eps = -2;
 
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();
@@ -123,7 +123,7 @@ public class PhysicsEngine
                 entity.onCollide(toCheck);
 
                 //En a t'on vraiment besoin ?
-                //toCheck.onCollide(entity);
+                toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
                 if (entity.isSolid() && toCheck.isSolid()) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
@@ -163,12 +163,12 @@ public class PhysicsEngine
 
         // the entity move on the X axis, compute the final X position
         if (Double.compare(entity.getXSpeed(), eps) > 0
-            && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
+            && Double.compare(entity.getX() + entity.getWidth()-eps, toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
 //            finalX = min(finalX, toCheck.getX() - entity.getWidth());
             finalX = entity.getX();
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
-            && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
+            && Double.compare(entity.getX()+eps,  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)
 //            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
             finalX = entity.getX();
@@ -177,13 +177,13 @@ public class PhysicsEngine
 
         // the entity move on the Y axis, compute the final Y position
         if (Double.compare(entity.getYSpeed(), eps) > 0
-            && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
+            && Double.compare(entity.getY() + entity.getHeight()-eps, toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
 //            finalY = min(finalY, toCheck.getY() - entity.getHeight());
             finalY = entity.getY();
 
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
-            && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
+            && Double.compare(entity.getY()+eps,  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
 //            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
             finalY = entity.getY();

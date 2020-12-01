@@ -71,7 +71,7 @@ public class PacmanApp extends Application {
                 inputEngine.update();
 
                 //spawnEnemies( true);
-                //spawnSuperFruit(true);
+                spawnSuperFruit(true);
                 blinky.update();
                 //clyde.update();
 
