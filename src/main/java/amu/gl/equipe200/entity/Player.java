@@ -116,9 +116,17 @@ public class Player
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
             superPowerActive();
         }
+
+        if(others.getTag() == Settings.Tag.valueOf("ENEMY")){
+            triggerLose();
+        }
     }
 
-    public void superPowerActive(){
+    void triggerLose(){
+        System.out.println("PERDU");
+    }
+
+    void superPowerActive(){
         new Thread(new Runnable()
         {
             @Override

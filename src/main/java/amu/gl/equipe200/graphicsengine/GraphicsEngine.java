@@ -85,6 +85,11 @@ public class GraphicsEngine
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }
+        try {
+            IMAGEMAP.put("Clyde", new Image( "Clyde.jpg", 35, 35, true, true));
+        }catch(Exception e){
+            java.lang.System.err.println("Pas trouve");
+        }
     }
 
 

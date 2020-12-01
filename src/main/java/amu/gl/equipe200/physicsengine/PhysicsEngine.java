@@ -18,7 +18,7 @@ public class PhysicsEngine
     private double worldHeight;
     private double worldWidth;
 
-    private static double eps = 0.000001d;
+    private static double eps = -0.5;
 
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();

@@ -1,11 +1,7 @@
 package amu.gl.equipe200.core;
-import amu.gl.equipe200.entity.Block;
-import amu.gl.equipe200.entity.Entity;
-import amu.gl.equipe200.entity.SuperFruit;
+import amu.gl.equipe200.entity.*;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
-import amu.gl.equipe200.entity.Enemy;
-import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.system.InputEngine;
@@ -54,8 +50,12 @@ public class PacmanApp extends Application {
         graphicsEngine.loadScene(mainMenuScene.getScene());
 
         playerIsCreated = false;
-        createPlayers();
+        Player pacMan = createPlayers();
         playerIsCreated = true;
+
+        Blinky blinky = createBlinky(pacMan);
+        Clyde clyde = createClyde(pacMan);
+
         createMap("src\\main\\resources\\Map1.txt");
 
 
@@ -69,9 +69,11 @@ public class PacmanApp extends Application {
 
                 //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
                 inputEngine.update();
-                // add random enemies
-                spawnEnemies( true);
-              //  spawnSuperFruit(true);
+
+                //spawnEnemies( true);
+                //spawnSuperFruit(true);
+                blinky.update();
+                //clyde.update();
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
@@ -115,8 +117,7 @@ public class PacmanApp extends Application {
 
 
 
-
-    private void createPlayers() {
+    private Player createPlayers() {
         // center horizontally, position at 70% vertically
         double x = Settings.SCENE_WIDTH / 3.0;
         double y = Settings.SCENE_HEIGHT * 0.7;
@@ -139,6 +140,38 @@ public class PacmanApp extends Application {
         graphicsEngine.addRenderable(player2);
         inputEngine.addIOEntity(player2);
         gameScene.getPlayers().add(player2);
+
+        return player1;
+    }
+
+    private Blinky createBlinky(Player pacMan) {
+
+        double x = Settings.SCENE_WIDTH / 7.0;
+        double y = Settings.SCENE_HEIGHT * 0.3;
+
+        Blinky blinky = new Blinky(x, y, 0, 0, 0, 0, 1, 1, gameScene, "enemyImage", "playerfieldLayer", pacMan);
+        blinky.setX(x);
+        blinky.setY(y);
+        physicsEngine.registerEntity(blinky);
+        graphicsEngine.addRenderable(blinky);
+        gameScene.getEnemies().add(blinky);
+
+        return blinky;
+    }
+
+    private Clyde createClyde(Player pacMan) {
+
+        double x = Settings.SCENE_WIDTH / 0.5;
+        double y = Settings.SCENE_HEIGHT * 0.5;
+
+        Clyde Clyde = new Clyde(x, y, 0, 0, 0, 0, 1, 1, gameScene, "Clyde", "playerfieldLayer", pacMan);
+        Clyde.setX(x);
+        Clyde.setY(y);
+        physicsEngine.registerEntity(Clyde);
+        graphicsEngine.addRenderable(Clyde);
+        gameScene.getEnemies().add(Clyde);
+
+        return Clyde;
     }
 
     private void createMap(String mapName){
