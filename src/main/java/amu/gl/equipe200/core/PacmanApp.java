@@ -1,6 +1,9 @@
 package amu.gl.equipe200.core;
 
 
+import amu.gl.equipe200.IAEngine.AStar;
+import amu.gl.equipe200.IAEngine.Cell;
+import amu.gl.equipe200.IAEngine.Grid;
 import amu.gl.equipe200.entity.Block;
 
 import amu.gl.equipe200.entity.Entity;
@@ -63,7 +66,12 @@ public class PacmanApp extends Application {
         playerIsCreated = false;
         createPlayers();
         playerIsCreated = true;
-        createMap("src\\main\\resources\\Map1.txt");
+        // int [y][x]
+        int[][] mat = createMap("src\\main\\resources\\Map1.txt");
+        Grid grid = new Grid(mat);
+        AStar algo = new AStar(grid);
+        ArrayList<Cell> path = algo.start(grid.getCell(0, 5), grid.getCell(4,11));
+        System.out.println(path);
 
 
         gameLoop = new AnimationTimer() {
@@ -148,8 +156,9 @@ public class PacmanApp extends Application {
         gameScene.getPlayers().add(player2);
     }
 
-    private void createMap(String mapName){
+    private int[][] createMap(String mapName){
         int[][] mapGrid = getMapGrid(mapName);
+        System.out.println(mapGrid);
         double offset = Settings.SCENE_HEIGHT/16.0;
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
@@ -165,6 +174,7 @@ public class PacmanApp extends Application {
                 }
             }
         }
+        return mapGrid;
     }
 
     private int[][] getMapGrid(String mapName){
