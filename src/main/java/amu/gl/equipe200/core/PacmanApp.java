@@ -1,7 +1,11 @@
 package amu.gl.equipe200.core;
 
+
+import amu.gl.equipe200.entity.Block;
+
+import amu.gl.equipe200.entity.Entity;
+import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
-import amu.gl.equipe200.graphicsengine.RenderableComponent;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 import amu.gl.equipe200.entity.Enemy;
@@ -16,9 +20,10 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 /*
@@ -58,6 +63,7 @@ public class PacmanApp extends Application {
         playerIsCreated = false;
         createPlayers();
         playerIsCreated = true;
+        createMap("src\\main\\resources\\Map1.txt");
 
 
         gameLoop = new AnimationTimer() {
@@ -71,7 +77,8 @@ public class PacmanApp extends Application {
                 //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
                 inputEngine.update();
                 // add random enemies
-                spawnEnemies( true);
+                //spawnEnemies( true);
+              //  spawnSuperFruit(true);
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
@@ -85,7 +92,7 @@ public class PacmanApp extends Application {
 
 
                 // check if amu.gl.equipe200.entity can be removed
-                gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
+                //gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
 
                 // remove removables from list, layer, etc
                 removeEntity( gameScene.getEnemies());
@@ -118,23 +125,66 @@ public class PacmanApp extends Application {
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
-        double x = Settings.SCENE_WIDTH / 2.0;
+        double x = Settings.SCENE_WIDTH / 6.0;
         double y = Settings.SCENE_HEIGHT * 0.7;
 
-        // create player
-        Player player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
-        physicsEngine.registerEntity(player);
-        graphicsEngine.addRenderable(player);
-        inputEngine.addIOEntity(player);
-        //RenderableComponent sprite = new SpriteComponent(player, "playerImage", "playerfieldLayer");
-        //player.initShip(sprite);
-//        PhysicsComponent physicsComponent = new PhysicsComponent(player, true, 0 - sprite.getWidth() / 2.0,
-//                0 - sprite.getHeight() / 2.0, Settings.SCENE_WIDTH - sprite.getWidth() / 2.0, Settings.SCENE_HEIGHT -sprite.getHeight() / 2.0);
-//        InputComponent inputComponent = new PlayerInputComponent(player);
-        // register player
-        gameScene.getPlayers().add(player);
-        playerIsCreated = true;
+        // create player1
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        player1.setX(x);
+        player1.setY(y);
+        player1.setControls("Z", "S", "Q", "D");
+        physicsEngine.registerEntity(player1);
+        graphicsEngine.addRenderable(player1);
+        inputEngine.addIOEntity(player1);
+        gameScene.getPlayers().add(player1);
 
+        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        player2.setX(5 * x);
+        player2.setY(y);
+        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
+        physicsEngine.registerEntity(player2);
+        graphicsEngine.addRenderable(player2);
+        inputEngine.addIOEntity(player2);
+        gameScene.getPlayers().add(player2);
+    }
+
+    private void createMap(String mapName){
+        int[][] mapGrid = getMapGrid(mapName);
+        double offset = Settings.SCENE_HEIGHT/16.0;
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                if(mapGrid[i][j] == 1) {
+                    Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer", offset, offset);
+                    graphicsEngine.addRenderable(block);
+                    physicsEngine.registerEntity(block);
+                }
+                if(mapGrid[i][j] == 2){
+                    SuperFruit superFruit = new SuperFruit(j * offset, i * offset,gameScene,"SuperFruit", "playerfieldLayer");
+                    physicsEngine.registerEntity(superFruit);
+                    graphicsEngine.addRenderable(superFruit);
+                }
+            }
+        }
+    }
+
+    private int[][] getMapGrid(String mapName){
+        File file = new File(mapName);
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int[][] mapTab = new int[16][16];
+        int i = 0;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            for (int j = 0; j < 16; j++) {
+                mapTab[i][j] = (int) line.charAt(j) - (int)'0' ;
+            }
+            i++;
+        }
+        return mapTab;
     }
 
     private void spawnEnemies( boolean random) {
@@ -144,7 +194,8 @@ public class PacmanApp extends Application {
         }
 
         // random speed
-        double speed = rnd.nextDouble() * 1.0 + 2.0;
+        //double speed = rnd.nextDouble() * 1.0 + 2.0;
+        double speed = 1.0;
 
         // x position range: enemy is always fully inside the screen, no part of it is outside
         // y position: right on top of the view, so that it becomes visible with the next game iteration
@@ -153,6 +204,8 @@ public class PacmanApp extends Application {
 
         // create a sprite
         Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene,"enemyImage", "playerfieldLayer" );
+        enemy.setX(x);
+        enemy.setY(y);
         physicsEngine.registerEntity(enemy);
         graphicsEngine.addRenderable(enemy);
 //        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
@@ -160,6 +213,19 @@ public class PacmanApp extends Application {
         //enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
         // manage sprite
         gameScene.getEnemies().add( enemy);
+    }
+
+    private void spawnSuperFruit(boolean random){
+        if( random && rnd.nextInt(Settings.SUPERFRUIT_SPAWN_RANDOMNESS) != 0) {
+            return;
+        }
+
+        double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
+        double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
+
+        SuperFruit superFruit = new SuperFruit(x,y,gameScene,"SuperFruit", "playerfieldLayer");
+        physicsEngine.registerEntity(superFruit);
+        graphicsEngine.addRenderable(superFruit);
     }
 
     private void removeEntity(List<? extends Entity> spriteList) {
@@ -170,7 +236,7 @@ public class PacmanApp extends Application {
             if( sprite.isRemovable()) {
                 physicsEngine.removeEntity((PhysicsInterface) iter);
                 // remove from layer
-                sprite.getComponent(RenderableComponent.class).remove();
+//                sprite.getComponent(RenderableComponent.class).remove();
                 // remove from list
                 iter.remove();
             }

@@ -18,6 +18,8 @@ public class PhysicsEngine
     private double worldHeight;
     private double worldWidth;
 
+    private static double eps = 0.000001d;
+
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();
         this.worldWidth = worldWidth;
@@ -34,6 +36,11 @@ public class PhysicsEngine
 
     public void update(long ellapsedTime){
         for(PhysicsInterface entity : this.physicsEntities) {
+            if(entity.isRemovable()){
+                physicsEntities.remove(entity);
+                continue;
+            }
+
             // Check if the entity is movable, as collidable only entities does not require any update
             if(!entity.isMovable()) continue;
 
@@ -76,19 +83,19 @@ public class PhysicsEngine
         boolean triggered = false;
 
         // Check on X axis
-        if (newX < 0) {
+        if (Double.compare(newX, eps) <= 0) {
             triggered = true;
             newX = 0;
-        } else if (newX + entity.getWidth() > this.worldWidth) {
+        } else if (Double.compare(newX + entity.getWidth(), this.worldWidth - eps) >= 0) {
             triggered = true;
             newX = this.worldWidth - entity.getWidth();
         }
 
         // Check on Y axis
-        if (newY < 0) {
+        if (Double.compare(newY, eps) <= 0) {
             triggered = true;
             newY = 0;
-        } else if (newY + entity.getHeight() > this.worldHeight) {
+        } else if (Double.compare(newY + entity.getHeight(), this.worldHeight - eps) >= 0) {
             triggered = true;
             newY = this.worldHeight - entity.getHeight();
         }
@@ -114,6 +121,8 @@ public class PhysicsEngine
             if (collide(entity, newPosition, toCheck)) {
                 // trigger the collision call back
                 entity.onCollide(toCheck);
+
+                //En a t'on vraiment besoin ?
                 toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
@@ -133,10 +142,10 @@ public class PhysicsEngine
     private boolean collide(PhysicsInterface A,
                             Pair<Double, Double> newPosition,
                             PhysicsInterface B) {
-        return (B.getX() + B.getWidth() >= newPosition.first
-                && B.getX() <= newPosition.first + A.getWidth()
-                && B.getY() + B.getHeight() >= newPosition.second
-                && B.getY() <= newPosition.second + A.getHeight());
+        return (Double.compare(B.getX() + B.getWidth(), newPosition.first) >= 0
+                && Double.compare(B.getX(), newPosition.first + A.getWidth()) <= 0
+                && Double.compare(B.getY() + B.getHeight(), newPosition.second ) >=0
+                && Double.compare(B.getY(), newPosition.second + A.getHeight()) <= 0);
     }
 
     /**
@@ -153,27 +162,32 @@ public class PhysicsEngine
         Double finalY = newPosition.second;
 
         // the entity move on the X axis, compute the final X position
-        if (entity.getXSpeed() > 0
-                && entity.getX() + entity.getWidth() < toCheck.getX()) {
+        if (Double.compare(entity.getXSpeed(), eps) > 0
+            && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
-            finalX = min(finalX, toCheck.getX() - entity.getWidth());
-        }
-        if (entity.getXSpeed() < 0
-                && toCheck.getX() + toCheck.getWidth() < entity.getX()) {
+//            finalX = min(finalX, toCheck.getX() - entity.getWidth());
+            finalX = entity.getX();
+        } else if (Double.compare(entity.getXSpeed(), -eps) < 0
+            && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)
-            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
+//            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
+            finalX = entity.getX();
+
         }
 
         // the entity move on the Y axis, compute the final Y position
-        if (entity.getYSpeed() > 0
-                && entity.getY() + entity.getHeight() < toCheck.getY()) {
+        if (Double.compare(entity.getYSpeed(), eps) > 0
+            && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
-            finalY = min(finalY, toCheck.getY() - entity.getHeight());
-        }
-        if (entity.getYSpeed() < 0
-                && toCheck.getY() + toCheck.getHeight() < entity.getY()) {
+//            finalY = min(finalY, toCheck.getY() - entity.getHeight());
+            finalY = entity.getY();
+
+        } else if (Double.compare(entity.getYSpeed(), -eps) < 0
+            && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
-            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
+//            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
+            finalY = entity.getY();
+
         }
         return Pair.create(finalX, finalY);
     }

@@ -1,19 +1,15 @@
-package amu.gl.equipe200.core;
+package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.core.Engine;
+import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class Entity {
     protected ArrayList<Settings.Tag> collisionsCheck;
-    private GameWorld gameWorld;
-
-    private Pane layer;
-
-    private Engine collisionLister;
 
 
     private double x;
@@ -29,15 +25,11 @@ public abstract class Entity {
 
     private boolean removable = false;
 
-    private double w;
-    private double h;
-
     private boolean canMove = true;
     private Settings.Tag tag;
 
-    /*** ColiderComponent ***/
-//    private ArrayList<PhysicsComponent> collisionManifold;
-    private HashMap<Class<? extends Component>, Component> components;
+
+
 
     public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
 
@@ -51,39 +43,19 @@ public abstract class Entity {
         this.health = health;
         this.damage = damage;
 
-        //this.imageView = new ImageView(image);
-        //this.imageView.relocate(x, y);
-        //this.imageView.setRotate(r);
-
-        //this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
-        //this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
-
-        this.components = new HashMap<>();
         /*** Collidable ***/
 //        collisionManifold = new ArrayList<>();
         this.collisionsCheck = new ArrayList<>();
 
-        this.gameWorld = gameWorld;
-
-        //addToLayer();
 
     }
 
-
-
-    public void addToLayer(Node node) {
-        this.layer.getChildren().add(node);
-    }
+    public Entity(){};
 
 
 
-    public Pane getLayer() {
-        return layer;
-    }
 
-    public void setLayer(Pane layer) {
-        this.layer = layer;
-    }
+
 
     public double getX() {
         return x;
@@ -179,46 +151,6 @@ public abstract class Entity {
         return Double.compare(health, 0) > 0;
     }
 
-
-
-
-
-//    public double getWidth() {
-//        return w;
-//    }
-//
-//    public double getHeight() {
-//        return h;
-//    }
-//
-//    public void setWidth(double w) { this.w = w; }
-//
-//    public void setHeight(double h) {
-//        this.h = h;
-//    }
-
-    public double getCenterX() {
-        return x + w * 0.5;
-    }
-
-    public double getCenterY() {
-        return y + h * 0.5;
-    }
-
-    public Component getComponent(Class<? extends Component> type){
-        return this.components.get(type);
-    }
-
-    public void addComponent(Class<? extends Component> type, Component component){
-        this.components.put(type, component);
-    }
-    // TODO: per-pixel-collision
-//    public boolean collidesWith( Entity otherSprite) {
-//
-//        return ( otherSprite.getX() + otherSprite.getWidth() >= x && otherSprite.getY() + otherSprite.getHeight() >= y && otherSprite.getX() <= x + w && otherSprite.getY() <= y + h);
-//
-//    }
-
     /**
      * Reduce health by the amount of damage that the given sprite can inflict
      * @param sprite
@@ -255,43 +187,8 @@ public abstract class Entity {
     }
 
 
-    /***  Collidable   ***/
-    public void setCollisionLister(Engine listener){
-        this.collisionLister = listener;
-    }
-
-//    public void addToCollisionManifold(PhysicsComponent physicsComponent){
-//        this.collisionManifold.add(physicsComponent);
-//    }
-
-//    public void clearCollisionManifold(){
-//        this.collisionManifold.clear();
-//    }
-
-//    public boolean collisionStayed(PhysicsComponent physicsComponent){
-//        return this.collisionManifold.contains(physicsComponent);
-//    }
-
-//    public abstract void onCollide(PhysicsComponent physicsComponent);
-
-//    public boolean hasCollisions(){
-//        return !this.collisionManifold.isEmpty();
-//    }
-
-
-//    public void removeCollision(PhysicsComponent physicsComponent){
-//        this.collisionManifold.remove(physicsComponent);
-//    }
-
-//    public abstract void onCollisionStay(PhysicsComponent physicsComponent2);
-
     public void setTag(Settings.Tag tag){
         this.tag = tag;
     }
 
-//    public abstract void onExit(PhysicsComponent physicsComponent2);
-
-    public GameWorld getGameWorld(){
-        return this.gameWorld;
-    }
 }

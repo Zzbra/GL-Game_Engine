@@ -71,6 +71,10 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>amu.gl.equipe200.Main</mainClass>
+                    <launcher>launch.sh</launcher>
+                    <compress>2</compress>
+                    <jlinkZipName>pacman</jlinkZipName>
+                    <jlinkImageName>pacman</jlinkImageName>
                 </configuration>
             </plugin>
         </plugins>

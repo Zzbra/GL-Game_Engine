@@ -1,14 +1,13 @@
 package amu.gl.equipe200.entity;
 
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.graphicsengine.GraphicsInterface;
-import amu.gl.equipe200.core.Entity;
+import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
 public class Enemy
         extends Entity
-        implements PhysicsInterface, GraphicsInterface {
+        implements PhysicsInterface, RenderableInterface {
 
     private String imageName, layerName;
 
@@ -18,7 +17,7 @@ public class Enemy
     private double x, y;
     private double xSpeed, ySpeed;
     private double r, rSpeed;                   // WARNING:it's an angle not a position
-    private double width = 10, height = 10;
+    private double width = 50, height = 50;
 
 
 
@@ -61,7 +60,10 @@ public class Enemy
 //    @Override
 //    public void onExit(PhysicsComponent physicsComponent) {}
 
-
+    @Override
+    public String getImageName() {
+        return this.imageName;
+    }
 
 
     /****************************
@@ -82,8 +84,6 @@ public class Enemy
     public double getYSpeed() { return this.ySpeed; }
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
     @Override
-    public double getR() { return this.r; }
-    @Override
     public double getWidth() {
         return this.width;
     }
@@ -95,13 +95,6 @@ public class Enemy
     public void setHeight(double height) {
         this.height = height;
     }
-    @Override
-    public String getID() { return null; }
-    @Override
-    public String getImageName(long elapsedTime) { return null; }@Override
-    public String getImageName() {
-        return this.imageName;
-    }
 
 
     /**********************************
@@ -112,21 +105,18 @@ public class Enemy
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isSolid() { return false; }
+    public boolean isSolid() { return true; }
     @Override
     public void onWorldEnds() {
         // TODO
-        System.out.println(this.toString() + " has reach the end of the world");
+        //System.out.println(this.toString() + " has reach the end of the world");
     }
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        System.out.println(this.toString() + " has collided with " + others.toString());
+        //System.out.println(this.toString() + " has collided with " + others.toString());
     }
 
-    /**********************************
-     *    Physics Engine behaviour    *
-     **********************************/
 
 
 
