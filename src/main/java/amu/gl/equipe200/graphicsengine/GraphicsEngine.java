@@ -2,6 +2,7 @@ package amu.gl.equipe200.graphicsengine;
 
 import amu.gl.equipe200.utils.Pair;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -31,6 +32,22 @@ public class GraphicsEngine extends Application {
     private double windowWidthInGame, windowHeightInGame;
     private int windowWidthPixel, windowsHeightPixel;
 
+    // Request update every frame
+    private HashSet<GameLoopListener> gameLoopListeners;
+    private AnimationTimer gameLoop = new AnimationTimer() {
+        private long lastUpdate = 0 ;
+        @Override
+        public void handle(long now) {
+            // cap the time between frame to 1/60s * 10e9 nanosec
+            if (now - lastUpdate >= 1_666_666) {
+                for (GameLoopListener l : gameLoopListeners) {
+                    l.onNewFrame(now);
+                }
+                lastUpdate = now;
+            }
+        }
+    };
+
     public GraphicsEngine(int windowWidthPixel, int windowsHeightPixel,
                           double windowWidthInGame, double windowHeightInGame) {
         // set the window size
@@ -52,6 +69,9 @@ public class GraphicsEngine extends Application {
         this.layers.add("GUI");
         this.layers.add("FOREGROUND");
         this.layers.add("BACKGROUND");
+
+        // create the gameloopListener
+        this.gameLoopListeners = new HashSet<>();
     }
 
     public void update(long ellapsedTime) {
@@ -79,6 +99,10 @@ public class GraphicsEngine extends Application {
         this.graphicsEntities.remove(entity);
         this.views.remove(entity);
     }
+
+    // register or remove gameLoop listener
+    public void registerGameLoopListener(GameLoopListener l) { this.gameLoopListeners.add(l); }
+    public void removeGameLoopListener(GameLoopListener l) { this.gameLoopListeners.remove(l); }
 
     // add graphical layer to the engine
     public void addLayer(String name) { this.layers.add(name); }
@@ -159,6 +183,6 @@ public class GraphicsEngine extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        this.gameLoop.start();
     }
 }
