@@ -20,4 +20,7 @@ public interface GraphicsInterface {
     // Does the render of entity need to be update
     default boolean hasMoved() { return false; }
     default boolean hasNewSprite() { return false; }
+
+    // Trigger
+    default void onProcessed(GraphicsEngine engine) { }
 }

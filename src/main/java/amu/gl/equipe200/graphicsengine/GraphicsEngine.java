@@ -1,6 +1,7 @@
 package amu.gl.equipe200.graphicsengine;
 
 import amu.gl.equipe200.utils.Pair;
+
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.nio.file.attribute.GroupPrincipal;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -41,7 +41,7 @@ public class GraphicsEngine extends Application {
 
         // create the javafx component
         this.stage = null;          // stage will set on start
-        this.displayedScene = null; //TODO
+        this.displayedScene = null; // TODO
 
         this.images = new ImagesManager();
         this.graphicsEntities = new HashSet<>();
@@ -58,10 +58,12 @@ public class GraphicsEngine extends Application {
         for (GraphicsInterface entity : this.graphicsEntities) {
             if (entity.needRemoval()) {
                 this.removeEntity(entity);
+                entity.onProcessed(this);
                 continue;
             }
             if (entity.hasMoved()) this.moveEntity(entity);
             if (entity.hasNewSprite()) this.redrawEntity(entity, ellapsedTime);
+            entity.onProcessed(this);
         }
     }
 
@@ -71,7 +73,6 @@ public class GraphicsEngine extends Application {
         this.graphicsEntities.add(entity);
         this.views.put(entity, view);
     }
-
     public void removeEntity(GraphicsInterface entity) {
         Node node = this.views.get(entity);
         this.layers.get(entity.getLayerName()).getChildren().remove(node);
@@ -79,7 +80,7 @@ public class GraphicsEngine extends Application {
         this.views.remove(entity);
     }
 
-    // add layer to the engine
+    // add graphical layer to the engine
     public void addLayer(String name) { this.layers.add(name); }
     public void addLayer(int depth, String name) {this.layers.add(depth, name); }
 
@@ -95,21 +96,25 @@ public class GraphicsEngine extends Application {
         return Pair.create(x, y);
     }
 
-
+    // Create a new node for the engine to use
     private ImageView createNewNode(GraphicsInterface entity) {
         ImageView view = new ImageView();
+
         // load and set the texture
         Image texture = this.images.getImage(entity.getImageName(0));
         view.setImage(texture);
+
         // relocate and rotate the view
         Pair<Integer, Integer> position = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
         view.setX(position.first);
         view.setY(position.second);
         view.setRotate(entity.getR());
+
         // scale it to the right scale
         Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getX(), entity.getY()));
         view.setFitWidth(size.first);
         view.setFitHeight(size.second);
+
         return view;
     }
 
