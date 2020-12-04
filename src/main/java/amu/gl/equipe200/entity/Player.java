@@ -25,7 +25,7 @@ public class Player
     /**
      * Graphics variables
      */
-    private String imagePath;
+    private String imageName;
     private String layerName;
     private boolean hasMoved;
     private boolean hasNewSprite;
@@ -42,11 +42,11 @@ public class Player
     public Player(double x, double y, double r,
                   double dx, double dy, double dr,
                   double health, double damage,
-                  double speed, GameWorld gameScene, String imagePath, String layerName) {
+                  double speed, GameWorld gameScene, String imageName, String layerName) {
 
         super(x, y, r, dx, dy, dr, health, damage, gameScene);
         this.setTag(Settings.Tag.PLAYER);
-        this.imagePath = imagePath;
+        this.imageName = imageName;
         this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
         isSolid=true;
@@ -86,7 +86,7 @@ public class Player
     }
 
     @Override
-    public String getImageName(long ellapsedTime) { return this.imagePath; }
+    public String getImageName(long ellapsedTime) { return this.imageName; }
     @Override
     public String getLayerName(){ return this.layerName; }
 
