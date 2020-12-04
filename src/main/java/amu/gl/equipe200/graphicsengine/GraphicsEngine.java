@@ -4,10 +4,13 @@ import amu.gl.equipe200.utils.Pair;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
@@ -23,8 +26,8 @@ public class GraphicsEngine extends Application {
     private ImagesManager images;
     private LayerManager layers;
 
-
     // entity to render
+    private HashSet<GraphicsInterface> graphicsEntitiesToAdd;
     private HashSet<GraphicsInterface> graphicsEntities;
     private HashMap<GraphicsInterface, ImageView> views;
 
@@ -34,6 +37,7 @@ public class GraphicsEngine extends Application {
 
     // Request update every frame
     private HashSet<GameLoopListener> gameLoopListeners;
+    private boolean launchGameLoop = false;
     private AnimationTimer gameLoop = new AnimationTimer() {
         private long lastUpdate = 0 ;
         @Override
@@ -48,20 +52,21 @@ public class GraphicsEngine extends Application {
         }
     };
 
-    public GraphicsEngine(int windowWidthPixel, int windowsHeightPixel,
-                          double windowWidthInGame, double windowHeightInGame) {
+    public GraphicsEngine(int windowWidthPixel, int windowsHeightPixel) {
         // set the window size
         this.windowWidthPixel = windowWidthPixel;
         this.windowsHeightPixel = windowsHeightPixel;
-        this.windowWidthInGame = windowWidthInGame;
-        this.windowHeightInGame = windowHeightInGame;
+        this.windowWidthInGame = 0;
+        this.windowHeightInGame = 0;
 
         // create the javafx component
         this.stage = null;          // stage will set on start
-        this.displayedScene = null; // TODO
+        this.displayedScene = this.errorScene();
 
-        this.images = new ImagesManager();
+        // Content holders
         this.graphicsEntities = new HashSet<>();
+        this.graphicsEntitiesToAdd = new HashSet<>();
+        this.views = new HashMap<>();
 
         // create the base layers for the graphics engine
         this.layers = new LayerManager();
@@ -70,29 +75,91 @@ public class GraphicsEngine extends Application {
         this.layers.add("FOREGROUND");
         this.layers.add("BACKGROUND");
 
+        // Manager for cached images
+        this.images = new ImagesManager();
+
         // create the gameloopListener
         this.gameLoopListeners = new HashSet<>();
     }
 
+    /*********************************
+     *     entry point of javafx     *
+     *********************************/
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        this.display();
+        this.stage.show();
+    }
+
+    /******************************************
+     *     entry point of the core engine     *
+     ******************************************
     public void update(long ellapsedTime) {
+        // create and add the javafx node to the layers
+        for (GraphicsInterface entity : graphicsEntitiesToAdd) {
+            ImageView view = this.createNewNode(entity);
+            this.layers.addNodeToLayer(entity.getLayerName(), view);
+            this.graphicsEntities.add(entity);
+            this.views.put(entity, view);
+        }
+        this.graphicsEntitiesToAdd.clear();
+
+        // Update the scene
         for (GraphicsInterface entity : this.graphicsEntities) {
+            // if the entity needs to be removed do it
             if (entity.needRemoval()) {
                 this.removeEntity(entity);
                 entity.onProcessed(this);
                 continue;
             }
+            // Else update the linked node
             if (entity.hasMoved()) this.moveEntity(entity);
             if (entity.hasNewSprite()) this.redrawEntity(entity, ellapsedTime);
             entity.onProcessed(this);
         }
     }
 
-    // register or remove entities for updates
-    public void registerEntity(GraphicsInterface entity){
-        ImageView view = this.createNewNode(entity);
-        this.graphicsEntities.add(entity);
-        this.views.put(entity, view);
+    /**********************************
+     *     change displayed scene     *
+     **********************************/
+    public void loadMenu(Scene scene) {
+        // stop the app and clear the stage
+        this.gameLoop.stop();
+        this.clear();
+
+        // load the menu
+        this.displayedScene = scene;
+        this.launchGameLoop = false;
     }
+    public void loadGameWorld(HashSet<GraphicsInterface> entitiesToAdd, double windowWidthInGame, double windowHeightInGame){
+        // stop the app and clear the stage
+        this.gameLoop.stop();
+        this.clear();
+
+        // set the size of the new gameWorld
+        this.windowWidthInGame = windowWidthInGame;
+        this.windowHeightInGame = windowHeightInGame;
+
+        // add the already existing entities to the engine
+        for (GraphicsInterface entity : entitiesToAdd) {
+            this.registerEntity(entity);
+        }
+
+        // display the scene
+        this.displayedScene = new Scene(new Group(), this.windowWidthPixel, this.windowsHeightPixel);
+        this.launchGameLoop = true;
+    }
+    public void display() {
+        this.stage.setScene(this.displayedScene);
+        if (this.launchGameLoop) this.gameLoop.start();
+    }
+
+    /**********************************
+     *     add or remove elements     *
+     **********************************/
+    // register or remove entities for updates
+    public void registerEntity(GraphicsInterface entity){ this.graphicsEntitiesToAdd.add(entity); }
     public void removeEntity(GraphicsInterface entity) {
         Node node = this.views.get(entity);
         this.layers.get(entity.getLayerName()).getChildren().remove(node);
@@ -107,6 +174,26 @@ public class GraphicsEngine extends Application {
     // add graphical layer to the engine
     public void addLayer(String name) { this.layers.add(name); }
     public void addLayer(int depth, String name) {this.layers.add(depth, name); }
+
+    /**********************************
+     *     Internal of the engine     *
+     **********************************/
+    // Clear the current state of the graphics engine
+    private void clear() {
+        // remove the entities
+        this.graphicsEntitiesToAdd.clear();
+        this.graphicsEntities.clear();
+        this.views.clear();
+
+        // clear the layer manager
+        this.layers.clear();
+        this.layers.add("POPUPS");
+        this.layers.add("GUI");
+        this.layers.add("FOREGROUND");
+        this.layers.add("BACKGROUND");
+
+        this.images.clearCache();
+    }
 
     // Convert coordinates from InGame to Screen space (and the other way)
     private Pair<Integer, Integer> fromGameSpaceToScreenSpace(Pair<Double, Double> toConvert) {
@@ -141,7 +228,6 @@ public class GraphicsEngine extends Application {
 
         return view;
     }
-
     private void moveEntity(GraphicsInterface entity) {
         // get the view associated with the entity
         ImageView view = this.views.get(entity);
@@ -153,7 +239,6 @@ public class GraphicsEngine extends Application {
         view.relocate(position.first, position.second);
         view.setRotate(entity.getR());
     }
-
     private void redrawEntity(GraphicsInterface entity, long ellapsedTime) {
         // get the view associated with the entity
         ImageView view = this.views.get(entity);
@@ -168,21 +253,12 @@ public class GraphicsEngine extends Application {
         view.setFitWidth(size.second);
     }
 
-    public void loadScene(Scene scene){
-        this.displayedScene = scene;
-        this.stage.setScene(scene);
-        this.stage.show();
-    }
-
-//    // TODO : Déplacer les systems dans core
-//    public void update(SpriteComponent component) {
-//        ImageView imageView = component.getView();
-//        imageView.relocate(component.getX(), component.getY());
-//        imageView.setRotate(component.getR());
-//    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.gameLoop.start();
+    // Error scene
+    private Scene errorScene() {
+        String javaVersion = System.getProperty("java.version");
+        String javafxVersion = System.getProperty("javafx.version");
+        Label l = new Label("Error using JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        Scene scene = new Scene(new StackPane(l), this.windowWidthPixel, this.windowHeightInGame);
+        return scene;
     }
 }

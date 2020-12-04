@@ -21,13 +21,14 @@ public class LayerManager {
         this.layersByName.put(name, layer);
         this.layersByDepth.add(depth, layer);
         for (int i = depth + 1; i < this.layersByDepth.size(); i++){
-            this.layersByDepth.get(i).setDepth(i+1);
+            this.layersByDepth.get(i).setDepth(i);
         }
     }
-    public void add(String name) {
-        RenderLayer layer = new RenderLayer(name, this.layersByDepth.size());
-        this.layersByName.put(name, layer);
-        this.layersByDepth.add(layer);
+    public void add(String name) { add(this.layersByDepth.size(),name); }
+
+    public void clear() {
+        this.layersByName.clear();
+        this.layersByDepth.clear();
     }
 
     public RenderLayer get(String name) { return this.layersByName.get(name); }
