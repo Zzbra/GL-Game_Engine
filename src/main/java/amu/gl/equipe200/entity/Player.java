@@ -1,8 +1,9 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.graphicsengine.GraphicsEngine;
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
@@ -11,19 +12,23 @@ import amu.gl.equipe200.gameworld.Settings;
  */
 public class Player
         extends Entity
-        implements PhysicsInterface, RenderableInterface, IOInterface {
-
-    private String imagePath;
-    private String layerName;
-    private volatile boolean isSolid;
-    private double speed;
+        implements PhysicsInterface, GraphicsInterface, IOInterface {
 
     /**
      * Physics variables
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double width = 40, height = 40;
+    private double width, height;
+    private volatile boolean isSolid;
+
+    /**
+     * Graphics variables
+     */
+    private String imagePath;
+    private String layerName;
+    private boolean hasMoved;
+    private boolean hasNewSprite;
 
     /**
      * Input variables
@@ -41,7 +46,6 @@ public class Player
 
         super(x, y, r, dx, dy, dr, health, damage, gameScene);
         this.setTag(Settings.Tag.PLAYER);
-        this.speed = speed;
         this.imagePath = imagePath;
         this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
@@ -55,17 +59,19 @@ public class Player
     @Override
     public double getX() { return this.x; }
     @Override
-    public void setX(double x) { this.x = x; }
-    @Override
     public double getY() { return this.y; }
     @Override
+    public void setX(double x) { this.x = x; }
+    @Override
     public void setY(double y) { this.y = y; }
+
     @Override
     public double getXSpeed() { return this.xSpeed; }
     public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
     @Override
     public double getYSpeed() { return this.ySpeed; }
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
+
     @Override
     public double getWidth() {
         return this.width;
@@ -79,6 +85,11 @@ public class Player
         this.height = height;
     }
 
+    @Override
+    public String getImageName(long ellapsedTime) { return this.imagePath; }
+    @Override
+    public String getLayerName(){ return this.layerName; }
+
     public void setControls(String up, String down, String left, String right) {
         this.upKey = up.toUpperCase();
         this.downKey = down.toUpperCase();
@@ -86,15 +97,9 @@ public class Player
         this.rightKey = right.toUpperCase();
     }
 
-    @Override
-
-
-    public String getLayerName(){return this.layerName;}
-
-
-    /**********************************
-     *    Physics Engine behaviour    *
-     **********************************/
+    /******************************************************************************************************************
+     *    Physics Engine behaviour                                                                                    *
+     ******************************************************************************************************************/
     @Override
     public boolean isWorldBounded() { return true; }
     @Override
@@ -118,31 +123,32 @@ public class Player
         }
     }
 
-    public void superPowerActive(){
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                    long startTime=System.currentTimeMillis();
-                    long time=System.currentTimeMillis();
-                    while (time<(startTime+5000)) {
-                        isSolid = false;
-                        time=System.currentTimeMillis();
-                    }
-                isSolid = true;
-            }
-        }).start();
+    /******************************************************************************************************************
+     *    Graphics Engine behaviour                                                                                   *
+     ******************************************************************************************************************/
+    @Override
+    public boolean needRemoval() { return false; }
+
+    @Override
+    public boolean hasMoved() { return this.hasMoved; }
+
+    @Override
+    public boolean hasNewSprite() { return this.hasNewSprite; }
+
+    @Override
+    public void onProcessed(GraphicsEngine engine) {
+        this.hasMoved = false;
+        this.hasNewSprite = false;
     }
 
-    /********************************
-     *    Input Engine Behaviour    *
-     ********************************/
+    /******************************************************************************************************************
+     *    Input Engine behaviour                                                                                      *
+     ******************************************************************************************************************/
     public void reactToInput(String key) {
         key = key.toUpperCase();
         //System.out.println(this + "recieved input " + key);
         if(key.equals("K")) {
-           setIsSolid(!isSolid);
+            setIsSolid(!isSolid);
         }
         if (key.equals(upKey)) {
             setXSpeed(0);
@@ -167,20 +173,32 @@ public class Player
 
     }
 
+    /******************************************************************************************************************
+     *    Other                                                                                                       *
+     ******************************************************************************************************************/
+    public void superPowerActive(){
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                    long startTime=System.currentTimeMillis();
+                    long time=System.currentTimeMillis();
+                    while (time<(startTime+5000)) {
+                        isSolid = false;
+                        time=System.currentTimeMillis();
+                    }
+                isSolid = true;
+            }
+        }).start();
+    }
+
     /****************
      *    Others    *
      ****************/
     @Override
     public void checkRemovability() {
         // TODO Auto-generated method stub
-    }
-
-//    @Override
-//    public void onExit(PhysicsComponent physicsComponent) { }
-
-    @Override
-    public String getImageName() {
-        return this.imagePath;
     }
 
 
