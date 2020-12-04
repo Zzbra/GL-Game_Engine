@@ -5,6 +5,7 @@ import amu.gl.equipe200.entity.Block;
 
 import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.entity.SuperFruit;
+import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
@@ -15,8 +16,7 @@ import amu.gl.equipe200.gameworld.Settings;
 
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.system.InputEngine;
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -35,93 +35,53 @@ import java.util.*;
     à l'utilisateur de créer des custom PhysicalComponent qui redéfinissent les
     méthodes liées à la collision.
  */
-public class PacmanApp extends Application {
+public class PacmanApp
+        implements GameLoopListener {
 
     private InputEngine inputEngine;
     private PhysicsEngine physicsEngine;
     private GraphicsEngine graphicsEngine;
 
     private Random rnd = new Random();
+
     private GameWorld mainMenuScene, gameScene;
-    private AnimationTimer gameLoop;
 
     private boolean playerIsCreated;
 
-    @Override
-    public void start(Stage primaryStage) {
+
+    public void init(String[] args) {
+
         this.mainMenuScene = GameWorldMaker.MakeMenuScene();
         this.gameScene = GameWorldMaker.MakeGameScene();
 
         /*** Create the engines ***/
         //TODO: replace scene size by world size
         this.physicsEngine = new PhysicsEngine(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-        this.graphicsEngine = new GraphicsEngine(primaryStage, gameScene.getLayers());
+        this.graphicsEngine = new GraphicsEngine((int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine(gameScene.getScene());
 
-        graphicsEngine.loadScene(mainMenuScene.getScene());
+        graphicsEngine.loadMenu(mainMenuScene.getScene());
+        graphicsEngine.display();
 
         playerIsCreated = false;
         createPlayers();
         playerIsCreated = true;
         createMap("src\\main\\resources\\Map1.txt");
 
-
-        gameLoop = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-
-                // player input
-                //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
-
-                //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
-                inputEngine.update();
-                // add random enemies
-                //spawnEnemies( true);
-              //  spawnSuperFruit(true);
-
-                // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
-                // TODO: compute the ellapsed time to send it to the engines
-                physicsEngine.update(1);
-
-
-                // update amu.gl.equipe200.entity in scene
-                // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
-                // TODO: compute the ellapsed time to send it to the engines
-                graphicsEngine.update(1);
-
-
-                // check if amu.gl.equipe200.entity can be removed
-                //gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
-
-                // remove removables from list, layer, etc
-                removeEntity( gameScene.getEnemies());
-
-                // update score, health, etc
-                updateScore();
-            }
-
-        };
-
         // Définition du callback de startGameButton
         Button startButton = (Button)mainMenuScene.getUIComponents().get("startGameButton");
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                graphicsEngine.loadScene(gameScene.getScene());
+                graphicsEngine.loadMenu(gameScene.getScene());
                 if(!playerIsCreated)
                     createPlayers();
-                //setControls();
-
-                gameLoop.start();
+            graphicsEngine.display();
             }
         });
 
 
     }
-
-
-
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
@@ -134,7 +94,7 @@ public class PacmanApp extends Application {
         player1.setY(y);
         player1.setControls("Z", "S", "Q", "D");
         physicsEngine.registerEntity(player1);
-        graphicsEngine.addRenderable(player1);
+        graphicsEngine.registerEntity(player1);
         inputEngine.addIOEntity(player1);
         gameScene.getPlayers().add(player1);
 
@@ -143,7 +103,7 @@ public class PacmanApp extends Application {
         player2.setY(y);
         player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
         physicsEngine.registerEntity(player2);
-        graphicsEngine.addRenderable(player2);
+        graphicsEngine.registerEntity(player2);
         inputEngine.addIOEntity(player2);
         gameScene.getPlayers().add(player2);
     }
@@ -154,14 +114,14 @@ public class PacmanApp extends Application {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
                 if(mapGrid[i][j] == 1) {
-                    Block block = new Block(j * offset, i * offset, "blockImage", "playerfieldLayer", offset, offset);
-                    graphicsEngine.addRenderable(block);
+                    Block block = new Block(j * offset, i * offset, offset, offset, "blockImage", "playerfieldLayer");
+                    graphicsEngine.registerEntity(block);
                     physicsEngine.registerEntity(block);
                 }
                 if(mapGrid[i][j] == 2){
                     SuperFruit superFruit = new SuperFruit(j * offset, i * offset,gameScene,"SuperFruit", "playerfieldLayer");
                     physicsEngine.registerEntity(superFruit);
-                    graphicsEngine.addRenderable(superFruit);
+                    graphicsEngine.registerEntity(superFruit);
                 }
             }
         }
@@ -207,7 +167,7 @@ public class PacmanApp extends Application {
         enemy.setX(x);
         enemy.setY(y);
         physicsEngine.registerEntity(enemy);
-        graphicsEngine.addRenderable(enemy);
+        graphicsEngine.registerEntity(enemy);
 //        RenderableComponent sprite = new SpriteComponent(enemy, "enemyImage", "playerfieldLayer");
 //        enemy.setY(-sprite.getHeight());
         //enemy.addComponent(PhysicsComponent.class, new PhysicsComponent(enemy));
@@ -225,7 +185,7 @@ public class PacmanApp extends Application {
 
         SuperFruit superFruit = new SuperFruit(x,y,gameScene,"SuperFruit", "playerfieldLayer");
         physicsEngine.registerEntity(superFruit);
-        graphicsEngine.addRenderable(superFruit);
+        graphicsEngine.registerEntity(superFruit);
     }
 
     private void removeEntity(List<? extends Entity> spriteList) {
@@ -253,8 +213,35 @@ public class PacmanApp extends Application {
 //        }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    @Override
+    public void onNewFrame(long now) {
+        // player input
+        //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 
+        //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
+        inputEngine.update();
+        // add random enemies
+        //spawnEnemies( true);
+        //  spawnSuperFruit(true);
+
+        // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
+        // TODO: compute the ellapsed time to send it to the engines
+        physicsEngine.update(1);
+
+
+        // update amu.gl.equipe200.entity in scene
+        // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
+        // TODO: compute the ellapsed time to send it to the engines
+        graphicsEngine.update(1);
+
+
+        // check if amu.gl.equipe200.entity can be removed
+        //gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
+
+        // remove removables from list, layer, etc
+        removeEntity( gameScene.getEnemies());
+
+        // update score, health, etc
+        updateScore();
+    }
 }

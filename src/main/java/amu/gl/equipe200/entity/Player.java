@@ -25,6 +25,7 @@ public class Player
     /**
      * Graphics variables
      */
+    private double r;
     private String imageName;
     private String layerName;
     private boolean hasMoved;
@@ -53,9 +54,9 @@ public class Player
     }
 
 
-    /****************************
-     *   Getters and Setters    *
-     ****************************/
+    /******************************************************************************************************************
+     *    Getters and Setters                                                                                         *
+     ******************************************************************************************************************/
     @Override
     public double getX() { return this.x; }
     @Override
@@ -104,11 +105,10 @@ public class Player
     public boolean isWorldBounded() { return true; }
     @Override
     public boolean isCollidable() { return true;}
-
-    public void setIsSolid(boolean isSolid) {this.isSolid=isSolid;}
-
     @Override
     public boolean isSolid() { return isSolid; }
+    public void setIsSolid(boolean isSolid) {this.isSolid=isSolid;}
+
     @Override
     public void onWorldEnds() {
         // TODO
@@ -131,7 +131,6 @@ public class Player
 
     @Override
     public boolean hasMoved() { return this.hasMoved; }
-
     @Override
     public boolean hasNewSprite() { return this.hasNewSprite; }
 

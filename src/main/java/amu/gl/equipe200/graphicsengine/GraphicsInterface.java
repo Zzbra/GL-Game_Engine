@@ -21,6 +21,6 @@ public interface GraphicsInterface {
     default boolean hasMoved() { return false; }
     default boolean hasNewSprite() { return false; }
 
-    // Trigger
-    default void onProcessed(GraphicsEngine engine) { }
+    // Callback of the graphics engine
+    default void onProcessed(GraphicsEngine engine) {}
 }

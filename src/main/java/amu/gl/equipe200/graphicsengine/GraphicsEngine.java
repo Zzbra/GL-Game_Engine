@@ -94,7 +94,7 @@ public class GraphicsEngine extends Application {
 
     /******************************************
      *     entry point of the core engine     *
-     ******************************************
+     ******************************************/
     public void update(long ellapsedTime) {
         // create and add the javafx node to the layers
         for (GraphicsInterface entity : graphicsEntitiesToAdd) {

@@ -1,24 +1,30 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.graphicsengine.GraphicsEngine;
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.gameworld.Settings;
 
 public class Enemy
         extends Entity
-        implements PhysicsInterface, RenderableInterface {
-
-    private String imageName, layerName;
+        implements PhysicsInterface, GraphicsInterface {
 
     /**
      * Physics variables
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double r, rSpeed;                   // WARNING:it's an angle not a position
-    private double width = 50, height = 50;
+    private double width, height;
 
+    /**
+     * Graphics variables
+     */
+    private double r;
+    private String imageName;
+    private String layerName;
+    private boolean hasMoved;
+    private boolean hasNewSprite;
 
 
     public Enemy(double x, double y, double r,
@@ -41,48 +47,26 @@ public class Enemy
         this.layerName = layerName;
     }
 
-    @Override
-    public void checkRemovability() {
-        if( Double.compare( getY(), Settings.SCENE_HEIGHT) > 0) {
-            setRemovable(true);
-        }
-    }
 
-    public String getLayerName(){return this.layerName;}
-
-    /*** Colidable ***/
-//    @Override
-//    public void onCollide(PhysicsComponent physicsComponent) { }
-//
-//    @Override
-//    public void onCollisionStay(PhysicsComponent physicsComponent) { }
-
-//    @Override
-//    public void onExit(PhysicsComponent physicsComponent) {}
-
-    @Override
-    public String getImageName() {
-        return this.imageName;
-    }
-
-
-    /****************************
-     *   Getters and Setters    *
-     ****************************/
+    /******************************************************************************************************************
+     *    Getters and Setters                                                                                         *
+     ******************************************************************************************************************/
     @Override
     public double getX() { return this.x; }
     @Override
-    public void setX(double x) { this.x = x; }
-    @Override
     public double getY() { return this.y; }
     @Override
+    public void setX(double x) { this.x = x; }
+    @Override
     public void setY(double y) { this.y = y; }
+
     @Override
     public double getXSpeed() { return this.xSpeed; }
     public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
     @Override
     public double getYSpeed() { return this.ySpeed; }
     public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
+
     @Override
     public double getWidth() {
         return this.width;
@@ -96,16 +80,22 @@ public class Enemy
         this.height = height;
     }
 
+    @Override
+    public String getImageName(long ellapsedTime) { return this.imageName; }
+    @Override
+    public String getLayerName(){ return this.layerName; }
 
-    /**********************************
-     *    Physics Engine behaviour    *
-     **********************************/
+
+    /******************************************************************************************************************
+     *    Physics Engine behaviour                                                                                    *
+     ******************************************************************************************************************/
     @Override
     public boolean isWorldBounded() { return true; }
     @Override
     public boolean isCollidable() { return true; }
     @Override
     public boolean isSolid() { return true; }
+
     @Override
     public void onWorldEnds() {
         // TODO
@@ -118,6 +108,28 @@ public class Enemy
     }
 
 
+    /******************************************************************************************************************
+     *    Graphics Engine behaviour                                                                                   *
+     ******************************************************************************************************************/
+    @Override
+    public boolean needRemoval() { return false; }
+
+    @Override
+    public boolean hasMoved() { return this.hasMoved; }
+    @Override
+    public boolean hasNewSprite() { return this.hasMoved; }
+
+    @Override
+    public void onProcessed(GraphicsEngine engine) {
+        this.hasMoved = false;
+        this.hasNewSprite = false;
+    }
 
 
+    @Override
+    public void checkRemovability() {
+        if( Double.compare( getY(), Settings.SCENE_HEIGHT) > 0) {
+            setRemovable(true);
+        }
+    }
 }
