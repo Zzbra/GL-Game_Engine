@@ -63,7 +63,7 @@ public class PacmanApp
         /*** create the gameworld  ***/
         this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         this.createPlayers();
-        
+
         createMap("Map1.txt");
         /***  Set up the graphics engine  ***/
         graphicsEngine.registerGameLoopListener(this);
