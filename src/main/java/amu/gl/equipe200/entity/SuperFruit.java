@@ -18,10 +18,9 @@ public class SuperFruit
     private String imageName;
     private String layerName;
 
-    private double width = 35, height = 35;
+    private double width = 1, height = 1;
 
     public SuperFruit(double x, double y,
-                      GameWorld gamescene,
                       String imageName,
                       String layerName) {
         setX(x);
@@ -38,14 +37,6 @@ public class SuperFruit
     /******************************************************************************************************************
      *    Getters and Setters                                                                                         *
      ******************************************************************************************************************/
-    @Override
-    public double getX() { return this.getX(); }
-    @Override
-    public double getY() { return this.getY(); }
-    @Override
-    public void setX(double x) { this.setX(x); }
-    @Override
-    public void setY(double y) { this.setY(y); }
 
     @Override
     public double getXSpeed() {
