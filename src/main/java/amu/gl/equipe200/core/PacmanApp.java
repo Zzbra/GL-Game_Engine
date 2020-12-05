@@ -54,7 +54,7 @@ public class PacmanApp extends Application {
         playerIsCreated = true;
 
         Blinky blinky = createBlinky(pacMan);
-        Clyde clyde = createClyde(pacMan);
+        //Clyde clyde = createClyde(pacMan);
 
         createMap("src\\main\\resources\\Map1.txt");
 
@@ -71,7 +71,7 @@ public class PacmanApp extends Application {
                 inputEngine.update();
 
                 //spawnEnemies( true);
-                spawnSuperFruit(true);
+                //spawnSuperFruit(true);
                 blinky.update();
                 //clyde.update();
 
@@ -111,8 +111,6 @@ public class PacmanApp extends Application {
                 gameLoop.start();
             }
         });
-
-
     }
 
 
@@ -132,14 +130,14 @@ public class PacmanApp extends Application {
         inputEngine.addIOEntity(player1);
         gameScene.getPlayers().add(player1);
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
-        player2.setX(2 * x);
-        player2.setY(y);
-        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
-        physicsEngine.registerEntity(player2);
-        graphicsEngine.addRenderable(player2);
-        inputEngine.addIOEntity(player2);
-        gameScene.getPlayers().add(player2);
+//        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+//        player2.setX(2 * x);
+//        player2.setY(y);
+//        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
+//        physicsEngine.registerEntity(player2);
+//        graphicsEngine.addRenderable(player2);
+//        inputEngine.addIOEntity(player2);
+//        gameScene.getPlayers().add(player2);
 
         return player1;
     }
@@ -148,6 +146,9 @@ public class PacmanApp extends Application {
 
         double x = Settings.SCENE_WIDTH / 7.0;
         double y = Settings.SCENE_HEIGHT * 0.3;
+        //test
+        x=50;
+        y=60;
 
         Blinky blinky = new Blinky(x, y, 0, 0, 0, 0, 1, 1, gameScene, "enemyImage", "playerfieldLayer", pacMan);
         blinky.setX(x);

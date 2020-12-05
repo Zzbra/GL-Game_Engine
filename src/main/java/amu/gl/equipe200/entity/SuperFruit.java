@@ -17,7 +17,6 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
                       String layerName) {
         setX(x);
         setY(y);
-        // TODO: add width and height in the constructor ?
 
         this.setTag(Settings.Tag.ENEMY);
         this.imageName = imageName;

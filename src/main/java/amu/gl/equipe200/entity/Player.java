@@ -23,7 +23,7 @@ public class Player
      */
     private double x, y;
     private double xSpeed, ySpeed;
-    private double width = 40, height = 40;
+    private double width = 40, height =40;
 
     /**
      * Input variables

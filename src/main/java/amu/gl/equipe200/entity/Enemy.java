@@ -17,7 +17,7 @@ public class Enemy
     private double x, y;
     private double xSpeed, ySpeed;
     private double r, rSpeed;                   // WARNING:it's an angle not a position
-    private double width = 50, height = 50;
+    private double width = 40, height = 40;
 
 
 

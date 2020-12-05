@@ -121,8 +121,6 @@ public class PhysicsEngine
             if (collide(entity, newPosition, toCheck)) {
                 // trigger the collision call back
                 entity.onCollide(toCheck);
-
-                //En a t'on vraiment besoin ?
                 toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
@@ -187,7 +185,6 @@ public class PhysicsEngine
             // the movable is on the bottom of the obstacle and try to go in (maybe)
 //            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
             finalY = entity.getY();
-
         }
         return Pair.create(finalX, finalY);
     }
