@@ -1,8 +1,10 @@
-package amu.gl.equipe200.pacman.menues;
+package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.graphicsengine.MenuInterface;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,12 +21,20 @@ public class MainMenu
     private static MainMenu INSTANCE;
     private Scene mainMenuScene;
     private Pane root;
-    public Button startGameButton, controlButton, aboutButton;
+    private PacmanApp linkedApp;
+    public final Button startGameButton, controlButton, aboutButton;
 
-    private MainMenu() {
-        Scene mainMenuScene;
+    private MainMenu(PacmanApp app) {
+        this.linkedApp = app;
 
         startGameButton = new Button("Start Game");
+        startGameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                linkedApp.loadGame();
+            }
+        });
+
         controlButton = new Button("Controls");
         aboutButton = new Button("About");
 
@@ -44,8 +54,8 @@ public class MainMenu
         this.mainMenuScene = mainMenuScene;
     }
 
-    public static MainMenu getInstance() {
-        if (INSTANCE == null) INSTANCE = new MainMenu();
+    public static MainMenu getInstance(PacmanApp app) {
+        if (INSTANCE == null) INSTANCE = new MainMenu(app);
         return INSTANCE;
     }
 

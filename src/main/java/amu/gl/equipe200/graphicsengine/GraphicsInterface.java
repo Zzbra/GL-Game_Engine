@@ -11,7 +11,7 @@ public interface GraphicsInterface {
     double getWidth();
 
     // Getter for the graphical properties
-    String getImageName(long ellapsedTime);
+    String getImageName();
     String getLayerName();
 
     // Does the entity need to removed

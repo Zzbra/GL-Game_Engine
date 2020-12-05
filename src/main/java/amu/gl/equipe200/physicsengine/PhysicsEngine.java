@@ -42,7 +42,7 @@ public class PhysicsEngine {
         this.physicsEntities.remove(entity);
     }
 
-    public void update(long ellapsedTime){
+    public void update(double ellapsedTime){
         for(PhysicsInterface entity : this.physicsEntities) {
             if(entity.isRemovable()){
                 physicsEntities.remove(entity);
@@ -66,6 +66,17 @@ public class PhysicsEngine {
         }
     }
 
+    public void loadGameWorld(HashSet<PhysicsInterface> physicsEntities, double gameWorldWidth, double gameWorldHeight) {
+        this.physicsEntities.clear();
+
+        this.worldWidth = gameWorldWidth;
+        this.worldHeight = gameWorldHeight;
+
+        for(PhysicsInterface p : physicsEntities) {
+            this.physicsEntities.add(p);
+        }
+    }
+
     /**
      * Compute the new position of the entity as if nothing block it, need to be corrected afterward
      * Does not include the rotation
@@ -73,9 +84,10 @@ public class PhysicsEngine {
      * @param elapsedTime : "in-game" time ellapsed since last update
      * @return the new position of the entity in world coordinates
      */
-    private Pair<Double, Double> computeNewPosition (PhysicsInterface entity, long elapsedTime) {
+    private Pair<Double, Double> computeNewPosition (PhysicsInterface entity, double elapsedTime) {
         double newX = entity.getX() + elapsedTime * entity.getXSpeed();
         double newY = entity.getY() + elapsedTime * entity.getYSpeed();
+        System.out.println();
         return Pair.create(newX, newY);
     }
 

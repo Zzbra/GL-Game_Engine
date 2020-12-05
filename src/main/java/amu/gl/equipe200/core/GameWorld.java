@@ -24,7 +24,7 @@ public class GameWorld {
     private final HashSet<IOInterface> ioEntities = new HashSet<>();
 
 
-    GameWorld(double width, double height) {
+    public GameWorld(double width, double height) {
         this.width = width;
         this.height = height;
     }

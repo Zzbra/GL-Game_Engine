@@ -86,7 +86,7 @@ public class GraphicsEngine {
     /******************************************
      *     entry point of the core engine     *
      ******************************************/
-    public void update(long ellapsedTime) {
+    public void update() {
         // create and add the javafx node to the layers
         for (GraphicsInterface entity : graphicsEntitiesToAdd) {
             ImageView view = this.createNewNode(entity);
@@ -106,7 +106,7 @@ public class GraphicsEngine {
             }
             // Else update the linked node
             if (entity.hasMoved()) this.moveEntity(entity);
-            if (entity.hasNewSprite()) this.redrawEntity(entity, ellapsedTime);
+            if (entity.hasNewSprite()) this.redrawEntity(entity);
             entity.onProcessed(this);
         }
     }
@@ -204,7 +204,7 @@ public class GraphicsEngine {
         ImageView view = new ImageView();
 
         // load and set the texture
-        Image texture = this.images.getImage(entity.getImageName(0));
+        Image texture = this.images.getImage(entity.getImageName());
         view.setImage(texture);
 
         // relocate and rotate the view
@@ -231,12 +231,12 @@ public class GraphicsEngine {
         view.relocate(position.first, position.second);
         view.setRotate(entity.getR());
     }
-    private void redrawEntity(GraphicsInterface entity, long ellapsedTime) {
+    private void redrawEntity(GraphicsInterface entity) {
         // get the view associated with the entity
         ImageView view = this.views.get(entity);
 
         // get the texture and size
-        Image texture = this.images.getImage(entity.getImageName(ellapsedTime));
+        Image texture = this.images.getImage(entity.getImageName());
         Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
 
         // change the properties of the view
