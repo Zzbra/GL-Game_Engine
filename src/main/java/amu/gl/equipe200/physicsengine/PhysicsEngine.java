@@ -1,8 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.entity.Entity;
-import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashSet;
@@ -10,8 +8,7 @@ import java.util.HashSet;
 import static java.lang.Double.max;
 import static java.lang.Double.min;
 
-public class PhysicsEngine
-        extends Engine {
+public class PhysicsEngine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
@@ -141,7 +138,8 @@ public class PhysicsEngine
 
                 // check if both entities are solid and if so compute the final position of the entity
                 // TODO: Changer absolument la partie BLOCK, on ne doit pas checker de Tag ici mais les blocks ne doivent pas collide
-                if (entity.isSolid() && toCheck.isSolid() && (entity.getTag() != Settings.Tag.BLOCK || toCheck.getTag() != Settings.Tag.BLOCK)) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
+                // && (entity.getTag() != Settings.Tag.BLOCK || toCheck.getTag() != Settings.Tag.BLOCK)
+                if (entity.isSolid() && toCheck.isSolid() ) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
             }
         }
         return newPosition;

@@ -1,6 +1,8 @@
-package amu.gl.equipe200.core;
+package amu.gl.equipe200.pacman.menues;
 
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.graphicsengine.MenuInterface;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,18 +12,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class MainMenuScene extends GameWorld {
 
+public class MainMenu
+        implements MenuInterface {
 
-    public MainMenuScene(){
-        super();
+    private static MainMenu INSTANCE;
+    private Scene mainMenuScene;
+    private Pane root;
+    public Button startGameButton, controlButton, aboutButton;
+
+    private MainMenu() {
         Scene mainMenuScene;
-        Button startGameButton = new Button("Start Game");
-        this.getUIComponents().put("startGameButton", startGameButton);
-        Button controlButton = new Button("Controls");
-        this.getUIComponents().put("controlButton", controlButton);
-        Button aboutButton = new Button("About");
-        this.getUIComponents().put("aboutButton", aboutButton);
+
+        startGameButton = new Button("Start Game");
+        controlButton = new Button("Controls");
+        aboutButton = new Button("About");
+
         Image img = new Image("menuScreen.jpg");
         ImageView imgView = new ImageView(img);
         VBox vBox = new VBox(imgView,startGameButton, controlButton, aboutButton);
@@ -30,9 +36,21 @@ public class MainMenuScene extends GameWorld {
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
         mainMenuScene = new Scene(panel, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         mainMenuScene.getStylesheets().add("MainMenuStyleSheet.css");
-        super.setScene(mainMenuScene);
+
+        this.root = panel;
+        this.mainMenuScene = mainMenuScene;
     }
 
+    public static MainMenu getInstance() {
+        if (INSTANCE == null) INSTANCE = new MainMenu();
+        return INSTANCE;
+    }
+
+    public Scene getScene() { return mainMenuScene; }
+
+    @Override
+    public Pane getRoot() { return this.root; }
 }

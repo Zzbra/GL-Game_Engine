@@ -1,10 +1,7 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import amu.gl.equipe200.core.Settings;
 
 import java.util.ArrayList;
 
@@ -81,20 +78,20 @@ public abstract class Entity {
         this.r = r;
     }
 
-    public double getDx() {
+    public double getXSpeed() {
         return dx;
     }
 
-    public void setDx(double dx) {
+    public void setXSpeed(double dx) {
         this.dx = dx;
     }
 
 
-    public double getDy() {
+    public double getYSpeed() {
         return dy;
     }
 
-    public void setDy(double dy) {
+    public void setYSpeed(double dy) {
         this.dy = dy;
     }
 

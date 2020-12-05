@@ -1,18 +1,25 @@
 package amu.gl.equipe200.entity;
+
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.graphicsengine.RenderableInterface;
 
 
-public class SuperFruit extends Entity implements PhysicsInterface, RenderableInterface{
+public class SuperFruit
+        extends Entity
+        implements PhysicsInterface, GraphicsInterface {
 
+    /**
+     * Graphics variables
+     */
+    private double r;
     private String imageName;
     private String layerName;
-    private double width = 35, height = 35;
+
+    private double width = 1, height = 1;
 
     public SuperFruit(double x, double y,
-                      GameWorld gamescene,
                       String imageName,
                       String layerName) {
         setX(x);
@@ -25,25 +32,15 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
         setTag(Settings.Tag.FRUIT);
     }
 
-    @Override
-    public void checkRemovability(){
-    }
 
-    @Override
-    public String getImageName() {
-        return this.imageName;
-    }
-
-    @Override
-    public String getLayerName() {
-        return this.layerName;
-    }
+    /******************************************************************************************************************
+     *    Getters and Setters                                                                                         *
+     ******************************************************************************************************************/
 
     @Override
     public double getXSpeed() {
         return 0;
     }
-
     @Override
     public double getYSpeed() {
         return 0;
@@ -53,7 +50,6 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
     public double getWidth() {
         return this.width;
     }
-
     @Override
     public double getHeight() {
         return this.height;
@@ -61,7 +57,6 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
 
     @Override
     public void setXSpeed(double dx) {
-
     }
 
     @Override
@@ -70,7 +65,14 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
     }
 
     @Override
-    public boolean isWorldBounded() { return true; }
+    public String getImageName(long ellapsedTime) { return this.imageName; }
+    @Override
+    public String getLayerName(){ return this.layerName; }
+
+
+    /******************************************************************************************************************
+     *    Physics Engine behaviour                                                                                    *
+     ******************************************************************************************************************/
     @Override
     public boolean isCollidable() { return true; }
     @Override
@@ -83,5 +85,15 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
         if(others.getTag() == Settings.Tag.valueOf("PLAYER")){
             setRemovable(true);
         }
+    }
+
+    /******************************************************************************************************************
+     *    Graphics Engine behaviour                                                                                   *
+     ******************************************************************************************************************/
+    @Override
+    public boolean needRemoval() { return false; }
+
+    @Override
+    public void checkRemovability(){
     }
 }

@@ -1,6 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.Settings;
 
 public interface PhysicsInterface {
     // Getter and setter for the position
