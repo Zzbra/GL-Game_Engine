@@ -6,12 +6,10 @@ import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
+import amu.gl.equipe200.inputengine.InputEngine;
 import amu.gl.equipe200.pacman.menues.MainMenu;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
-import amu.gl.equipe200.gameworld.Settings;
-
-import amu.gl.equipe200.system.InputEngine;
 
 // TODO: remove the extends Application in the gameApp to remove these
 import javafx.application.Application;
@@ -56,7 +54,7 @@ public class PacmanApp
         /*** Create the engines ***/
         this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
-        this.inputEngine = new InputEngine(graphicsEngine.getCurrentScene());
+        this.inputEngine = new InputEngine();
 
         /*** create the gameworld  ***/
         this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
@@ -72,6 +70,8 @@ public class PacmanApp
                 graphicsEngine.loadGameWorld(gameWorld.getGraphicsEntities(),
                                              16, 16);
                 graphicsEngine.display();
+                inputEngine.loadGameWorld(gameWorld.getIOEntities());
+                inputEngine.attachToScene(graphicsEngine.getCurrentScene());
             }
         });
 
@@ -105,7 +105,7 @@ public class PacmanApp
         double y = 16 * 0.6;
 
         // create player1
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player1.setX(x);
         player1.setY(y);
         player1.setWidth(1);
@@ -114,9 +114,10 @@ public class PacmanApp
         gameWorld.addGraphicsEntity(player1);
         gameWorld.addPhysicsEntity(player1);
         physicsEngine.registerEntity(player1);
+        gameWorld.addIOEntity(player1);
 
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player2.setX(5 * x);
         player2.setY(y);
         player2.setYSpeed(-0.1);
@@ -126,6 +127,7 @@ public class PacmanApp
         gameWorld.addGraphicsEntity(player2);
         gameWorld.addPhysicsEntity(player2);
         physicsEngine.registerEntity(player2);
+        gameWorld.addIOEntity(player2);
 
     }
 
@@ -241,8 +243,8 @@ public class PacmanApp
 //        // player input
 //        //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 //
-//        //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
-//        inputEngine.update();
+        //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
+        inputEngine.update();
 //        // add random enemies
 //        //spawnEnemies( true);
 //        //  spawnSuperFruit(true);

@@ -9,7 +9,7 @@ public class Settings {
     public static double WORLD_WIDTH = 16;
     public static double WORLD_HEIGHT = 16;
 
-    public static double PLAYER_SPEED = 1.0;
+    public static double PLAYER_SPEED = 0.1;
     public static double PLAYER_SHIP_HEALTH = 100.0;
 
     public static double PLAYER_MISSILE_SPEED = 1.0;
