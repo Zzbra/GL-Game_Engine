@@ -3,6 +3,7 @@ package amu.gl.equipe200.physicsengine;
 import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.utils.Pair;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static java.lang.Double.max;
@@ -12,7 +13,7 @@ public class PhysicsEngine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
-    private HashSet<Collision> collisions;
+    private HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisionPair;
     // Size of the world in which the entities move
     private double worldHeight;
     private double worldWidth;
@@ -23,16 +24,11 @@ public class PhysicsEngine {
         this.physicsEntities = new HashSet<>();
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
-        collisions = new HashSet<>();
+        collisionPair = new HashSet<>();
     }
 
-    public HashSet<Collision> getCollisions() {
-        return collisions;
-    }
-
-    public void setCollisions(HashSet<Collision> collisions) {
-        this.collisions = collisions;
-    }
+    public HashSet<Pair<PhysicsInterface, PhysicsInterface>> getCollisionPair(){ return this.collisionPair;}
+    public void clearCollision(){ this.collisionPair.clear();}
 
     // register or remove entities for updates
     public void registerEntity(PhysicsInterface entity){
@@ -130,7 +126,7 @@ public class PhysicsEngine {
                 // trigger the collision call back
 
                // entity.onCollide(toCheck);
-                collisions.add(new Collision(entity, toCheck));
+                collisionPair.add(Pair.create(entity, toCheck));
                 System.out.println(entity + " " + toCheck);
 
                 //En a t'on vraiment besoin ?

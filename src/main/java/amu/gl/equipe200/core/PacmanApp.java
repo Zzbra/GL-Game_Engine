@@ -12,15 +12,19 @@ import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 
 // TODO: remove the extends Application in the gameApp to remove these
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
+import amu.gl.equipe200.utils.Pair;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
     TODO: Réparer un bug qui à lieux lorsque qu'on entre en colision tout en
@@ -59,7 +63,8 @@ public class PacmanApp
         /*** create the gameworld  ***/
         this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         this.createPlayers();
-        createMap("src\\main\\resources\\Map1.txt");
+        
+        createMap("Map1.txt");
         /***  Set up the graphics engine  ***/
         graphicsEngine.registerGameLoopListener(this);
         graphicsEngine.loadMenu(MainMenu.getInstance());
@@ -144,7 +149,7 @@ public class PacmanApp
                 }
                 if(mapGrid[i][j] == 2){
                     SuperFruit superFruit = new SuperFruit(j , i,"SuperFruit.jpg", "BACKGROUND");
-                    physicsEngine.registerEntity(superFruit);
+                    gameWorld.addPhysicsEntity(superFruit);
                     gameWorld.addGraphicsEntity(superFruit);
                 }
             }
@@ -152,21 +157,18 @@ public class PacmanApp
     }
 
     private int[][] getMapGrid(String mapName){
-        File file = new File(mapName);
-        Scanner sc = null;
-        try {
-            sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(mapName);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + mapName);
         }
+        String sc = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining(""));
         int[][] mapTab = new int[16][16];
-        int i = 0;
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            for (int j = 0; j < 16; j++) {
-                mapTab[i][j] = (int) line.charAt(j) - (int)'0' ;
-            }
-            i++;
+
+        System.out.println(sc.length());
+        for(int i = 0; i < sc.length(); i++){
+            if(sc.charAt(i) != '\n')
+                mapTab[i/16][i%16] = (int) sc.charAt(i) - (int) '0';
         }
         return mapTab;
     }
@@ -237,6 +239,10 @@ public class PacmanApp
 ////        }
 //    }
 //
+    private void handleCollision(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
+
+    }
+
     @Override
     public void onNewFrame(long now) {
         System.out.println("New Frame");
@@ -252,7 +258,9 @@ public class PacmanApp
 //        // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
 //        // TODO: compute the ellapsed time to send it to the engines
         physicsEngine.update(1);
-//
+
+        HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions = physicsEngine.getCollisionPair();
+        handleCollision(collisions);
 //
 //        // update amu.gl.equipe200.entity in scene
 //        // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
