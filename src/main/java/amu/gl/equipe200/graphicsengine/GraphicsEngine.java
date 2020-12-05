@@ -8,19 +8,22 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class GraphicsEngine extends Application {
+public class GraphicsEngine {
 
     // javafx component used for display
     private Stage stage;
     private Scene displayedScene;
+    private Pane rootNode;
 
     // ressources used
     private ImagesManager images;
@@ -38,21 +41,10 @@ public class GraphicsEngine extends Application {
     // Request update every frame
     private HashSet<GameLoopListener> gameLoopListeners;
     private boolean launchGameLoop = false;
-    private AnimationTimer gameLoop = new AnimationTimer() {
-        private long lastUpdate = 0 ;
-        @Override
-        public void handle(long now) {
-            // cap the time between frame to 1/60s * 10e9 nanosec
-            if (now - lastUpdate >= 1_666_666) {
-                for (GameLoopListener l : gameLoopListeners) {
-                    l.onNewFrame(now);
-                }
-                lastUpdate = now;
-            }
-        }
-    };
+    private AnimationTimer gameLoop;
 
-    public GraphicsEngine(int windowWidthPixel, int windowsHeightPixel) {
+
+    public GraphicsEngine(Stage stage, int windowWidthPixel, int windowsHeightPixel) {
         // set the window size
         this.windowWidthPixel = windowWidthPixel;
         this.windowsHeightPixel = windowsHeightPixel;
@@ -60,8 +52,21 @@ public class GraphicsEngine extends Application {
         this.windowHeightInGame = 0;
 
         // create the javafx component
-        this.stage = null;          // stage will set on start
-        this.displayedScene = this.errorScene();
+        this.stage = stage;
+        this.setErrorScene();
+        this.gameLoop = new AnimationTimer() {
+            private long lastUpdate = 0 ;
+            @Override
+            public void handle(long now) {
+                // cap the time between frame to 1/60s * 10e9 nanosec
+                if (now - lastUpdate >= 1_666_666) {
+                    for (GameLoopListener l : gameLoopListeners) {
+                        l.onNewFrame(now);
+                    }
+                    lastUpdate = now;
+                }
+            }
+        };
 
         // Content holders
         this.graphicsEntities = new HashSet<>();
@@ -69,27 +74,13 @@ public class GraphicsEngine extends Application {
         this.views = new HashMap<>();
 
         // create the base layers for the graphics engine
-        this.layers = new LayerManager();
-        this.layers.add("POPUPS");
-        this.layers.add("GUI");
-        this.layers.add("FOREGROUND");
-        this.layers.add("BACKGROUND");
+        this.layers = new LayerManager(rootNode);
 
         // Manager for cached images
         this.images = new ImagesManager();
 
         // create the gameloopListener
         this.gameLoopListeners = new HashSet<>();
-    }
-
-    /*********************************
-     *     entry point of javafx     *
-     *********************************/
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        this.display();
-        this.stage.show();
     }
 
     /******************************************
@@ -123,38 +114,54 @@ public class GraphicsEngine extends Application {
     /**********************************
      *     change displayed scene     *
      **********************************/
-    public void loadMenu(Scene scene) {
+    public void loadMenu(MenuInterface menu) {
         // stop the app and clear the stage
         this.gameLoop.stop();
-        this.clear();
+        this.graphicsEntitiesToAdd.clear();
+        this.graphicsEntities.clear();
+        this.views.clear();
+        this.images.clearCache();
 
         // load the menu
-        this.displayedScene = scene;
+        this.displayedScene = menu.getScene();
+        this.rootNode = menu.getRoot();
+
+        this.layers = new LayerManager(this.rootNode);
+
         this.launchGameLoop = false;
     }
     public void loadGameWorld(HashSet<GraphicsInterface> entitiesToAdd, double windowWidthInGame, double windowHeightInGame){
         // stop the app and clear the stage
         this.gameLoop.stop();
-        this.clear();
+        this.graphicsEntitiesToAdd.clear();
+        this.graphicsEntities.clear();
+        this.views.clear();
+        this.images.clearCache();
 
         // set the size of the new gameWorld
         this.windowWidthInGame = windowWidthInGame;
         this.windowHeightInGame = windowHeightInGame;
+
+        // create the new scene
+        Pane g = new Pane();
+        this.displayedScene = new Scene(g, this.windowWidthPixel, this.windowsHeightPixel);
+        this.rootNode = g;
+
+        this.layers = new LayerManager(this.rootNode);
 
         // add the already existing entities to the engine
         for (GraphicsInterface entity : entitiesToAdd) {
             this.registerEntity(entity);
         }
 
-        // display the scene
-        this.displayedScene = new Scene(new Group(), this.windowWidthPixel, this.windowsHeightPixel);
         this.launchGameLoop = true;
     }
     public void display() {
         this.stage.setScene(this.displayedScene);
         if (this.launchGameLoop) this.gameLoop.start();
+        this.stage.show();
     }
-
+    public Scene getCurrentScene() { return this.displayedScene; }
     /**********************************
      *     add or remove elements     *
      **********************************/
@@ -178,27 +185,12 @@ public class GraphicsEngine extends Application {
     /**********************************
      *     Internal of the engine     *
      **********************************/
-    // Clear the current state of the graphics engine
-    private void clear() {
-        // remove the entities
-        this.graphicsEntitiesToAdd.clear();
-        this.graphicsEntities.clear();
-        this.views.clear();
-
-        // clear the layer manager
-        this.layers.clear();
-        this.layers.add("POPUPS");
-        this.layers.add("GUI");
-        this.layers.add("FOREGROUND");
-        this.layers.add("BACKGROUND");
-
-        this.images.clearCache();
-    }
 
     // Convert coordinates from InGame to Screen space (and the other way)
     private Pair<Integer, Integer> fromGameSpaceToScreenSpace(Pair<Double, Double> toConvert) {
-        int x = (int) Math.round(toConvert.first * this.windowWidthPixel / this.windowWidthInGame);
-        int y = (int) Math.round(toConvert.second * this.windowsHeightPixel / this.windowHeightInGame);
+        double scale = (this.windowWidthPixel / this.windowWidthInGame);
+        int x = (int) Math.round(toConvert.first * scale);
+        int y = (int) Math.round(toConvert.second * scale);
         return Pair.create(x, y);
     }
     private Pair<Double, Double> fromScreenSpaceToGameSpace(Pair<Double, Double> toConvert) {
@@ -216,13 +208,13 @@ public class GraphicsEngine extends Application {
         view.setImage(texture);
 
         // relocate and rotate the view
-        Pair<Integer, Integer> position = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
+        Pair<Integer, Integer> position = fromGameSpaceToScreenSpace(Pair.create(entity.getX(), entity.getY()));
         view.setX(position.first);
         view.setY(position.second);
         view.setRotate(entity.getR());
 
         // scale it to the right scale
-        Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getX(), entity.getY()));
+        Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
         view.setFitWidth(size.first);
         view.setFitHeight(size.second);
 
@@ -254,11 +246,13 @@ public class GraphicsEngine extends Application {
     }
 
     // Error scene
-    private Scene errorScene() {
+    private void setErrorScene() {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
         Label l = new Label("Error using JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), this.windowWidthPixel, this.windowHeightInGame);
-        return scene;
+        Pane root = new StackPane(l);
+        Scene scene = new Scene(root, this.windowWidthPixel, this.windowsHeightPixel);
+        this.displayedScene = scene;
+        this.rootNode = root;
     }
 }

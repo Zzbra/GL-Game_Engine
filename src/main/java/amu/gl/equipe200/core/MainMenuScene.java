@@ -10,18 +10,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class MainMenuScene extends GameWorld {
+public class MainMenuScene {
 
-
-    public MainMenuScene(){
-        super();
+    public static Scene MainMenuScene(){
+        System.out.println("Hello! ");
         Scene mainMenuScene;
         Button startGameButton = new Button("Start Game");
-        this.getUIComponents().put("startGameButton", startGameButton);
         Button controlButton = new Button("Controls");
-        this.getUIComponents().put("controlButton", controlButton);
         Button aboutButton = new Button("About");
-        this.getUIComponents().put("aboutButton", aboutButton);
         Image img = new Image("menuScreen.jpg");
         ImageView imgView = new ImageView(img);
         VBox vBox = new VBox(imgView,startGameButton, controlButton, aboutButton);
@@ -32,7 +28,7 @@ public class MainMenuScene extends GameWorld {
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         mainMenuScene = new Scene(panel, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         mainMenuScene.getStylesheets().add("MainMenuStyleSheet.css");
-        super.setScene(mainMenuScene);
+        return mainMenuScene;
     }
 
 }

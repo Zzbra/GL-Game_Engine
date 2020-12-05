@@ -2,6 +2,9 @@ package amu.gl.equipe200.pacman.menues;
 
 import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.graphicsengine.MenuInterface;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,13 +20,16 @@ public class MainMenu
 
     private static MainMenu INSTANCE;
     private Scene mainMenuScene;
+    private Pane root;
+    public Button startGameButton, controlButton, aboutButton;
 
     private MainMenu() {
-        System.out.println("Hello! ");
         Scene mainMenuScene;
-        Button startGameButton = new Button("Start Game");
-        Button controlButton = new Button("Controls");
-        Button aboutButton = new Button("About");
+
+        startGameButton = new Button("Start Game");
+        controlButton = new Button("Controls");
+        aboutButton = new Button("About");
+
         Image img = new Image("menuScreen.jpg");
         ImageView imgView = new ImageView(img);
         VBox vBox = new VBox(imgView,startGameButton, controlButton, aboutButton);
@@ -32,9 +38,11 @@ public class MainMenu
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
         panel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
         mainMenuScene = new Scene(panel, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         mainMenuScene.getStylesheets().add("MainMenuStyleSheet.css");
 
+        this.root = panel;
         this.mainMenuScene = mainMenuScene;
     }
 
@@ -44,4 +52,7 @@ public class MainMenu
     }
 
     public Scene getScene() { return mainMenuScene; }
+
+    @Override
+    public Pane getRoot() { return this.root; }
 }
