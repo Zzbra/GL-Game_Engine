@@ -50,7 +50,7 @@ public class PacmanApp
     @Override
     public void start(Stage primaryStage) {
         /*** Create the engines ***/
-        this.physicsEngine = new PhysicsEngine(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);  //TODO: replace scene size by world size
+        this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine(graphicsEngine.getCurrentScene());
 
@@ -66,7 +66,7 @@ public class PacmanApp
             @Override
             public void handle(ActionEvent actionEvent) {
                 graphicsEngine.loadGameWorld(gameWorld.getGraphicsEntities(),
-                                             Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+                                             16, 16);
                 graphicsEngine.display();
             }
         });
@@ -97,15 +97,15 @@ public class PacmanApp
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
-        double x = Settings.SCENE_WIDTH / 6.0;
-        double y = Settings.SCENE_HEIGHT * 0.7;
+        double x = 16 / 6.0;
+        double y = 16 * 0.6;
 
         // create player1
         Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player1.setX(x);
         player1.setY(y);
-        player1.setWidth(50);
-        player1.setHeight(50);
+        player1.setWidth(1);
+        player1.setHeight(1);
         player1.setControls("Z", "S", "Q", "D");
         gameWorld.addGraphicsEntity(player1);
         gameWorld.addPhysicsEntity(player1);
@@ -115,9 +115,9 @@ public class PacmanApp
         Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player2.setX(5 * x);
         player2.setY(y);
-        player2.setYSpeed(-10);
-        player2.setWidth(50);
-        player2.setHeight(50);
+        player2.setYSpeed(-0.1);
+        player2.setWidth(1);
+        player2.setHeight(1);
         player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
         gameWorld.addGraphicsEntity(player2);
         gameWorld.addPhysicsEntity(player2);

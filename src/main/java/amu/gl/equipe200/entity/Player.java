@@ -36,9 +36,7 @@ public class Player
      */
     private String upKey, downKey, leftKey, rightKey;
 
-    public Player(){
-
-    }
+    public Player(){ }
 
     public Player(double x, double y, double r,
                   double dx, double dy, double dr,
@@ -134,7 +132,7 @@ public class Player
     @Override
     public boolean hasMoved() { return this.hasMoved; }
     @Override
-    public boolean hasNewSprite() { return false; }
+    public boolean hasNewSprite() { return true; }
 
     @Override
     public void onProcessed(GraphicsEngine engine) {

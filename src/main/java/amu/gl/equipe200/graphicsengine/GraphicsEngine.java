@@ -191,6 +191,8 @@ public class GraphicsEngine {
         double scale = (this.windowWidthPixel / this.windowWidthInGame);
         int x = (int) Math.round(toConvert.first * scale);
         int y = (int) Math.round(toConvert.second * scale);
+        System.out.println(toConvert.first);
+        System.out.println(x);
         return Pair.create(x, y);
     }
     private Pair<Double, Double> fromScreenSpaceToGameSpace(Pair<Double, Double> toConvert) {
