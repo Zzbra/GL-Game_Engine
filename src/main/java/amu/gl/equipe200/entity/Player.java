@@ -5,7 +5,7 @@ import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.gameworld.Settings;
+import amu.gl.equipe200.core.Settings;
 
 /**
  *  La super class Entity a des paramètres w et h qui sont aussi width et height. A changer du coup.

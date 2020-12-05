@@ -1,15 +1,10 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashSet;
 
-import static java.lang.Double.max;
-import static java.lang.Double.min;
-
-public class PhysicsEngine
-        extends Engine {
+public class PhysicsEngine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;

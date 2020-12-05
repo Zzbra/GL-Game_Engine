@@ -7,8 +7,6 @@ import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.pacman.menues.MainMenu;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
-import amu.gl.equipe200.gameworld.Settings;
-
 import amu.gl.equipe200.inputengine.InputEngine;
 
 // TODO: remove the extends Application in the gameApp to remove these

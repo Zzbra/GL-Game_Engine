@@ -1,4 +1,4 @@
-package amu.gl.equipe200.gameworld;
+package amu.gl.equipe200.core;
 
 import amu.gl.equipe200.utils.Pair;
 

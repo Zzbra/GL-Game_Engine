@@ -1,10 +1,7 @@
 package amu.gl.equipe200.entity;
 
-import amu.gl.equipe200.core.Engine;
 import amu.gl.equipe200.core.GameWorld;
-import amu.gl.equipe200.gameworld.Settings;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import amu.gl.equipe200.core.Settings;
 
 import java.util.ArrayList;
 
