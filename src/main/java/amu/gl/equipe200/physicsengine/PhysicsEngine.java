@@ -155,6 +155,9 @@ public class PhysicsEngine
      * @param toCheck: entity which the movable entity collide with
      * @return: final position of the movable entity
      */
+
+
+
     private Pair<Double, Double> computeCollidedPosition(PhysicsInterface entity,
                                                         Pair<Double, Double> newPosition,
                                                         PhysicsInterface toCheck) {
@@ -166,13 +169,17 @@ public class PhysicsEngine
             && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
 //            finalX = min(finalX, toCheck.getX() - entity.getWidth());
-            finalX = entity.getX();
+            //finalX = entity.getX();
+            stop(entity);
+            finalX = toCheck.getX() - entity.getWidth() - eps;
+
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)
 //            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
-            finalX = entity.getX();
-
+            //finalX = entity.getX();
+            stop(entity);
+            finalX = toCheck.getX() + toCheck.getWidth() + eps;
         }
 
         // the entity move on the Y axis, compute the final Y position
@@ -180,14 +187,16 @@ public class PhysicsEngine
             && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
 //            finalY = min(finalY, toCheck.getY() - entity.getHeight());
-            finalY = entity.getY();
-
+//            finalY = entity.getY();
+            stop(entity);
+            finalY = toCheck.getY() - entity.getHeight() - eps;
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
             && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
 //            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
-            finalY = entity.getY();
-
+            //finalY = entity.getY();
+            stop(entity);
+            finalY = toCheck.getY() + toCheck.getHeight() + eps;
         }
         return Pair.create(finalX, finalY);
     }
@@ -200,5 +209,10 @@ public class PhysicsEngine
     private void move(PhysicsInterface entity, Pair<Double, Double> newPosition){
         entity.setX(newPosition.first);
         entity.setY(newPosition.second);
+    }
+
+    private void stop(PhysicsInterface entity){
+        entity.setXSpeed(0);
+        entity.setYSpeed(0);
     }
 }

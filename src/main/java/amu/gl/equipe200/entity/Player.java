@@ -112,7 +112,10 @@ public class Player
     @Override
     public void onCollide(PhysicsInterface others) {
         // TODO
-        //System.out.println(this.toString() + " has collided with " + others.toString());
+        System.out.println(this.toString() + " has collided with " + others.toString());
+        System.out.println(this.getX() +" "+ this.getY() +" "+ this.getWidth() +" "+ this.getHeight());
+        System.out.println(others.getX() +" "+ others.getY() +" "+ others.getWidth() +" "+ others.getHeight());
+
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
             superPowerActive();
         }

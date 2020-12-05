@@ -24,6 +24,7 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
         this.layerName = layerName;
         setTag(Settings.Tag.FRUIT);
     }
+
     @Override
     public void checkRemovability(){
     }
@@ -56,6 +57,16 @@ public class SuperFruit extends Entity implements PhysicsInterface, RenderableIn
     @Override
     public double getHeight() {
         return this.height;
+    }
+
+    @Override
+    public void setXSpeed(double dx) {
+
+    }
+
+    @Override
+    public void setYSpeed(double dy) {
+
     }
 
     @Override

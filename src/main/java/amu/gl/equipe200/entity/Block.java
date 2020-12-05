@@ -42,6 +42,16 @@ public class Block extends Entity implements RenderableInterface, PhysicsInterfa
     }
 
     @Override
+    public void setXSpeed(double dx) {
+
+    }
+
+    @Override
+    public void setYSpeed(double dy) {
+
+    }
+
+    @Override
     public double getR() {
         return 0;
     }
