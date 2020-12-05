@@ -39,6 +39,10 @@ public class AStar {
         return new ArrayList<>();
     }
 
+    public Grid getGrid(){
+        return this.grid;
+    }
+
     private ArrayList<Cell> getChilds(Cell current, Stack<Cell> open, Stack<Cell> close) {
         ArrayList<Cell> childs = grid.getPossibilities(current);
         ArrayList<Cell> childtoRemove = new ArrayList<>();

@@ -71,7 +71,7 @@ public class GraphicsEngine
             java.lang.System.err.println("Pas trouve");
         }
         try {
-            IMAGEMAP.put("enemyImage", new Image( "ghostRed.jpg", 50, 50, true, true));
+            IMAGEMAP.put("enemyImage", new Image( "ghostRed.jpg", 40, 40, true, true));
         }catch(Exception e){
             java.lang.System.err.println("Pas trouve");
         }

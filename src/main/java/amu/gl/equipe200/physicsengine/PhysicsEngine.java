@@ -18,7 +18,7 @@ public class PhysicsEngine
     private double worldHeight;
     private double worldWidth;
 
-    private static double eps = 0.000001d;
+    private static double eps = -2;
 
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();
@@ -121,8 +121,6 @@ public class PhysicsEngine
             if (collide(entity, newPosition, toCheck)) {
                 // trigger the collision call back
                 entity.onCollide(toCheck);
-
-                //En a t'on vraiment besoin ?
                 toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
@@ -155,48 +153,38 @@ public class PhysicsEngine
      * @param toCheck: entity which the movable entity collide with
      * @return: final position of the movable entity
      */
-
-
-
     private Pair<Double, Double> computeCollidedPosition(PhysicsInterface entity,
-                                                        Pair<Double, Double> newPosition,
-                                                        PhysicsInterface toCheck) {
+                                                         Pair<Double, Double> newPosition,
+                                                         PhysicsInterface toCheck) {
         Double finalX = newPosition.first;
         Double finalY = newPosition.second;
 
         // the entity move on the X axis, compute the final X position
         if (Double.compare(entity.getXSpeed(), eps) > 0
-            && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
+                && Double.compare(entity.getX() + entity.getWidth()-eps, toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
 //            finalX = min(finalX, toCheck.getX() - entity.getWidth());
-            //finalX = entity.getX();
-            stop(entity);
-            finalX = toCheck.getX() - entity.getWidth() - eps;
-
+            finalX = entity.getX();
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
-            && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
+                && Double.compare(entity.getX()+eps,  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)
 //            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
-            //finalX = entity.getX();
-            stop(entity);
-            finalX = toCheck.getX() + toCheck.getWidth() + eps;
+            finalX = entity.getX();
+
         }
 
         // the entity move on the Y axis, compute the final Y position
         if (Double.compare(entity.getYSpeed(), eps) > 0
-            && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
+                && Double.compare(entity.getY() + entity.getHeight()-eps, toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
 //            finalY = min(finalY, toCheck.getY() - entity.getHeight());
-//            finalY = entity.getY();
-            stop(entity);
-            finalY = toCheck.getY() - entity.getHeight() - eps;
+            finalY = entity.getY();
+
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
-            && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
+                && Double.compare(entity.getY()+eps,  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
 //            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
-            //finalY = entity.getY();
-            stop(entity);
-            finalY = toCheck.getY() + toCheck.getHeight() + eps;
+            finalY = entity.getY();
         }
         return Pair.create(finalX, finalY);
     }
@@ -209,10 +197,5 @@ public class PhysicsEngine
     private void move(PhysicsInterface entity, Pair<Double, Double> newPosition){
         entity.setX(newPosition.first);
         entity.setY(newPosition.second);
-    }
-
-    private void stop(PhysicsInterface entity){
-        entity.setXSpeed(0);
-        entity.setYSpeed(0);
     }
 }

@@ -6,7 +6,8 @@ public class Settings {
     public static double SCENE_WIDTH = 800;
     public static double SCENE_HEIGHT = 800;
 
-    public static double PLAYER_SHIP_SPEED = 4.0;
+    public static double PLAYER_SHIP_SPEED = 2.0;
+    public static double ENEMY_SHIP_SPEED = 1.0;
     public static double PLAYER_SHIP_HEALTH = 100.0;
 
     public static double PLAYER_MISSILE_SPEED = 1.0;
@@ -21,5 +22,4 @@ public class Settings {
     private Pair<Double, Double> worldSize = Pair.create(100d, 100d);
     public void setWorldSize(double width, double height) { this.worldSize = Pair.create(width, height); }
     public Pair<Double, Double> getWorldSize() { return this.worldSize; }
-
 }

@@ -4,15 +4,11 @@ package amu.gl.equipe200.core;
 import amu.gl.equipe200.IAEngine.AStar;
 import amu.gl.equipe200.IAEngine.Cell;
 import amu.gl.equipe200.IAEngine.Grid;
-import amu.gl.equipe200.entity.Block;
+import amu.gl.equipe200.entity.*;
 
-import amu.gl.equipe200.entity.Entity;
-import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
-import amu.gl.equipe200.entity.Enemy;
-import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.gameworld.Settings;
 
 
@@ -64,15 +60,15 @@ public class PacmanApp extends Application {
         graphicsEngine.loadScene(mainMenuScene.getScene());
 
         playerIsCreated = false;
-        createPlayers();
+        Player pacMan = createPlayers();
         playerIsCreated = true;
         // int [y][x]
+
         int[][] mat = createMap("src\\main\\resources\\Map1.txt");
         Grid grid = new Grid(mat);
         AStar algo = new AStar(grid);
-        ArrayList<Cell> path = algo.start(grid.getCell(0, 5), grid.getCell(4,11));
-        System.out.println(path);
 
+        Blinky blinky = createBlinky(pacMan, algo);
 
         gameLoop = new AnimationTimer() {
 
@@ -81,12 +77,12 @@ public class PacmanApp extends Application {
 
                 // player input
                 //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
-
                 //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
                 inputEngine.update();
                 // add random enemies
                 //spawnEnemies( true);
               //  spawnSuperFruit(true);
+                blinky.update();
 
                 // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
                 // TODO: compute the ellapsed time to send it to the engines
@@ -97,7 +93,6 @@ public class PacmanApp extends Application {
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
                 // TODO: compute the ellapsed time to send it to the engines
                 graphicsEngine.update(1);
-
 
                 // check if amu.gl.equipe200.entity can be removed
                 //gameScene.getEnemies().forEach(entity -> entity.checkRemovability());
@@ -131,7 +126,7 @@ public class PacmanApp extends Application {
 
 
 
-    private void createPlayers() {
+    private Player createPlayers() {
         // center horizontally, position at 70% vertically
         double x = Settings.SCENE_WIDTH / 6.0;
         double y = Settings.SCENE_HEIGHT * 0.7;
@@ -154,6 +149,25 @@ public class PacmanApp extends Application {
         graphicsEngine.addRenderable(player2);
         inputEngine.addIOEntity(player2);
         gameScene.getPlayers().add(player2);
+
+        return player1;
+    }
+
+    private Blinky createBlinky(Player pacMan, AStar algo) {
+
+        double x = 0;
+        double y = 0;
+
+
+        Blinky blinky = new Blinky(x, y, 0, 0, 0, 0, Settings.ENEMY_SHIP_SPEED, 0,gameScene, "enemyImage", "playerfieldLayer",pacMan, algo);
+        blinky.setX(x);
+        blinky.setY(y);
+
+        physicsEngine.registerEntity(blinky);
+        graphicsEngine.addRenderable(blinky);
+        gameScene.getPlayers().add(blinky);
+
+        return blinky;
     }
 
     private int[][] createMap(String mapName){

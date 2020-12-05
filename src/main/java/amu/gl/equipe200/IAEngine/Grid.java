@@ -1,5 +1,7 @@
 package amu.gl.equipe200.IAEngine;
 
+import amu.gl.equipe200.gameworld.Settings;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,5 +60,9 @@ public class Grid {
         return "Grid{" +
                 "cells=" + cells +
                 '}';
+    }
+
+    public Cell pointToCell(double x, double y){
+        return getCell((int)(x/(Settings.SCENE_HEIGHT/16)), (int)(y/(Settings.SCENE_HEIGHT/16)));
     }
 }
