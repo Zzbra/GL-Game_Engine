@@ -221,11 +221,12 @@ public class GraphicsEngine {
         return view;
     }
     private void moveEntity(GraphicsInterface entity) {
+        System.out.println("Moved");
         // get the view associated with the entity
         ImageView view = this.views.get(entity);
 
         // get the new postion
-        Pair<Integer, Integer> position = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
+        Pair<Integer, Integer> position = fromGameSpaceToScreenSpace(Pair.create(entity.getX(), entity.getY()));
 
         // change the properties of the view
         view.relocate(position.first, position.second);
@@ -237,7 +238,7 @@ public class GraphicsEngine {
 
         // get the texture and size
         Image texture = this.images.getImage(entity.getImageName(ellapsedTime));
-        Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getX(), entity.getY()));
+        Pair<Integer, Integer> size = fromGameSpaceToScreenSpace(Pair.create(entity.getWidth(), entity.getHeight()));
 
         // change the properties of the view
         view.setImage(texture);

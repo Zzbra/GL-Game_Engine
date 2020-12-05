@@ -109,16 +109,20 @@ public class PacmanApp
         player1.setControls("Z", "S", "Q", "D");
         gameWorld.addGraphicsEntity(player1);
         gameWorld.addPhysicsEntity(player1);
+        physicsEngine.registerEntity(player1);
 
 
         Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player2.setX(5 * x);
         player2.setY(y);
+        player2.setYSpeed(-10);
         player2.setWidth(50);
         player2.setHeight(50);
         player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
         gameWorld.addGraphicsEntity(player2);
         gameWorld.addPhysicsEntity(player2);
+        physicsEngine.registerEntity(player2);
+
     }
 //
 //    private void createMap(String mapName){
@@ -228,12 +232,12 @@ public class PacmanApp
 //
     @Override
     public void onNewFrame(long now) {
-//        System.out.println("New Frame");
+        System.out.println("New Frame");
 //        // player input
 //        //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 //
 //        //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
-        inputEngine.update();
+//        inputEngine.update();
 //        // add random enemies
 //        //spawnEnemies( true);
 //        //  spawnSuperFruit(true);

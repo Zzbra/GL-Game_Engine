@@ -62,9 +62,9 @@ public class Player
     @Override
     public double getY() { return this.y; }
     @Override
-    public void setX(double x) { this.x = x; }
+    public void setX(double x) { this.hasMoved = true; this.x = x; }
     @Override
-    public void setY(double y) { this.y = y; }
+    public void setY(double y) { this.hasMoved = true; this.y = y; }
 
     @Override
     public double getXSpeed() { return this.xSpeed; }
@@ -102,6 +102,8 @@ public class Player
      *    Physics Engine behaviour                                                                                    *
      ******************************************************************************************************************/
     @Override
+    public boolean isMovable() { return true; }
+    @Override
     public boolean isWorldBounded() { return true; }
     @Override
     public boolean isCollidable() { return true;}
@@ -132,7 +134,7 @@ public class Player
     @Override
     public boolean hasMoved() { return this.hasMoved; }
     @Override
-    public boolean hasNewSprite() { return this.hasNewSprite; }
+    public boolean hasNewSprite() { return false; }
 
     @Override
     public void onProcessed(GraphicsEngine engine) {
