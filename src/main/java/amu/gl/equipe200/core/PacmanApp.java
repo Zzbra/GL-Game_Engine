@@ -9,6 +9,7 @@ import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
+import amu.gl.equipe200.physicsengine.Collision;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 import amu.gl.equipe200.entity.Enemy;
@@ -47,7 +48,7 @@ public class PacmanApp extends Application {
     private Random rnd = new Random();
     private GameWorld mainMenuScene, gameScene;
     private AnimationTimer gameLoop;
-
+    private boolean gameOver;
     private boolean playerIsCreated;
 
     @Override
@@ -78,7 +79,9 @@ public class PacmanApp extends Application {
 
             @Override
             public void handle(long now) {
-
+                if (gameOver){
+                    graphicsEngine.loadScene(mainMenuScene.getScene());
+                }
                 // player input
                 //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 
@@ -92,7 +95,11 @@ public class PacmanApp extends Application {
                 // TODO: compute the ellapsed time to send it to the engines
                 physicsEngine.update(1);
 
-
+                HashSet<Collision> collisions = physicsEngine.getCollisions();
+                for(Collision collision: collisions){
+                    hanldeCollisions(collision);
+                }
+                physicsEngine.setCollisions(new HashSet<>());
                 // update amu.gl.equipe200.entity in scene
                 // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
                 // TODO: compute the ellapsed time to send it to the engines
@@ -117,6 +124,7 @@ public class PacmanApp extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 graphicsEngine.loadScene(gameScene.getScene());
+                gameOver = false;
                 if(!playerIsCreated)
                     createPlayers();
                 //setControls();
@@ -128,7 +136,23 @@ public class PacmanApp extends Application {
 
     }
 
-
+    private void hanldeCollisions(Collision collision){
+        PhysicsInterface entity1 = collision.getEntity1();
+        entity1.onCollide(collision.getEntity2());
+        if(entity1.getTag() == Settings.Tag.PLAYER){
+            if(collision.getEntity2().getTag() == Settings.Tag.ENEMY){
+                Entity player1 = gameScene.getPlayers().get(0);
+                player1.setHealth(player1.getHealth() - 1);
+                System.out.println(player1.getHealth());
+                if(player1.getHealth() == 0){
+                    player1.setRemovable(true);
+                    playerIsCreated = false;
+                    gameOver = true;
+                    gameScene.getPlayers().remove(player1);
+                }
+            }
+        }
+    }
 
 
     private void createPlayers() {
@@ -137,7 +161,7 @@ public class PacmanApp extends Application {
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player1
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED,  "playerImage", "playerfieldLayer");
         player1.setX(x);
         player1.setY(y);
         player1.setControls("Z", "S", "Q", "D");
@@ -146,14 +170,14 @@ public class PacmanApp extends Application {
         inputEngine.addIOEntity(player1);
         gameScene.getPlayers().add(player1);
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameScene, "playerImage", "playerfieldLayer");
-        player2.setX(5 * x);
-        player2.setY(y);
-        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
-        physicsEngine.registerEntity(player2);
-        graphicsEngine.addRenderable(player2);
-        inputEngine.addIOEntity(player2);
-        gameScene.getPlayers().add(player2);
+//        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, "playerImage", "playerfieldLayer");
+//        player2.setX(5 * x);
+//        player2.setY(y);
+//        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
+//        physicsEngine.registerEntity(player2);
+//        graphicsEngine.addRenderable(player2);
+//        inputEngine.addIOEntity(player2);
+//        gameScene.getPlayers().add(player2);
     }
 
     private int[][] createMap(String mapName){
@@ -171,6 +195,11 @@ public class PacmanApp extends Application {
                     SuperFruit superFruit = new SuperFruit(j * offset, i * offset,gameScene,"SuperFruit", "playerfieldLayer");
                     physicsEngine.registerEntity(superFruit);
                     graphicsEngine.addRenderable(superFruit);
+                }
+                if(mapGrid[i][j] == 3){
+                    Enemy enemy = new Enemy(j * offset, i * offset, 0, 0,0,0,1,1, "enemyImage", "playerfieldLayer" );
+                    physicsEngine.registerEntity(enemy);
+                    graphicsEngine.addRenderable(enemy);
                 }
             }
         }
@@ -213,7 +242,7 @@ public class PacmanApp extends Application {
         double y = 0;
 
         // create a sprite
-        Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1, gameScene,"enemyImage", "playerfieldLayer" );
+        Enemy enemy = new Enemy(x, y, 0, 0, speed, 0, 1,1,"enemyImage", "playerfieldLayer" );
         enemy.setX(x);
         enemy.setY(y);
         physicsEngine.registerEntity(enemy);

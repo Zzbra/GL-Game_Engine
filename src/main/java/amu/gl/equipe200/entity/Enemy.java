@@ -24,10 +24,9 @@ public class Enemy
     public Enemy(double x, double y, double r,
                  double xSpeed, double ySpeed, double dr,
                  double health, double damage,
-                 GameWorld gamescene,
                  String imageName,
                  String layerName) {
-        super(x, y, r, xSpeed, ySpeed, dr, health, damage, gamescene);
+        super(x, y, r, xSpeed, ySpeed, dr, health, damage);
 
         this.x = x;
         this.y = y;

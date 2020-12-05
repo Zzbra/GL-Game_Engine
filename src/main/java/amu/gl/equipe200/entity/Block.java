@@ -1,5 +1,6 @@
 package amu.gl.equipe200.entity;
 
+import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.graphicsengine.RenderableInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
@@ -15,6 +16,7 @@ public class Block extends Entity implements RenderableInterface, PhysicsInterfa
         this.layerName = layerName;
         this.width = width;
         this.height = height;
+        setTag(Settings.Tag.BLOCK);
     }
 
 

@@ -31,7 +31,7 @@ public abstract class Entity {
 
 
 
-    public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage, GameWorld gameWorld) {
+    public Entity(double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
 
         this.x = x;
         this.y = y;

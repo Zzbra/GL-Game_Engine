@@ -1,6 +1,8 @@
 package amu.gl.equipe200.physicsengine;
 
 import amu.gl.equipe200.core.Engine;
+import amu.gl.equipe200.entity.Entity;
+import amu.gl.equipe200.gameworld.Settings;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashSet;
@@ -13,7 +15,7 @@ public class PhysicsEngine
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
-
+    private HashSet<Collision> collisions;
     // Size of the world in which the entities move
     private double worldHeight;
     private double worldWidth;
@@ -24,6 +26,15 @@ public class PhysicsEngine
         this.physicsEntities = new HashSet<>();
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
+        collisions = new HashSet<>();
+    }
+
+    public HashSet<Collision> getCollisions() {
+        return collisions;
+    }
+
+    public void setCollisions(HashSet<Collision> collisions) {
+        this.collisions = collisions;
     }
 
     // register or remove entities for updates
@@ -120,13 +131,17 @@ public class PhysicsEngine
             // check if the two entities collide during the movement
             if (collide(entity, newPosition, toCheck)) {
                 // trigger the collision call back
-                entity.onCollide(toCheck);
+
+               // entity.onCollide(toCheck);
+                collisions.add(new Collision(entity, toCheck));
+                System.out.println(entity + " " + toCheck);
 
                 //En a t'on vraiment besoin ?
-                toCheck.onCollide(entity);
+               // toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
-                if (entity.isSolid() && toCheck.isSolid()) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
+                // TODO: Changer absolument la partie BLOCK, on ne doit pas checker de Tag ici mais les blocks ne doivent pas collide
+                if (entity.isSolid() && toCheck.isSolid() && (entity.getTag() != Settings.Tag.BLOCK || toCheck.getTag() != Settings.Tag.BLOCK)) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
             }
         }
         return newPosition;
@@ -172,6 +187,7 @@ public class PhysicsEngine
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() - entity.getWidth() - eps;
+            System.out.println("db1");
 
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
@@ -180,9 +196,12 @@ public class PhysicsEngine
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() + toCheck.getWidth() + eps;
+            System.out.println("db2");
+
         }
 
         // the entity move on the Y axis, compute the final Y position
+
         if (Double.compare(entity.getYSpeed(), eps) > 0
             && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
@@ -190,6 +209,7 @@ public class PhysicsEngine
 //            finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() - entity.getHeight() - eps;
+            System.out.println("db3");
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
             && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
@@ -197,6 +217,7 @@ public class PhysicsEngine
             //finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() + toCheck.getHeight() + eps;
+            System.out.println("db4");
         }
         return Pair.create(finalX, finalY);
     }

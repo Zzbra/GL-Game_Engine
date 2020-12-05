@@ -37,15 +37,16 @@ public class Player
     public Player(double x, double y, double r,
                   double dx, double dy, double dr,
                   double health, double damage,
-                  double speed, GameWorld gameScene, String imagePath, String layerName) {
+                  double speed, String imagePath, String layerName) {
 
-        super(x, y, r, dx, dy, dr, health, damage, gameScene);
+        super(x, y, r, dx, dy, dr, health, damage);
         this.setTag(Settings.Tag.PLAYER);
         this.speed = speed;
         this.imagePath = imagePath;
         this.layerName = layerName;
         collisionsCheck.add(Settings.Tag.ENEMY);
         isSolid=true;
+        setHealth(5);
     }
 
 
