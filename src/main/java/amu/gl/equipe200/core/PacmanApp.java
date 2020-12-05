@@ -42,7 +42,7 @@ public class PacmanApp
     private PhysicsEngine physicsEngine;
     private GraphicsEngine graphicsEngine;
     private InputEngine inputEngine;
-
+    private int[][] currentMap;
     private Random rnd = new Random();
 
     private GameWorld gameWorld;
@@ -64,7 +64,7 @@ public class PacmanApp
         this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
         this.createPlayers();
 
-        createMap("Map1.txt");
+        this.currentMap = createMap("Map1.txt");
         /***  Set up the graphics engine  ***/
         graphicsEngine.registerGameLoopListener(this);
         graphicsEngine.loadMenu(MainMenu.getInstance());
@@ -136,7 +136,7 @@ public class PacmanApp
 
     }
 
-    private void createMap(String mapName){
+    private int[][] createMap(String mapName){
         int[][] mapGrid = getMapGrid(mapName);
         //double offset = Settings.SCENE_HEIGHT/16.0;
         for (int i = 0; i < 16; i++) {
@@ -154,6 +154,7 @@ public class PacmanApp
                 }
             }
         }
+        return mapGrid;
     }
 
     private int[][] getMapGrid(String mapName){
