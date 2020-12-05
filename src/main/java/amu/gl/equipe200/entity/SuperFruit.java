@@ -56,6 +56,15 @@ public class SuperFruit
     }
 
     @Override
+    public void setXSpeed(double dx) {
+    }
+
+    @Override
+    public void setYSpeed(double dy) {
+
+    }
+
+    @Override
     public String getImageName(long ellapsedTime) { return this.imageName; }
     @Override
     public String getLayerName(){ return this.layerName; }

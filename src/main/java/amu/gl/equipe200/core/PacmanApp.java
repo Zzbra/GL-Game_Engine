@@ -105,11 +105,11 @@ public class PacmanApp
         double y = 16 * 0.6;
 
         // create player1
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
         player1.setX(x);
         player1.setY(y);
-        player1.setWidth(1);
-        player1.setHeight(1);
+        player1.setWidth(0.8);
+        player1.setHeight(0.8);
         player1.setControls("Z", "S", "Q", "D");
         gameWorld.addGraphicsEntity(player1);
         gameWorld.addPhysicsEntity(player1);
@@ -117,7 +117,7 @@ public class PacmanApp
         gameWorld.addIOEntity(player1);
 
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
         player2.setX(5 * x);
         player2.setY(y);
         player2.setYSpeed(-0.1);

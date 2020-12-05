@@ -78,20 +78,20 @@ public abstract class Entity {
         this.r = r;
     }
 
-    public double getDx() {
+    public double getXSpeed() {
         return dx;
     }
 
-    public void setDx(double dx) {
+    public void setXSpeed(double dx) {
         this.dx = dx;
     }
 
 
-    public double getDy() {
+    public double getYSpeed() {
         return dy;
     }
 
-    public void setDy(double dy) {
+    public void setYSpeed(double dy) {
         this.dy = dy;
     }
 
