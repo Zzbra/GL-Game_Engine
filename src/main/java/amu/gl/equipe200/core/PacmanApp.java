@@ -9,7 +9,7 @@ import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 import amu.gl.equipe200.gameworld.Settings;
 
-import amu.gl.equipe200.system.InputEngine;
+import amu.gl.equipe200.inputengine.InputEngine;
 
 // TODO: remove the extends Application in the gameApp to remove these
 import javafx.application.Application;
@@ -50,12 +50,12 @@ public class PacmanApp
     @Override
     public void start(Stage primaryStage) {
         /*** Create the engines ***/
-        this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
+        this.physicsEngine = new PhysicsEngine(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
-        this.inputEngine = new InputEngine(graphicsEngine.getCurrentScene());
+        this.inputEngine = new InputEngine();
 
         /*** create the gameworld  ***/
-        this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+        this.gameWorld = new GameWorld(16, 16);
         this.createPlayers();
 
         /***  Set up the graphics engine  ***/
@@ -65,14 +65,15 @@ public class PacmanApp
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                graphicsEngine.loadGameWorld(gameWorld.getGraphicsEntities(),
-                                             16, 16);
+                graphicsEngine.loadGameWorld(gameWorld.getGraphicsEntities(), gameWorld.getWidth(), gameWorld.getHeight());
                 graphicsEngine.display();
+                inputEngine.attachToScene(graphicsEngine.getCurrentScene());
+                inputEngine.loadGameWorld(gameWorld.getIOEntities());
             }
         });
 
         /***  Set up the input engine  ***/
-        //TODO
+        inputEngine.attachToScene(graphicsEngine.getCurrentScene());
 
 
 
@@ -97,11 +98,11 @@ public class PacmanApp
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
-        double x = 16 / 6.0;
-        double y = 16 * 0.6;
+        double x = Settings.WORLD_WIDTH / 6.0;
+        double y = Settings.WORLD_WIDTH * 0.6;
 
         // create player1
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player1.setX(x);
         player1.setY(y);
         player1.setWidth(1);
@@ -109,10 +110,11 @@ public class PacmanApp
         player1.setControls("Z", "S", "Q", "D");
         gameWorld.addGraphicsEntity(player1);
         gameWorld.addPhysicsEntity(player1);
+        gameWorld.addIOEntity(player1);
         physicsEngine.registerEntity(player1);
 
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
+        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED, gameWorld, "pacman.jpg", "FOREGROUND");
         player2.setX(5 * x);
         player2.setY(y);
         player2.setYSpeed(-0.1);
@@ -121,10 +123,11 @@ public class PacmanApp
         player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
         gameWorld.addGraphicsEntity(player2);
         gameWorld.addPhysicsEntity(player2);
+        gameWorld.addIOEntity(player2);
         physicsEngine.registerEntity(player2);
 
     }
-//
+
 //    private void createMap(String mapName){
 //        int[][] mapGrid = getMapGrid(mapName);
 //        double offset = Settings.SCENE_HEIGHT/16.0;
@@ -234,10 +237,7 @@ public class PacmanApp
     public void onNewFrame(long now) {
         System.out.println("New Frame");
 //        // player input
-//        //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
-//
-//        //inputEngine.update(gameScene.getComponentsByType(InputComponent.class));
-//        inputEngine.update();
+        inputEngine.update();
 //        // add random enemies
 //        //spawnEnemies( true);
 //        //  spawnSuperFruit(true);
@@ -245,9 +245,7 @@ public class PacmanApp
 //        // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
 //        // TODO: compute the ellapsed time to send it to the engines
         physicsEngine.update(1);
-//
-//
-//        // update amu.gl.equipe200.entity in scene
+
 //        // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
 //        // TODO: compute the ellapsed time to send it to the engines
         graphicsEngine.update(1);

@@ -151,21 +151,21 @@ public class Player
         }
         if (key.equals(upKey)) {
             setXSpeed(0);
-            setYSpeed(-Settings.PLAYER_SHIP_SPEED);
+            setYSpeed(-Settings.PLAYER_SPEED);
             setR(270);
         }
         if (key.equals(downKey)) {
             setXSpeed(0);
-            setYSpeed(Settings.PLAYER_SHIP_SPEED);
+            setYSpeed(Settings.PLAYER_SPEED);
             setR(90);
         }
         if (key.equals(leftKey)) {
-            setXSpeed(-Settings.PLAYER_SHIP_SPEED);
+            setXSpeed(-Settings.PLAYER_SPEED);
             setYSpeed(0);
             setR(180);
         }
         if (key.equals(rightKey)) {
-            setXSpeed(Settings.PLAYER_SHIP_SPEED);
+            setXSpeed(Settings.PLAYER_SPEED);
             setYSpeed(0);
             setR(0);
         }
