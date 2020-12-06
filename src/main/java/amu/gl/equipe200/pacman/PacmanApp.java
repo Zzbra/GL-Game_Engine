@@ -1,5 +1,7 @@
 package amu.gl.equipe200.pacman;
 
+import amu.gl.equipe200.pacman.UI.Counter;
+import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
 import amu.gl.equipe200.pacman.entities.Pacman;
 import amu.gl.equipe200.pacman.menues.*;
@@ -7,9 +9,12 @@ import amu.gl.equipe200.pacman.menues.*;
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
+import amu.gl.equipe200.utils.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class PacmanApp
@@ -18,6 +23,8 @@ public class PacmanApp
     private GameWorld pacmanWorld;
     private Pacman pacman;
     private Blinky blinky;
+    private Counter counter;
+    private int score;
 
     public static void main(String[] args) {
         launch(args);
@@ -27,17 +34,29 @@ public class PacmanApp
     public void onInit() {
         System.out.println("Hello onInit");
         this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
-
+        score = 0;
         int[][] map = createMap("Map1.txt");
         getIaEngine().loadMap(map);
         createPlayers();
         createGhost();
         loadMainMenu();
+        createCounter();
+    }
+    @Override
+    public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
+        super.handleCollisions(collisions);
+        for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
+                score++;
+                System.out.println("score: " + score);
+                counter.setValue(score);
+            }
+        }
     }
 
     @Override
     public void onGameIterBegin(double ellapsedTime) {
-        this.pacman.update(ellapsedTime);
+
     }
     public void onGameIterEnd(long ellapsedTime) { }
 
@@ -76,6 +95,18 @@ public class PacmanApp
         pacmanWorld.addGraphicsEntity(blinky);
         pacmanWorld.addPhysicsEntity(blinky);
         pacmanWorld.addAIEntity(blinky);
+    }
+
+    private void createCounter(){
+        double blockHeight = Settings.SCENE_HEIGHT / Settings.WORLD_HEIGHT;
+        counter = new Counter();
+        counter.setWidth(1);
+        counter.setX(0);
+        counter.setY(Settings.SCENE_HEIGHT/blockHeight);
+        counter.setHeight(Settings.UISECTION_HEIGHT/blockHeight);
+        for(Digit digit : counter.getDigits()){
+            pacmanWorld.addGraphicsEntity(digit);
+        }
     }
 
     private int[][] createMap(String mapName){
@@ -131,7 +162,6 @@ public class PacmanApp
         String sc = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining(""));
         int[][] mapTab = new int[16][16];
 
-        System.out.println(sc.length());
         for(int i = 0; i < sc.length(); i++){
             if(sc.charAt(i) != '\n')
                 mapTab[i/16][i%16] = (int) sc.charAt(i) - (int) '0';

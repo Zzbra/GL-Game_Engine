@@ -88,7 +88,7 @@ public class GameApp
         inputEngine.update();
 
         physicsEngine.update(ellapsedTime);
-        this.handleCollisions(physicsEngine.getCollisionPair());
+        handleCollisions(physicsEngine.getCollisionPair());
 
         graphicsEngine.update();
         iaEngine.update();
