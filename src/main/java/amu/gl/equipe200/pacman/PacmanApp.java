@@ -1,6 +1,7 @@
 package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.entity.Block;
+import amu.gl.equipe200.entity.PacGomme;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.pacman.MainMenu;
 
@@ -72,6 +73,11 @@ public class PacmanApp
                     SuperFruit superFruit = new SuperFruit(j , i,"SuperFruit.jpg", "BACKGROUND");
                     pacmanWorld.addPhysicsEntity(superFruit);
                     pacmanWorld.addGraphicsEntity(superFruit);
+                }
+                if(mapGrid[i][j] == 0){
+                    PacGomme pacGomme = new PacGomme(j , i, "PacGum.png", "BACKGROUND");
+                    pacmanWorld.addPhysicsEntity(pacGomme);
+                    pacmanWorld.addGraphicsEntity(pacGomme);
                 }
             }
         }
