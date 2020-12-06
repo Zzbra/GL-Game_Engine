@@ -9,10 +9,11 @@ import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.entity.Player;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PacmanApp
     extends GameApp {
@@ -28,7 +29,7 @@ public class PacmanApp
         System.out.println("Hello onInit");
         this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
 
-        createMap("src\\main\\resources\\Map1.txt");
+        createMap("Map1.txt");
         createPlayers();
 //        createGhost();
         loadMainMenu();
@@ -77,21 +78,18 @@ public class PacmanApp
     }
 
     private int[][] getMapGrid(String mapName){
-        File file = new File(mapName);
-        Scanner sc = null;
-        try {
-            sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(mapName);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + mapName);
         }
+        String sc = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining(""));
         int[][] mapTab = new int[16][16];
-        int i = 0;
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            for (int j = 0; j < 16; j++) {
-                mapTab[i][j] = (int) line.charAt(j) - (int)'0' ;
-            }
-            i++;
+
+        System.out.println(sc.length());
+        for(int i = 0; i < sc.length(); i++){
+            if(sc.charAt(i) != '\n')
+                mapTab[i/16][i%16] = (int) sc.charAt(i) - (int) '0';
         }
         return mapTab;
     }

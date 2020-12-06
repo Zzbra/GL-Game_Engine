@@ -36,7 +36,7 @@ public class IAEngine {
         for(IAInterface entity : entities){
             Cell currentCell = new Cell((int)entity.getX(), (int)entity.getY(), true);
             Cell goal = new Cell((int)entity.getGoalX(), (int)entity.getGoalY(), true);
-            ArrayList<Cell> path = aStar.start(currentCell, goal);
+            ArrayList<Cell> path = shortestPath.getShortestPath(currentCell, goal);
             if (path.size()>0){
                 adjustDirection(entity, path.get(1));
             }

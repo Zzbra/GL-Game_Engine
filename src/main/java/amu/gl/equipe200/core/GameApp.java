@@ -1,6 +1,7 @@
 package amu.gl.equipe200.core;
 
 
+import amu.gl.equipe200.IAEngine.IAEngine;
 import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
@@ -38,6 +39,7 @@ public class GameApp
     private PhysicsEngine physicsEngine;
     private GraphicsEngine graphicsEngine;
     private InputEngine inputEngine;
+    private IAEngine iaEngine;
 
     private Random rnd = new Random();
     private long lastGameUpdate;
@@ -49,6 +51,8 @@ public class GameApp
     public void onGameIterBegin(double ellapsedTime) { }
     public void onGameIterEnd(double ellapsedTime) { }
 
+    public IAEngine getIaEngine(){ return iaEngine;}
+
     @Override
     public void start(Stage primaryStage) {
         System.out.println("Hello");
@@ -57,7 +61,7 @@ public class GameApp
         this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine();
-
+        this.iaEngine = new IAEngine();
         /***  Configure the engines  ***/
         graphicsEngine.registerGameLoopListener(this);
         inputEngine.attachToScene(graphicsEngine.getCurrentScene());
@@ -166,6 +170,8 @@ public class GameApp
 
         inputEngine.loadGameWorld(currentGameWorld.getIOEntities());
         inputEngine.attachToScene(graphicsEngine.getCurrentScene());
+
+        iaEngine.loadGameWorld(currentGameWorld.getIAEntities());
     }
 
     public void loadMenu(MenuInterface menu) {
