@@ -42,7 +42,9 @@ public class PacmanApp
 
         score = 0;
         this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
-        int[][] map = createMap("Map1.txt");
+
+        int[][] map = createMap("Map.txt");
+
         blinky.setPacMan(pacman);
 
         getIaEngine().loadMap(map);
@@ -85,6 +87,33 @@ public class PacmanApp
     public void loadGame() { loadGameWorld(pacmanWorld);}
 
     public GameWorld getPacmanWorld() { return pacmanWorld; }
+
+    private void initLife(){
+        lifeCounter = new ArrayList<>();
+        for (int i = 0; i < pacman.getLives(); i++) {
+            Life life = new Life();
+            life.setX(Settings.WORLD_WIDTH-i-1);
+            life.setY(Settings.WORLD_HEIGHT);
+            life.setHeight(1);
+            life.setWidth(1);
+            pacmanWorld.addGraphicsEntity(life);
+            lifeCounter.add(life);
+        }
+
+    }
+
+    private void createCounter(){
+        double blockHeight = Settings.SCENE_HEIGHT / Settings.WORLD_HEIGHT;
+        counter = new Counter();
+        counter.setWidth(1);
+        counter.setX(0);
+        counter.setY(Settings.SCENE_HEIGHT/blockHeight);
+        counter.setHeight(Settings.UISECTION_HEIGHT/blockHeight);
+        for(Digit digit : counter.getDigits()){
+            pacmanWorld.addGraphicsEntity(digit);
+        }
+    }
+
 
     private int[][] createMap(String mapName){
         int[][] mapGrid = getMapGrid(mapName);
