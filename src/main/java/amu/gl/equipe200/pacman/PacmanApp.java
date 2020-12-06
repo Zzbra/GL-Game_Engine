@@ -47,9 +47,7 @@ public class PacmanApp
 
         blinky.setPacMan(pacman);
 
-        getIaEngine().loadMap(map);
-//        createPlayers();
-//        createGhost();
+        getIaEngine().loadMap(map, this.cell_width, this.cell_height);
         loadMainMenu();
         createCounter();
         initLife();
