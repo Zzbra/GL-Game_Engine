@@ -7,8 +7,6 @@ import java.util.HashMap;
 
 public class ImagesManager {
 
-    static final String PATH = "/ressources/images/";
-
     // cache for the images
     HashMap<String, Image> cachedImage = new HashMap<>();
 

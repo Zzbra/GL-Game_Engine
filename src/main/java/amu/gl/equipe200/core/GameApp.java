@@ -91,7 +91,9 @@ public class GameApp
         physicsEngine.update(ellapsedTime);
         handleCollisions(physicsEngine.getCollisionPair());
         graphicsEngine.update();
+
         iaEngine.update();
+
         this.onGameIterEnd(ellapsedTime);
     }
 

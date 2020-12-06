@@ -12,12 +12,15 @@ public class IAEngine {
     private ShortestPath shortestPath;
     private AStar aStar;
 
-    public IAEngine(){
+    private double cell_width, cell_height;
 
-    }
+    public IAEngine(){ }
 
-    public void loadMap(int[][] grid){
+    public void loadMap(int[][] grid, double cell_width, double cell_height){
         this.grid = grid;
+        this.cell_width = cell_width;
+        this.cell_height = cell_height;
+
         this.shortestPath = new ShortestPath(grid);
         this.aStar = new AStar(new Grid(grid));
     }
@@ -32,18 +35,27 @@ public class IAEngine {
 
 
     public void update(){
+        System.out.println("IA Update :");
 
         for(IAInterface entity : entities){
-            Cell currentCell = new Cell((int)(entity.getX()), (int)(entity.getY()), true);
-            Cell currentCellOtherCorner = new Cell((int)(entity.getX()+ entity.getWidth()), (int)(entity.getY() + entity.getHeight()), true);
+            System.out.println("Update Entity");
+            Cell currentCell = new Cell((int)(entity.getX() / this.cell_width),
+                                        (int)(entity.getY() / this.cell_height),
+                               true);
+            Cell currentCellOtherCorner = new Cell((int)((entity.getX()+ entity.getWidth()) / this.cell_width),
+                                                   (int)((entity.getY() + entity.getHeight()) / this.cell_height),
+                                          true);
             double dX = entity.getGoalX() - entity.getX();
             double dY = entity.getGoalY() - entity.getY();
             if(currentCell.getX() == currentCellOtherCorner.getX() && currentCell.getY() == currentCellOtherCorner.getY()) {
-                Cell goal = new Cell((int) entity.getGoalX(), (int) entity.getGoalY(), true);
+                Cell goal = new Cell((int) (entity.getGoalX() / this.cell_width),
+                                     (int) (entity.getGoalY() / this.cell_width),
+                                true);
                 ArrayList<Cell> path = shortestPath.getShortestPath(currentCell, goal);
                 if (path.size() > 1) {
                     adjustDirection(entity, path.get(1), currentCell);
                 }
+                System.out.println("Path :" + path);
             }
         }
     }
