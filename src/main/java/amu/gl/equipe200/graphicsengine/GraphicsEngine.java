@@ -1,16 +1,12 @@
 package amu.gl.equipe200.graphicsengine;
 
 import amu.gl.equipe200.core.Settings;
-import amu.gl.equipe200.pacman.entities.Entity;
 import amu.gl.equipe200.utils.Pair;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -111,12 +107,12 @@ public class GraphicsEngine {
             // Else update the linked node
             if (entity.hasMoved()) this.moveEntity(entity);
             if (entity.hasNewSprite()) this.redrawEntity(entity);
-            entity.onProcessed(this);
+            entity.onGraphicsProcessed();
         }
         // Remove entity that has been flagged
         for (GraphicsInterface entity : this.graphicsEntitiesToRemove) {
             this.removeEntity(entity);
-            entity.onProcessed(this);
+            entity.onGraphicsProcessed();
         }
         graphicsEntitiesToRemove.clear();
     }

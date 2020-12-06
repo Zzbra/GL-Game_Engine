@@ -1,5 +1,6 @@
 package amu.gl.equipe200.pacman;
 
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.pacman.UI.Counter;
 import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
@@ -14,6 +15,7 @@ import amu.gl.equipe200.utils.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ public class PacmanApp
     private Blinky blinky;
     private Counter counter;
     private int score;
+    private ArrayList<Life> lifeCounter;
 
     private int grid_size;
     private double cell_height, cell_width;
@@ -47,6 +50,7 @@ public class PacmanApp
 //        createGhost();
         loadMainMenu();
         createCounter();
+        initLife();
     }
     @Override
     public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
@@ -54,18 +58,26 @@ public class PacmanApp
         for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
                 score++;
-                System.out.println("score: " + score);
                 counter.setValue(score);
             }
+
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY){
+                if(lifeCounter.size()> 0) {
+                   lifeCounter.get(pacman.getLives()).toRemove();
+                }if (pacman.getLives() == 0){
+                    loadMainMenu();
+                }
+                pacman.activateInvincible();
+            }
         }
+
     }
+
 
     @Override
     public void onGameIterBegin(double ellapsedTime) {
         /*** update the entities ***/
-        this.pacman.update(ellapsedTime);
-
-        System.out.println("Blinky Speed: " + blinky.getXSpeed() + " " + blinky.getYSpeed());
+       pacman.update(ellapsedTime);
     }
     public void onGameIterEnd(long ellapsedTime) { }
 

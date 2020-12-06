@@ -50,7 +50,6 @@ public class GameApp
             p.first.onCollide(p.second);
             p.second.onCollide(p.first);
         }
-        collisions.clear();
     }
     public void onGameIterEnd(double ellapsedTime) { }
 
@@ -93,7 +92,6 @@ public class GameApp
 
         graphicsEngine.update();
         iaEngine.update();
-
         this.onGameIterEnd(ellapsedTime);
     }
 

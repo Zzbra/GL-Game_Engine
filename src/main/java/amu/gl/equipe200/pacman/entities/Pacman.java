@@ -1,6 +1,5 @@
 package amu.gl.equipe200.pacman.entities;
 
-import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
@@ -28,15 +27,16 @@ public class Pacman
     private String upKey, downKey, leftKey, rightKey;
 
     /***  Others  ***/
-    private int lifes;
+    private int lives;
 
     private boolean isInvincible;
-    private final static int invincibleTotalDuration = 5;
+    private final static int invincibleTotalDuration = 2;
     private double invincibleDuration;
 
     private boolean isPassWall;
     private final static double passWallTotalDuration = 5;
     private double passWallDuration;
+
 
 
     public Pacman(){
@@ -49,7 +49,7 @@ public class Pacman
         this.animation.add("images/Pacman_3.png");
         this.animation.add("images/Pacman_2.png");
 
-        this.lifes = 4;
+        this.lives = 4;
 
         this.isInvincible = false;
         this.invincibleDuration = 0;
@@ -70,6 +70,14 @@ public class Pacman
         this.leftKey = left.toUpperCase();
         this.rightKey = right.toUpperCase();
     }
+
+    public int getLives(){return lives;}
+    public void setLives(int lives){
+        if(lives >0) {
+            this.lives = lives;
+        }
+    }
+
 
     /******************************************************************************************************************
      *    Physics Engine behaviour                                                                                    *
@@ -95,10 +103,10 @@ public class Pacman
     }
     @Override
     public void onCollide(PhysicsInterface others) {
-        if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { this.isInvincible = true; }
-        if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { this.isPassWall = true; }
+        if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { activateInvincible(); }
+        if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { activatePassWall(); }
         if (others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
-            this.lifes--;
+            this.lives--;
             System.out.println("collide with enemy: one life lost");
         }
     }
@@ -119,7 +127,7 @@ public class Pacman
     }
 
     @Override
-    public void onProcessed(GraphicsEngine engine) {
+    public void onGraphicsProcessed() {
         this.hasMoved = false;
         this.hasNewSprite = false;
     }

@@ -29,6 +29,7 @@ public class GameWorld {
     public void addIOEntity(IOInterface e) { this.ioEntities.add(e); }
     public void addAIEntity(IAInterface e) { this.aiEntities.add(e); }
 
+
     public HashSet<PhysicsInterface> getPhysicsEntities() { return this.physicsEntities; }
     public HashSet<GraphicsInterface> getGraphicsEntities() { return this.graphicsEntities; }
     public HashSet<IOInterface> getIOEntities() { return this.ioEntities; }
