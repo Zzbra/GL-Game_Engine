@@ -14,6 +14,7 @@ public class SuperFruit
 
 
     public SuperFruit() {
+        super(Settings.Tag.POWERUP_WALLPASS);
         setImageName("SuperFruit.jpg");
         setLayerName("BACKGROUND");
     }

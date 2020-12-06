@@ -1,6 +1,7 @@
 package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.pacman.entities.*;
+import amu.gl.equipe200.pacman.entities.factory.PacmanFactory;
 import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;
@@ -17,6 +18,8 @@ public class PacmanApp
     extends GameApp {
 
     private GameWorld pacmanWorld;
+    private PacmanFactory pacmanFactory;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -51,8 +54,8 @@ public class PacmanApp
         player1.setWidth(0.8);
         player1.setHeight(0.8);
         player1.setControls("Z", "S", "Q", "D");
-        player1.setImageName("images/Pacman_1.png");
         player1.setLayerName("FOREGROUND");
+
         pacmanWorld.addGraphicsEntity(player1);
         pacmanWorld.addPhysicsEntity(player1);
         pacmanWorld.addIOEntity(player1);

@@ -1,21 +1,26 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.*;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.pacman.entities.Ghost;
+import amu.gl.equipe200.pacman.entities.Pacman;
 
 import java.util.ArrayList;
 
-public class Blinky extends Enemy implements IAInterface {
-    Player pacMan;
+public class Blinky
+        extends Ghost
+        implements IAInterface {
+
+    Pacman pacMan;
     ShortestPath algo;
     ArrayList<Cell> path;
     Cell next;
     Cell now;
     ShortestPath shortestPath;
 
-    public Blinky(double x, double y, double r, double xSpeed, double ySpeed, double dr, double health, double damage, String imageName, String layerName, Player pacMan) {
-        super(x, y, r, xSpeed, ySpeed, dr, health, damage, imageName, layerName);
+    public Blinky(double x, double y, double r, double xSpeed, double ySpeed, double dr, double health, double damage, String imageName, String layerName, Pacman pacMan) {
+        super();
         this.pacMan=pacMan;
         this.path= new ArrayList<>();
         this.now = new Cell((int)x, (int)y, true);

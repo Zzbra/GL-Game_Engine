@@ -27,7 +27,11 @@ public class Pacman
     /***  Input variables  ***/
     private String upKey, downKey, leftKey, rightKey;
 
+    /***  Entity Tag  ***/
+
+
     public Pacman(){
+        super(Settings.Tag.PLAYER);
         this.imageLastFrame = 0;
         this.animation = new ArrayList<>();
         this.animation.add("images/Pacman_1.png");
