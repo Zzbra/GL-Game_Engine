@@ -2,7 +2,7 @@ package amu.gl.equipe200.pacman.entities.factory;
 
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.pacman.PacmanApp;
-import amu.gl.equipe200.pacman.entities.pacman.Pacman;
+import amu.gl.equipe200.pacman.entities.Pacman;
 
 public class PacmanFactory {
 
