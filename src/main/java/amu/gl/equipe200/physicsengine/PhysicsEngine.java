@@ -38,7 +38,7 @@ public class PhysicsEngine {
     }
 
     public void update(double ellapsedTime){
-        getCollisionPair().clear();
+        clearCollision();
         for(PhysicsInterface entity : this.physicsEntities) {
             if(entity.isRemovable()){
                 physicsEntitiesToRemove.add(entity);
@@ -85,6 +85,7 @@ public class PhysicsEngine {
     private Pair<Double, Double> computeNewPosition (PhysicsInterface entity, double elapsedTime) {
         double newX = entity.getX() + elapsedTime * entity.getXSpeed();
         double newY = entity.getY() + elapsedTime * entity.getYSpeed();
+        System.out.println();
         return Pair.create(newX, newY);
     }
 
@@ -140,9 +141,7 @@ public class PhysicsEngine {
 
                // entity.onCollide(toCheck);
                 collisionPair.add(Pair.create(entity, toCheck));
-                if(!entity.getClass().toString().contains("BLINY")) {
-                    System.out.println(entity + " " + toCheck);
-                }
+                System.out.println(entity + " " + toCheck);
 
                 //En a t'on vraiment besoin ?
                // toCheck.onCollide(entity);

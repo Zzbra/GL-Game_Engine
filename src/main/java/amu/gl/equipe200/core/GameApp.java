@@ -92,7 +92,6 @@ public class GameApp
 
         graphicsEngine.update();
         iaEngine.update();
-
         this.onGameIterEnd(ellapsedTime);
     }
 
