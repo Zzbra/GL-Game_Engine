@@ -1,14 +1,12 @@
 package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.entity.Block;
-import amu.gl.equipe200.entity.PacGomme;
-import amu.gl.equipe200.entity.SuperFruit;
-import amu.gl.equipe200.pacman.MainMenu;
+import amu.gl.equipe200.pacman.entities.*;
+import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
-import amu.gl.equipe200.entity.Player;
+import javafx.print.PageLayout;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +17,9 @@ import java.util.stream.Collectors;
 public class PacmanApp
     extends GameApp {
 
-    protected GameWorld pacmanWorld;
+    private GameWorld pacmanWorld;
+    private Pacman pacman;
+    private Blinky blinky;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,30 +32,37 @@ public class PacmanApp
 
         createMap("Map1.txt");
         createPlayers();
-//        createGhost();
+        createGhost();
         loadMainMenu();
     }
     public void onGameIterBegin(long ellapsedTime) { }
     public void onGameIterEnd(long ellapsedTime) { }
 
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
-    protected void loadGame() { loadGameWorld(pacmanWorld);}
+    public void loadGame() { loadGameWorld(pacmanWorld);}
 
+    public GameWorld getPacmanWorld() { return pacmanWorld; }
 
     private void createPlayers() {
         // center horizontally, position at 70% vertically
         double x = 16 / 6.0;
         double y = 16 * 0.6;
 
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
-        player1.setX(x);
-        player1.setY(y);
-        player1.setWidth(0.8);
-        player1.setHeight(0.8);
-        player1.setControls("Z", "S", "Q", "D");
-        pacmanWorld.addGraphicsEntity(player1);
-        pacmanWorld.addPhysicsEntity(player1);
-        pacmanWorld.addIOEntity(player1);
+        pacman = new Pacman();
+        pacman.setX(x);
+        pacman.setY(y);
+        pacman.setWidth(0.8);
+        pacman.setHeight(0.8);
+        pacman.setControls("Z", "S", "Q", "D");
+        pacman.setImageName("images/Pacman_1.png");
+        pacman.setLayerName("FOREGROUND");
+        pacmanWorld.addGraphicsEntity(pacman);
+        pacmanWorld.addPhysicsEntity(pacman);
+        pacmanWorld.addIOEntity(pacman);
+    }
+
+    private void createGhost(){
+        blinky = new Blinky();
     }
 
     private void createMap(String mapName){
@@ -64,20 +71,27 @@ public class PacmanApp
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
                 if(mapGrid[i][j] == 1) {
-                    Block block = new Block(j , i , 1, 1, "Block.jpg", "BACKGROUND");
+                    Block block = new Block();
+                    block.setX(j);
+                    block.setY(i);
+                    block.setWidth(1);
+                    block.setHeight(1);
+                    block.setImageName(("images/Wall.png"));
+                    block.setLayerName("FOREGROUND");
                     pacmanWorld.addGraphicsEntity(block);
                     pacmanWorld.addPhysicsEntity(block);
 
                 }
                 if(mapGrid[i][j] == 2){
-                    SuperFruit superFruit = new SuperFruit(j , i,"SuperFruit.jpg", "BACKGROUND");
+                    SuperFruit superFruit = new SuperFruit();
+                    superFruit.setX(j);
+                    superFruit.setY(i);
+                    superFruit.setWidth(0.75);
+                    superFruit.setHeight(0.75);
+                    superFruit.setImageName("images/Fruit_Cherry.png");
+                    superFruit.setLayerName("FOREGROUND");
                     pacmanWorld.addPhysicsEntity(superFruit);
                     pacmanWorld.addGraphicsEntity(superFruit);
-                }
-                if(mapGrid[i][j] == 0){
-                    PacGomme pacGomme = new PacGomme(j , i, "PacGum.png", "BACKGROUND");
-                    pacmanWorld.addPhysicsEntity(pacGomme);
-                    pacmanWorld.addGraphicsEntity(pacGomme);
                 }
             }
         }

@@ -1,13 +1,9 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashMap;
 import java.util.HashSet;
-
-import static java.lang.Double.max;
-import static java.lang.Double.min;
 
 public class PhysicsEngine {
 
