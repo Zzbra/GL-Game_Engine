@@ -16,11 +16,12 @@ public class Blinky extends Ghost implements IAInterface {
 
     public Blinky() {
         super();
-        this.pacMan=pacMan;
         this.path= new ArrayList<>();
         this.now = new Cell((int)getX(), (int)getY(), true);
 
     }
+
+    public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
 
     public void update(){
 

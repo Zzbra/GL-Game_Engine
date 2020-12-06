@@ -17,7 +17,7 @@ public class Settings {
 
     public static int ENEMY_SPAWN_RANDOMNESS = 100;
     public static int SUPERFRUIT_SPAWN_RANDOMNESS = 400;
-    public static double ENEMY_SPEED = 0.1;
+    public static double ENEMY_SPEED = 5;
 
     public static enum Tag {PLAYER, ENEMY, FRUIT, BLOCK};
 

@@ -1,5 +1,6 @@
 package amu.gl.equipe200.inputengine;
 
 public interface IOInterface {
-    public void reactToInput(String key);
+    void reactToInput(String key);
+
 }

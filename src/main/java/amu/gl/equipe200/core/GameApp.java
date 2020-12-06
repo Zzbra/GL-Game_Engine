@@ -2,8 +2,7 @@ package amu.gl.equipe200.core;
 
 
 import amu.gl.equipe200.IAEngine.IAEngine;
-import amu.gl.equipe200.entity.Block;
-import amu.gl.equipe200.entity.SuperFruit;
+
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
@@ -79,7 +78,7 @@ public class GameApp
         double ellapsedTime = (now - this.lastGameUpdate) / 1000000000d;
         this.lastGameUpdate = now;
 
-        this.onGameIterBegin(ellapsedTime);
+        onGameIterBegin(ellapsedTime);
 
         inputEngine.update();
         physicsEngine.update(ellapsedTime);
