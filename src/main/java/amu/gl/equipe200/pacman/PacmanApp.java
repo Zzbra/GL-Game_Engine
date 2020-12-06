@@ -63,10 +63,8 @@ public class PacmanApp
                 }if (pacman.getLives() == 0){
                     loadMainMenu();
                 }
-                pacman.activateInvincible();
             }
         }
-
     }
 
 

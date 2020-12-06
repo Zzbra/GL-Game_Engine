@@ -85,7 +85,6 @@ public class PhysicsEngine {
     private Pair<Double, Double> computeNewPosition (PhysicsInterface entity, double elapsedTime) {
         double newX = entity.getX() + elapsedTime * entity.getXSpeed();
         double newY = entity.getY() + elapsedTime * entity.getYSpeed();
-        System.out.println();
         return Pair.create(newX, newY);
     }
 
@@ -134,17 +133,14 @@ public class PhysicsEngine {
             // Don't check entities with disabled collidable or yourself
             if (!toCheck.isCollidable()) continue;
             if (toCheck.equals(entity)) continue;
+            if (toCheck.isRemovable()) continue;
 
             // check if the two entities collide during the movement
             if (collide(entity, newPosition, toCheck)) {
-                // trigger the collision call back
 
-               // entity.onCollide(toCheck);
+                // trigger the collision call back
                 collisionPair.add(Pair.create(entity, toCheck));
                 System.out.println(entity + " " + toCheck);
-
-                //En a t'on vraiment besoin ?
-               // toCheck.onCollide(entity);
 
                 // check if both entities are solid and if so compute the final position of the entity
                 // TODO: Changer absolument la partie BLOCK, on ne doit pas checker de Tag ici mais les blocks ne doivent pas collide

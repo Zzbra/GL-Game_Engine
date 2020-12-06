@@ -108,6 +108,7 @@ public class Pacman
         if (others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
             this.lives--;
             System.out.println("collide with enemy: one life lost");
+            activateInvincible();
         }
     }
 
