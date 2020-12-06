@@ -35,19 +35,19 @@ public class Grid {
 
     public ArrayList<Cell> getPossibilities(Cell cell){
         ArrayList<Cell> possibilities = new ArrayList<>();
-        Cell up = getCell(cell.x+1, cell.y);
+        Cell up = getCell(cell.getX()+1, cell.getY());
         if (up != null)
             if (up.isWalkable) possibilities.add(up);
 
-        Cell down = getCell(cell.x-1, cell.y);
+        Cell down = getCell(cell.getX()-1, cell.getY());
         if (down != null)
             if (down.isWalkable) possibilities.add(down);
 
-        Cell right = getCell(cell.x, cell.y+1);
+        Cell right = getCell(cell.getX(), cell.getY()+1);
         if (right != null)
             if (right.isWalkable) possibilities.add(right);
 
-        Cell left = getCell(cell.x, cell.y-1);
+        Cell left = getCell(cell.getX(), cell.getY()-1);
         if (left != null)
             if (left.isWalkable) possibilities.add(left);
         return possibilities;

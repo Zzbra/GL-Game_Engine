@@ -91,8 +91,8 @@ public class AStar {
         }
 
         private float distance(Cell cell){
-            int dx = Math.abs(cell.x - goal.x);
-            int dy = Math.abs(cell.y - goal.y);
+            int dx = Math.abs(cell.getX() - goal.getX());
+            int dy = Math.abs(cell.getY() - goal.getY());
 
             return p * (dx * dx + dy * dy);
         }
