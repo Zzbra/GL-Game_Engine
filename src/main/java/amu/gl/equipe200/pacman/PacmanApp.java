@@ -1,5 +1,6 @@
 package amu.gl.equipe200.pacman;
 
+import amu.gl.equipe200.entity.Blinky;
 import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.pacman.MainMenu;
@@ -23,16 +24,18 @@ public class PacmanApp
     public static void main(String[] args) {
         launch(args);
     }
-
+    private Player player;
+    private Blinky blinky;
     @Override
     public void onInit() {
         System.out.println("Hello onInit");
         this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
 
-        createMap("Map1.txt");
+        int[][] map = createMap("Map1.txt");
         createPlayers();
-//        createGhost();
+        createGhost();
         loadMainMenu();
+        getIaEngine().loadMap(map);
     }
     public void onGameIterBegin(long ellapsedTime) { }
     public void onGameIterEnd(long ellapsedTime) { }
@@ -46,18 +49,32 @@ public class PacmanApp
         double x = 16 / 6.0;
         double y = 16 * 0.6;
 
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
-        player1.setX(x);
-        player1.setY(y);
-        player1.setWidth(0.8);
-        player1.setHeight(0.8);
-        player1.setControls("Z", "S", "Q", "D");
-        pacmanWorld.addGraphicsEntity(player1);
-        pacmanWorld.addPhysicsEntity(player1);
-        pacmanWorld.addIOEntity(player1);
+        player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
+        player.setX(x);
+        player.setY(y);
+        player.setWidth(0.8);
+        player.setHeight(0.8);
+        player.setControls("Z", "S", "Q", "D");
+        pacmanWorld.addGraphicsEntity(player);
+        pacmanWorld.addPhysicsEntity(player);
+        pacmanWorld.addIOEntity(player);
+
+
+
     }
 
-    private void createMap(String mapName){
+    private void createGhost(){
+        blinky = new Blinky(1, 1, 0, 0, 0, 0, 1, 1, "ghostRed.jpg", "FOREGROUND", player);
+        blinky.setWidth(0.8);
+        blinky.setHeight(0.8);
+        blinky.setX(1);
+        blinky.setY(1);
+        pacmanWorld.addGraphicsEntity(blinky);
+        pacmanWorld.addPhysicsEntity(blinky);
+        pacmanWorld.addAIEntity(blinky);
+    }
+
+    private int[][] createMap(String mapName){
         int[][] mapGrid = getMapGrid(mapName);
 
         for (int i = 0; i < 16; i++) {
@@ -75,6 +92,7 @@ public class PacmanApp
                 }
             }
         }
+        return mapGrid;
     }
 
     private int[][] getMapGrid(String mapName){
