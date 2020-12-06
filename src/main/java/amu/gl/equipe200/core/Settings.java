@@ -19,7 +19,9 @@ public class Settings {
     public static int SUPERFRUIT_SPAWN_RANDOMNESS = 400;
     public static double ENEMY_SPEED = 0.1;
 
-    public static enum Tag {PLAYER, ENEMY, FRUIT, BLOCK, PACGOMME};
+    public static enum Tag { PLAYER, ENEMY,
+                             POWERUP_INVINCIBLE, POWERUP_WALLPASS,
+                             PAGGUM, WALL }
 
     // Size of the physical world in which the entities are
     private Pair<Double, Double> worldSize = Pair.create(100d, 100d);

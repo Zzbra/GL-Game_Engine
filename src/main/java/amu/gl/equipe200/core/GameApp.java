@@ -13,6 +13,7 @@ import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 // TODO: remove the extends Application in the gameApp to remove these
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
+import amu.gl.equipe200.utils.Pair;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -44,9 +45,16 @@ public class GameApp
 
     public void onInit() { }
     public void onGameIterBegin(double ellapsedTime) { }
+    public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions) {
+        for (Pair<PhysicsInterface, PhysicsInterface> p : collisions ) {
+            p.first.onCollide(p.second);
+            p.second.onCollide(p.first);
+        }
+    }
     public void onGameIterEnd(double ellapsedTime) { }
 
     public IAEngine getIaEngine(){ return iaEngine;}
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -80,7 +88,10 @@ public class GameApp
         this.onGameIterBegin(ellapsedTime);
 
         inputEngine.update();
+
         physicsEngine.update(ellapsedTime);
+        handleCollisions(physicsEngine.getCollisionPair());
+
         graphicsEngine.update();
         iaEngine.update();
 

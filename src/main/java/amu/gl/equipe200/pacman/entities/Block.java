@@ -14,6 +14,7 @@ public class Block
     private volatile boolean isSolid;
 
     public Block() {
+        super(Settings.Tag.WALL);
         this.setImageName("Block.jpg");
         this.setLayerName("BACKGROUND");
     }
