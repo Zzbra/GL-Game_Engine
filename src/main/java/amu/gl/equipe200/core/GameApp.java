@@ -2,7 +2,6 @@ package amu.gl.equipe200.core;
 
 
 import amu.gl.equipe200.IAEngine.IAEngine;
-
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
@@ -14,6 +13,7 @@ import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 // TODO: remove the extends Application in the gameApp to remove these
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
+import amu.gl.equipe200.utils.Pair;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -45,14 +45,19 @@ public class GameApp
 
     public void onInit() { }
     public void onGameIterBegin(double ellapsedTime) { }
+    public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions) {
+        for (Pair<PhysicsInterface, PhysicsInterface> p : collisions ) {
+            p.first.onCollide(p.second);
+            p.second.onCollide(p.first);
+        }
+    }
     public void onGameIterEnd(double ellapsedTime) { }
 
     public IAEngine getIaEngine(){ return iaEngine;}
 
+
     @Override
     public void start(Stage primaryStage) {
-        System.out.println("Hello");
-
         /***  Create the engines  ***/
         this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
@@ -78,10 +83,13 @@ public class GameApp
         double ellapsedTime = (now - this.lastGameUpdate) / 1000000000d;
         this.lastGameUpdate = now;
 
-        onGameIterBegin(ellapsedTime);
+        this.onGameIterBegin(ellapsedTime);
 
         inputEngine.update();
+
         physicsEngine.update(ellapsedTime);
+        this.handleCollisions(physicsEngine.getCollisionPair());
+
         graphicsEngine.update();
         iaEngine.update();
 

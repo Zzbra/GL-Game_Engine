@@ -1,17 +1,15 @@
 package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.pacman.entities.*;
+import amu.gl.equipe200.pacman.entities.pacman.Pacman;
 import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
-import javafx.print.PageLayout;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PacmanApp
@@ -53,17 +51,17 @@ public class PacmanApp
         double x = 16 / 6.0;
         double y = 16 * 0.6;
 
-        pacman = new Pacman();
-        pacman.setX(x);
-        pacman.setY(y);
-        pacman.setWidth(0.8);
-        pacman.setHeight(0.8);
-        pacman.setControls("Z", "S", "Q", "D");
-        pacman.setImageName("images/Pacman_1.png");
-        pacman.setLayerName("FOREGROUND");
-        pacmanWorld.addGraphicsEntity(pacman);
-        pacmanWorld.addPhysicsEntity(pacman);
-        pacmanWorld.addIOEntity(pacman);
+        Pacman player1 = new Pacman();
+        player1.setX(x);
+        player1.setY(y);
+        player1.setWidth(0.8);
+        player1.setHeight(0.8);
+        player1.setControls("Z", "S", "Q", "D");
+        player1.setLayerName("FOREGROUND");
+
+        pacmanWorld.addGraphicsEntity(player1);
+        pacmanWorld.addPhysicsEntity(player1);
+        pacmanWorld.addIOEntity(player1);
     }
 
     private void createGhost(){
