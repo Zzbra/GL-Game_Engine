@@ -45,28 +45,18 @@ public class IAEngine {
                 System.out.println(path);
                 if (path.size() > 1) {
                     System.out.println(currentCell + " " + path.get(1));
-                    adjustDirection(entity, path.get(1));
+                    adjustDirection(entity, path.get(1), currentCell);
                 }
             }
         }
     }
 
-    private void adjustDirection(IAInterface entity, Cell direction){
+    private void adjustDirection(IAInterface entity, Cell direction, Cell currentCell){
         System.out.println(entity.getX() + " " + entity.getY() + " " +  direction);
-
-        if(direction.getX() > entity.getX()){
-            entity.setXSpeed(Settings.ENEMY_SPEED);
-            entity.setYSpeed(0);
-        }else if(direction.getX() < entity.getX()){
-            entity.setXSpeed(-Settings.ENEMY_SPEED);
-            entity.setYSpeed(0);
-        }if(direction.getY() > entity.getY()){
-            entity.setYSpeed(Settings.ENEMY_SPEED);
-            entity.setXSpeed(0);
-        }else if (direction.getY() < entity.getY()){
-            entity.setYSpeed(-Settings.ENEMY_SPEED);
-            entity.setXSpeed(0);
-        }
+        double dx = (direction.getX() - currentCell.getX()) * Settings.ENEMY_SPEED;
+        double dy = (direction.getY() - currentCell.getY()) * Settings.ENEMY_SPEED;
+        entity.setXSpeed(dx);
+        entity.setYSpeed(dy);
 
     }
 

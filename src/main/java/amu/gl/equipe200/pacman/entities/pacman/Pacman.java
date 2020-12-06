@@ -92,7 +92,7 @@ public class Pacman
             System.out.println("Ennemy collision Life lost");
         }
 
-        if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
+        if(others.getTag() == Settings.Tag.POWERUP_WALLPASS){
             superPowerActive();
         }
     }
