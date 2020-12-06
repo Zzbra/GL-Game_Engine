@@ -68,7 +68,7 @@ public class Block
     }
 
     @Override
-    public String getImageName(long ellapsedTime) { return this.imageName; }
+    public String getImageName() { return this.imageName; }
     @Override
     public String getLayerName(){ return this.layerName; }
 
