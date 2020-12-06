@@ -50,6 +50,7 @@ public class GameApp
             p.first.onCollide(p.second);
             p.second.onCollide(p.first);
         }
+        collisions.clear();
     }
     public void onGameIterEnd(double ellapsedTime) { }
 

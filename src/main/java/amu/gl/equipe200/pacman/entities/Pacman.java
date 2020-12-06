@@ -35,7 +35,7 @@ public class Pacman
     private double invincibleDuration;
 
     private boolean isPassWall;
-    private final static int passWallTotalDuration = 5;
+    private final static double passWallTotalDuration = 5;
     private double passWallDuration;
 
 
@@ -97,7 +97,6 @@ public class Pacman
     public void onCollide(PhysicsInterface others) {
         if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { this.isInvincible = true; }
         if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { this.isPassWall = true; }
-
         if (others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
             this.lifes--;
             System.out.println("collide with enemy: one life lost");
@@ -168,12 +167,11 @@ public class Pacman
                 this.isInvincible = false;
             }
         }
-
-        if (isPassWall) {
-            passWallDuration += ellapsedTime;
-            if (passWallDuration >= passWallTotalDuration) {
-                this.passWallDuration = 0;
+        if (this.isPassWall) {
+            this.passWallDuration += ellapsedTime;
+            if (this.passWallDuration >= passWallTotalDuration) {
                 this.isPassWall = false;
+                this.passWallDuration = 0;
             }
         }
     }

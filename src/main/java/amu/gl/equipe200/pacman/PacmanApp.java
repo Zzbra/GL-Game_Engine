@@ -37,7 +37,7 @@ public class PacmanApp
 
     @Override
     public void onGameIterBegin(double ellapsedTime) {
-        System.out.println(blinky.getXSpeed() + " " + blinky.getYSpeed());
+        this.pacman.update(ellapsedTime);
     }
     public void onGameIterEnd(long ellapsedTime) { }
 
@@ -83,7 +83,6 @@ public class PacmanApp
 
         for (int y = 0; y < 16; y++) {
             for (int x = 0; x < 16; x++) {
-                System.out.printf("%d", mapGrid[y][x]);
                 if(mapGrid[y][x] == 1) {
                     Block block = new Block();
                     block.setX(x);
@@ -119,7 +118,6 @@ public class PacmanApp
                     pacmanWorld.addGraphicsEntity(pacGomme);
                 }
             }
-            System.out.println();
         }
         return mapGrid;
     }
