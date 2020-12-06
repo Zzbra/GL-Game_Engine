@@ -8,43 +8,30 @@ import amu.gl.equipe200.pacman.entities.Pacman;
 
 import java.util.ArrayList;
 
-public class Blinky
-        extends Ghost
-        implements IAInterface {
-
+public class Blinky extends Ghost implements IAInterface {
     Pacman pacMan;
     ShortestPath algo;
     ArrayList<Cell> path;
-    Cell next;
-    Cell now;
-    ShortestPath shortestPath;
 
-    public Blinky(double x, double y, double r, double xSpeed, double ySpeed, double dr, double health, double damage, String imageName, String layerName, Pacman pacMan) {
+    Cell now;
+
+
+    public Blinky() {
         super();
         this.pacMan=pacMan;
         this.path= new ArrayList<>();
-        this.now = new Cell((int)x, (int)y, true);
-//        now=algo.getGrid().pointToCell(this.getX(), this.getY());
+        this.now = new Cell((int)getX(), (int)getY(), true);
+
     }
 
     public void update(){
 
-        //ArrayList<Cell> path = algo.start(grid.getCell(0, 5), grid.getCell(4,11));
-//        System.out.println((int)(pacMan.getX()/(Settings.SCENE_HEIGHT/16))+" "+(int)(pacMan.getY()/(Settings.SCENE_HEIGHT/16)));
-//        int gridX = (int)(pacMan.getX()/(Settings.SCENE_HEIGHT/16));
-//        int gridY = (int)(pacMan.getY()/(Settings.SCENE_HEIGHT/16));
 
-//        Cell start = algo.getGrid().pointToCell(this.getX(), this.getY());
-//        Cell goal = algo.getGrid().pointToCell(pacMan.getX(),pacMan.getY());
         Cell start = new Cell((int)getX(), (int)getY(), true);
         Cell goal = new Cell((int)pacMan.getX(), (int)pacMan.getY(), true);
         System.out.println("db");
         if(path.size()<=1) path = algo.getShortestPath(start, goal);
 
-//        int offset=2;
-//        if(algo.getGrid().pointToCell(this.getX()-offset, this.getY()-offset) == algo.getGrid().pointToCell(this.getX()+this.getWidth()+offset, this.getY()+this.getHeight()+offset)){
-//            now = algo.getGrid().pointToCell(this.getX(), this.getY());
-//        }
         Cell next = path.get(1);
         System.out.println(now);
 

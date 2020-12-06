@@ -82,6 +82,7 @@ public class GameApp
         inputEngine.update();
         physicsEngine.update(ellapsedTime);
         graphicsEngine.update();
+        iaEngine.update();
 
         this.onGameIterEnd(ellapsedTime);
     }

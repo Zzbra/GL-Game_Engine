@@ -1,12 +1,12 @@
 package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.pacman.entities.*;
-import amu.gl.equipe200.pacman.entities.factory.PacmanFactory;
 import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
+import javafx.print.PageLayout;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -18,8 +18,8 @@ public class PacmanApp
     extends GameApp {
 
     private GameWorld pacmanWorld;
-    private PacmanFactory pacmanFactory;
-
+    private Pacman pacman;
+    private Blinky blinky;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,7 +32,7 @@ public class PacmanApp
 
         createMap("Map1.txt");
         createPlayers();
-//        createGhost();
+        createGhost();
         loadMainMenu();
     }
     public void onGameIterBegin(long ellapsedTime) { }
@@ -59,6 +59,10 @@ public class PacmanApp
         pacmanWorld.addGraphicsEntity(player1);
         pacmanWorld.addPhysicsEntity(player1);
         pacmanWorld.addIOEntity(player1);
+    }
+
+    private void createGhost(){
+        blinky = new Blinky();
     }
 
     private void createMap(String mapName){
