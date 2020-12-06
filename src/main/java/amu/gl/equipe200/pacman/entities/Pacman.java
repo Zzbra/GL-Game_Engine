@@ -12,8 +12,8 @@ import java.util.ArrayList;
  *  La super class Entity a des paramètres w et h qui sont aussi width et height. A changer du coup.
  */
 public class Pacman
-        extends Entity
-        implements PhysicsInterface, GraphicsInterface, IOInterface {
+    extends Entity
+    implements PhysicsInterface, GraphicsInterface, IOInterface {
 
     /***  Physics Flag  ***/
 //    private volatile boolean isSolid = true;
