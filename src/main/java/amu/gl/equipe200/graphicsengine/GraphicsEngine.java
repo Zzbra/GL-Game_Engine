@@ -1,5 +1,6 @@
 package amu.gl.equipe200.graphicsengine;
 
+import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.pacman.entities.Entity;
 import amu.gl.equipe200.utils.Pair;
 
@@ -38,11 +39,12 @@ public class GraphicsEngine {
     // size of the window in game and in pixel
     private double windowWidthInGame, windowHeightInGame;
     private int windowWidthPixel, windowsHeightPixel;
-
+    private int uiSectionHeight;
     // Request update every frame
     private HashSet<GameLoopListener> gameLoopListeners;
     private boolean launchGameLoop = false;
     private AnimationTimer gameLoop;
+
 
 
     public GraphicsEngine(Stage stage, int windowWidthPixel, int windowsHeightPixel) {
@@ -51,6 +53,7 @@ public class GraphicsEngine {
         this.windowsHeightPixel = windowsHeightPixel;
         this.windowWidthInGame = 0;
         this.windowHeightInGame = 0;
+        this.uiSectionHeight = Settings.UISECTION_HEIGHT;
 
         // create the javafx component
         this.stage = stage;
@@ -99,6 +102,7 @@ public class GraphicsEngine {
         this.graphicsEntitiesToAdd.clear();
         // Update the scene
         for (GraphicsInterface entity : this.graphicsEntities){
+//            System.out.println(entity);
             // if the entity needs to be removed do it
             if (entity.isRemovable()) {
                this.graphicsEntitiesToRemove.add(entity);
@@ -150,7 +154,7 @@ public class GraphicsEngine {
 
         // create the new scene
         Pane g = new Pane();
-        this.displayedScene = new Scene(g, this.windowWidthPixel, this.windowsHeightPixel);
+        this.displayedScene = new Scene(g, this.windowWidthPixel, this.windowsHeightPixel + this.uiSectionHeight);
         this.rootNode = g;
 
         this.layers = new LayerManager(this.rootNode);

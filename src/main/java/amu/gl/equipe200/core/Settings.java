@@ -11,6 +11,7 @@ public class Settings {
 
     public static double PLAYER_SPEED = 5;
     public static double ENEMY_SPEED = 4;
+    public static int UISECTION_HEIGHT = 50;
 
     public static enum Tag { PLAYER, ENEMY,
                              POWERUP_INVINCIBLE, POWERUP_WALLPASS,

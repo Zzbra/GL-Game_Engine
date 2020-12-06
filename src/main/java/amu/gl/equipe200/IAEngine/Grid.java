@@ -16,10 +16,10 @@ public class Grid {
             for (int x = 0; x < mat.length; x++){
                 //System.out.printf("%d",mat[y][x]);
                 Cell cell = new Cell(x, y, mat[y][x] != 1);
-                System.out.println(cell);
+//                System.out.println(cell);
                 addCell(x, y, cell);
             }
-            System.out.println();
+//            System.out.println();
         }
     }
 

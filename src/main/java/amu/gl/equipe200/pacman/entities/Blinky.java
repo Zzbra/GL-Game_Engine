@@ -27,11 +27,9 @@ public class Blinky extends Ghost implements IAInterface {
 
         Cell start = new Cell((int)getX(), (int)getY(), true);
         Cell goal = new Cell((int)pacMan.getX(), (int)pacMan.getY(), true);
-        System.out.println("db");
         if(path.size()<=1) path = algo.getShortestPath(start, goal);
 
         Cell next = path.get(1);
-        System.out.println(now);
 
         if(now.getX()==next.getX() && now.getY()==next.getY()){
             path.remove(0);
