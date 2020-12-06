@@ -24,6 +24,7 @@ public interface PhysicsInterface {
     default boolean isWorldBounded() { return false; }
     default boolean isCollidable() { return false; }
     default boolean isSolid() { return false; }
+
     boolean isRemovable();
 
     Settings.Tag getTag();

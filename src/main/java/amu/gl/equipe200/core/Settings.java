@@ -25,5 +25,4 @@ public class Settings {
     private Pair<Double, Double> worldSize = Pair.create(100d, 100d);
     public void setWorldSize(double width, double height) { this.worldSize = Pair.create(width, height); }
     public Pair<Double, Double> getWorldSize() { return this.worldSize; }
-
 }

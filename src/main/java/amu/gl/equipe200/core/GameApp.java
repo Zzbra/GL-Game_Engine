@@ -6,21 +6,18 @@ import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.graphicsengine.MenuInterface;
+import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.inputengine.InputEngine;
-import amu.gl.equipe200.pacman.MainMenu;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
 
 // TODO: remove the extends Application in the gameApp to remove these
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /*
@@ -184,5 +181,17 @@ public class GameApp
         inputEngine.attachToScene(graphicsEngine.getCurrentScene());
     }
 
+    public void addPhysicsEntityToCurrent(PhysicsInterface p) {
+        this.currentGameWorld.addPhysicsEntity(p);
+        this.physicsEngine.registerEntity(p);
+    }
+    public void addGraphicsEntityToCurrent(GraphicsInterface g) {
+        this.currentGameWorld.addGraphicsEntity(g);
+        this.graphicsEngine.registerEntity(g);
+    }
+    public void addIOEntityToCurrent(IOInterface i) {
+        this.currentGameWorld.addIOEntity(i);
+        this.inputEngine.registerEntity(i);
+    }
 
 }

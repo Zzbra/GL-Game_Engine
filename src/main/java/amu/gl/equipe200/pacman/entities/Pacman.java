@@ -1,93 +1,52 @@
-package amu.gl.equipe200.entity;
+package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
+
+import java.util.ArrayList;
 
 /**
  *  La super class Entity a des paramètres w et h qui sont aussi width et height. A changer du coup.
  */
-public class Player
+public class Pacman
         extends Entity
         implements PhysicsInterface, GraphicsInterface, IOInterface {
 
-    /**
-     * Physics variables
-     */
-    private double x, y;
-    private double xSpeed, ySpeed;
-    private double width, height;
-    private volatile boolean isSolid;
+    /***  Physics Flag  ***/
+    private volatile boolean isSolid = true;
 
-    /**
-     * Graphics variables
-     */
-    private double r;
-    private String imageName;
-    private String layerName;
+    /***  Graphics variables  ***/
+    private ArrayList<String> animation;
+    private int imageLastFrame;
     private boolean hasMoved;
     private boolean hasNewSprite;
 
-    /**
-     * Input variables
-     */
+    /***  Input variables  ***/
     private String upKey, downKey, leftKey, rightKey;
 
-    public Player(){ }
-
-    public Player(double x, double y, double r,
-                  double dx, double dy, double dr,
-                  double health, double damage,
-                  double speed, String imageName, String layerName) {
-
-        super(x, y, r, dx, dy, dr, health, damage);
-        this.setTag(Settings.Tag.PLAYER);
-        this.imageName = imageName;
-        this.layerName = layerName;
-        collisionsCheck.add(Settings.Tag.ENEMY);
-        isSolid=true;
+    public Pacman(){
+        this.imageLastFrame = 0;
+        this.animation = new ArrayList<>();
+        this.animation.add("images/Pacman_1.png");
+        this.animation.add("images/Pacman_2.png");
+        this.animation.add("images/Pacman_3.png");
+        this.animation.add("images/Pacman_2.png");
     }
-
 
     /******************************************************************************************************************
      *    Getters and Setters                                                                                         *
      ******************************************************************************************************************/
     @Override
-    public double getX() { return this.x; }
+    public void setX(double x) { super.setX(x); hasMoved = true; }
     @Override
-    public double getY() { return this.y; }
+    public void setY(double y) { super.setY(y); hasMoved = true; }
     @Override
-    public void setX(double x) { this.hasMoved = true; this.x = x; }
-    @Override
-    public void setY(double y) { this.hasMoved = true; this.y = y; }
-
-    @Override
-    public double getXSpeed() { return this.xSpeed; }
-    public void setXSpeed(double xSpeed) { this.xSpeed = xSpeed; }
-    @Override
-    public double getYSpeed() { return this.ySpeed; }
-    public void setYSpeed(double ySpeed) { this.ySpeed = ySpeed; }
-
-    @Override
-    public double getWidth() {
-        return this.width;
+    public Settings.Tag getTag() {
+        return null;
     }
-    public void setWidth(double width) { this.width = width; }
-    @Override
-    public double getHeight() {
-        return this.height;
-    }
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    @Override
-    public String getImageName() { return this.imageName; }
-    @Override
-    public String getLayerName(){ return this.layerName; }
 
     public void setControls(String up, String down, String left, String right) {
         this.upKey = up.toUpperCase();
@@ -104,10 +63,14 @@ public class Player
     @Override
     public boolean isWorldBounded() { return true; }
     @Override
-    public boolean isCollidable() { return true;}
+    public boolean isCollidable() { return true; }
     @Override
     public boolean isSolid() { return isSolid; }
-    public void setIsSolid(boolean isSolid) {this.isSolid=isSolid;}
+
+    @Override
+    public boolean isRemovable() {
+        return false;
+    }
 
     @Override
     public void onWorldEnds() {
@@ -128,11 +91,17 @@ public class Player
      ******************************************************************************************************************/
     @Override
     public boolean needRemoval() { return false; }
-
     @Override
     public boolean hasMoved() { return this.hasMoved; }
+
     @Override
     public boolean hasNewSprite() { return true; }
+    @Override
+    public String getImageName() {
+        this.imageLastFrame++;
+        int url = (imageLastFrame / 30) % this.animation.size();
+        return this.animation.get(url);
+    }
 
     @Override
     public void onProcessed(GraphicsEngine engine) {
@@ -147,7 +116,7 @@ public class Player
         key = key.toUpperCase();
         //System.out.println(this + "recieved input " + key);
         if(key.equals("K")) {
-            setIsSolid(!isSolid);
+            isSolid = !isSolid;
         }
         if (key.equals(upKey)) {
             setXSpeed(0);
@@ -191,15 +160,4 @@ public class Player
             }
         }).start();
     }
-
-    /****************
-     *    Others    *
-     ****************/
-    @Override
-    public void checkRemovability() {
-        // TODO Auto-generated method stub
-    }
-
-
-
 }
