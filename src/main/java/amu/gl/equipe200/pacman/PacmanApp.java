@@ -1,5 +1,7 @@
 package amu.gl.equipe200.pacman;
 
+import amu.gl.equipe200.pacman.UI.Counter;
+import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
 import amu.gl.equipe200.pacman.entities.Pacman;
 import amu.gl.equipe200.pacman.menues.*;
@@ -7,9 +9,12 @@ import amu.gl.equipe200.pacman.menues.*;
 import amu.gl.equipe200.core.GameApp;
 import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.physicsengine.PhysicsInterface;
+import amu.gl.equipe200.utils.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class PacmanApp
@@ -18,6 +23,8 @@ public class PacmanApp
     private GameWorld pacmanWorld;
     private Pacman pacman;
     private Blinky blinky;
+    private Counter counter;
+    private int score;
 
     private int grid_size;
     private double cell_height, cell_width;
@@ -29,16 +36,28 @@ public class PacmanApp
     @Override
     public void onInit() {
         System.out.println("Hello onInit");
+
+        score = 0;
         this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
-
-        int[][] map = createMap("Map.txt");
+        int[][] map = createMap("Map1.txt");
         blinky.setPacMan(pacman);
-
 
         getIaEngine().loadMap(map);
 //        createPlayers();
 //        createGhost();
         loadMainMenu();
+        createCounter();
+    }
+    @Override
+    public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
+        super.handleCollisions(collisions);
+        for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
+                score++;
+                System.out.println("score: " + score);
+                counter.setValue(score);
+            }
+        }
     }
 
     @Override

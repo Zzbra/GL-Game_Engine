@@ -13,7 +13,6 @@ public class PacGomme
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-
     public PacGomme() {
         super(Settings.Tag.PACGUM);
         setImageName("PacGum.jpg");
@@ -25,17 +24,10 @@ public class PacGomme
      ******************************************************************************************************************/
     @Override
     public boolean isCollidable() { return true; }
-    @Override
-    public boolean isRemovable() { return false; }
 
-    @Override
-    public Settings.Tag getTag() {
-        return null;
+    public void onCollide(PhysicsInterface others){
+        if(others.getTag()==Settings.Tag.PLAYER){
+            toRemove();
+        }
     }
-
-    /******************************************************************************************************************
-     *    Graphics Engine behaviour                                                                                   *
-     ******************************************************************************************************************/
-    @Override
-    public boolean needRemoval(){ return false; }
 }

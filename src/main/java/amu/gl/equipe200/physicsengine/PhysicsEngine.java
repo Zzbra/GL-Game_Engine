@@ -1,5 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ public class PhysicsEngine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
+    private HashSet<PhysicsInterface> physicsEntitiesToRemove;
     private HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisionPair;
     // Size of the world in which the entities move
     private double worldHeight;
@@ -18,6 +20,7 @@ public class PhysicsEngine {
 
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();
+        this.physicsEntitiesToRemove = new HashSet<>();
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         collisionPair = new HashSet<>();
@@ -37,7 +40,7 @@ public class PhysicsEngine {
     public void update(double ellapsedTime){
         for(PhysicsInterface entity : this.physicsEntities) {
             if(entity.isRemovable()){
-                physicsEntities.remove(entity);
+                physicsEntitiesToRemove.add(entity);
                 continue;
             }
             // Check if the entity is movable, as collidable only entities does not require any update
@@ -54,6 +57,9 @@ public class PhysicsEngine {
 
             // Finally move the entity where it should go
             move(entity, newPosition);
+        }
+        for(PhysicsInterface entity : this.physicsEntitiesToRemove){
+            this.physicsEntities.remove(entity);
         }
     }
 
@@ -188,7 +194,7 @@ public class PhysicsEngine {
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() - entity.getWidth() - eps;
-            System.out.println("db1");
+            //System.out.println("db1");
 
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
@@ -197,7 +203,7 @@ public class PhysicsEngine {
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() + toCheck.getWidth() + eps;
-            System.out.println("db2");
+            //System.out.println("db2");
 
         }
 
@@ -210,7 +216,7 @@ public class PhysicsEngine {
 //            finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() - entity.getHeight() - eps;
-            System.out.println("db3");
+            //System.out.println("db3");
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
             && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
@@ -218,7 +224,7 @@ public class PhysicsEngine {
             //finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() + toCheck.getHeight() + eps;
-            System.out.println("db4");
+           // System.out.println("db4");
         }
         return Pair.create(finalX, finalY);
     }

@@ -15,7 +15,7 @@ public interface GraphicsInterface {
     String getLayerName();
 
     // Does the entity need to removed
-    default boolean needRemoval() { return false; }
+    default boolean isRemovable() { return false; }
 
     // Does the render of entity need to be update
     default boolean hasMoved() { return false; }

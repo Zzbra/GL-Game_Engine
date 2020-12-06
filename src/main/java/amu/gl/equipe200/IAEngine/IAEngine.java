@@ -38,13 +38,10 @@ public class IAEngine {
             Cell currentCellOtherCorner = new Cell((int)(entity.getX()+ entity.getWidth()), (int)(entity.getY() + entity.getHeight()), true);
             double dX = entity.getGoalX() - entity.getX();
             double dY = entity.getGoalY() - entity.getY();
-            System.out.println(dX + " " + dY);
             if(currentCell.getX() == currentCellOtherCorner.getX() && currentCell.getY() == currentCellOtherCorner.getY()) {
                 Cell goal = new Cell((int) entity.getGoalX(), (int) entity.getGoalY(), true);
                 ArrayList<Cell> path = shortestPath.getShortestPath(currentCell, goal);
-                System.out.println(path);
                 if (path.size() > 1) {
-                    System.out.println(currentCell + " " + path.get(1));
                     adjustDirection(entity, path.get(1), currentCell);
                 }
             }
@@ -52,7 +49,6 @@ public class IAEngine {
     }
 
     private void adjustDirection(IAInterface entity, Cell direction, Cell currentCell){
-        System.out.println(entity.getX() + " " + entity.getY() + " " +  direction);
         double dx = (direction.getX() - currentCell.getX()) * Settings.ENEMY_SPEED;
         double dy = (direction.getY() - currentCell.getY()) * Settings.ENEMY_SPEED;
         entity.setXSpeed(dx);
