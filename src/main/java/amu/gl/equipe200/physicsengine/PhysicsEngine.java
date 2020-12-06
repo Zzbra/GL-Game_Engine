@@ -1,5 +1,6 @@
 package amu.gl.equipe200.physicsengine;
 
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.utils.Pair;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ public class PhysicsEngine {
 
     // List of the entity to update
     private HashSet<PhysicsInterface> physicsEntities;
+    private HashSet<PhysicsInterface> physicsEntitiesToRemove;
     private HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisionPair;
     // Size of the world in which the entities move
     private double worldHeight;
@@ -18,6 +20,7 @@ public class PhysicsEngine {
 
     public PhysicsEngine(double worldWidth, double worldHeight){
         this.physicsEntities = new HashSet<>();
+        this.physicsEntitiesToRemove = new HashSet<>();
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         collisionPair = new HashSet<>();
@@ -37,7 +40,7 @@ public class PhysicsEngine {
     public void update(double ellapsedTime){
         for(PhysicsInterface entity : this.physicsEntities) {
             if(entity.isRemovable()){
-                physicsEntities.remove(entity);
+                physicsEntitiesToRemove.add(entity);
                 continue;
             }
             // Check if the entity is movable, as collidable only entities does not require any update
@@ -54,6 +57,9 @@ public class PhysicsEngine {
 
             // Finally move the entity where it should go
             move(entity, newPosition);
+        }
+        for(PhysicsInterface entity : this.physicsEntitiesToRemove){
+            this.physicsEntities.remove(entity);
         }
     }
 

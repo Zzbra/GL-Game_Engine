@@ -51,10 +51,6 @@ public class Pacman
     public void setX(double x) { super.setX(x); hasMoved = true; }
     @Override
     public void setY(double y) { super.setY(y); hasMoved = true; }
-    @Override
-    public Settings.Tag getTag() {
-        return null;
-    }
 
     public void setControls(String up, String down, String left, String right) {
         this.upKey = up.toUpperCase();
@@ -103,8 +99,6 @@ public class Pacman
     /******************************************************************************************************************
      *    Graphics Engine behaviour                                                                                   *
      ******************************************************************************************************************/
-    @Override
-    public boolean needRemoval() { return false; }
     @Override
     public boolean hasMoved() { return this.hasMoved; }
 

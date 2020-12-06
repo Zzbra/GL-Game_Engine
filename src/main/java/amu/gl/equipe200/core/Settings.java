@@ -10,14 +10,7 @@ public class Settings {
     public static double WORLD_HEIGHT = 16;
 
     public static double PLAYER_SPEED = 5;
-    public static double PLAYER_SHIP_HEALTH = 100.0;
-
-    public static double PLAYER_MISSILE_SPEED = 1.0;
-    public static double PLAYER_MISSILE_HEALTH = 200.0;
-
-    public static int ENEMY_SPAWN_RANDOMNESS = 100;
-    public static int SUPERFRUIT_SPAWN_RANDOMNESS = 400;
-    public static double ENEMY_SPEED = 5;
+    public static double ENEMY_SPEED = 4;
 
     public static enum Tag { PLAYER, ENEMY,
                              POWERUP_INVINCIBLE, POWERUP_WALLPASS,

@@ -67,8 +67,6 @@ public class Ghost
      *    Graphics Engine behaviour                                                                                   *
      ******************************************************************************************************************/
     @Override
-    public boolean needRemoval() { return false; }
-    @Override
     public boolean hasMoved() { return this.hasMoved; }
 
     @Override

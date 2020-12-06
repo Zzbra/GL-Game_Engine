@@ -24,6 +24,8 @@ public abstract class Entity
     private String imageName;
     private String layerName;
 
+    boolean isRemovable=false;
+
     public Entity(Settings.Tag tag) {
         this.tag = tag;
     }
@@ -69,4 +71,18 @@ public abstract class Entity
     @Override
     public String getLayerName() { return this.layerName; }
     public void setLayerName(String name) { this.layerName = name; }
+
+    @Override
+    public Settings.Tag getTag() {
+        return tag;
+    }
+    @Override
+
+    public boolean isRemovable() {
+        return isRemovable;
+    }
+
+    public void toRemove() {
+        isRemovable = true;
+    }
 }

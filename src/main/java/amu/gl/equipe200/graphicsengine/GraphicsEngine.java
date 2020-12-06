@@ -29,9 +29,9 @@ public class GraphicsEngine {
     // ressources used
     private ImagesManager images;
     private LayerManager layers;
-
     // entity to render
     private HashSet<GraphicsInterface> graphicsEntitiesToAdd;
+    private HashSet<GraphicsInterface> graphicsEntitiesToRemove;
     private HashSet<GraphicsInterface> graphicsEntities;
     private HashMap<GraphicsInterface, ImageView> views;
 
@@ -72,6 +72,7 @@ public class GraphicsEngine {
         // Content holders
         this.graphicsEntities = new HashSet<>();
         this.graphicsEntitiesToAdd = new HashSet<>();
+        this.graphicsEntitiesToRemove = new HashSet<>();
         this.views = new HashMap<>();
 
         // create the base layers for the graphics engine
@@ -96,20 +97,24 @@ public class GraphicsEngine {
             this.views.put(entity, view);
         }
         this.graphicsEntitiesToAdd.clear();
-
         // Update the scene
-        for (GraphicsInterface entity : this.graphicsEntities) {
+        for (GraphicsInterface entity : this.graphicsEntities){
             // if the entity needs to be removed do it
-            if (entity.needRemoval()) {
-                this.removeEntity(entity);
-                entity.onProcessed(this);
-                continue;
+            if (entity.isRemovable()) {
+               this.graphicsEntitiesToRemove.add(entity);
+               continue;
             }
             // Else update the linked node
             if (entity.hasMoved()) this.moveEntity(entity);
             if (entity.hasNewSprite()) this.redrawEntity(entity);
             entity.onProcessed(this);
         }
+        // Remove entity that has been flagged
+        for (GraphicsInterface entity : this.graphicsEntitiesToRemove) {
+            this.removeEntity(entity);
+            entity.onProcessed(this);
+        }
+        graphicsEntitiesToRemove.clear();
     }
 
     /**********************************
