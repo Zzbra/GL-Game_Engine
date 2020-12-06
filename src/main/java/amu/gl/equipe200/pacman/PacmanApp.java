@@ -50,7 +50,8 @@ public class PacmanApp
         // center horizontally, position at 70% vertically
         double x = 16 / 6.0;
         double y = 16 * 0.6;
-        this.pacman = new Pacman();
+
+        pacman = new Pacman();
         pacman.setX(x);
         pacman.setY(y);
         pacman.setWidth(0.8);
