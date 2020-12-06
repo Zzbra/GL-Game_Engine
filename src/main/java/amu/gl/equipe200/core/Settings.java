@@ -21,7 +21,7 @@ public class Settings {
 
     public static enum Tag { PLAYER, ENEMY,
                              POWERUP_INVINCIBLE, POWERUP_WALLPASS,
-                             PAGGUM, WALL }
+                             PACGUM, WALL }
 
     // Size of the physical world in which the entities are
     private Pair<Double, Double> worldSize = Pair.create(100d, 100d);

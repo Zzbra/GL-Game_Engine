@@ -46,7 +46,6 @@ public class SuperFruit
        // System.out.println(this.toString() + " has collided with " + others.toString());
 
         if(others.getTag() == Settings.Tag.valueOf("PLAYER")){
-//            setRemovable(true);
         }
     }
 

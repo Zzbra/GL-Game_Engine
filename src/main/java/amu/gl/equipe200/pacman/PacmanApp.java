@@ -102,7 +102,7 @@ public class PacmanApp
                     pacGomme.setY(i + 0.5-0.1);
                     pacGomme.setWidth(0.2);
                     pacGomme.setHeight(0.2);
-                    pacGomme.setImageName("images/PacGum.png");
+                    pacGomme.setImageName("images/pacGomme.jpg");
                     pacGomme.setLayerName("BACKGROUND");
                     pacmanWorld.addPhysicsEntity(pacGomme);
                     pacmanWorld.addGraphicsEntity(pacGomme);
@@ -127,5 +127,4 @@ public class PacmanApp
         }
         return mapTab;
     }
-
 }

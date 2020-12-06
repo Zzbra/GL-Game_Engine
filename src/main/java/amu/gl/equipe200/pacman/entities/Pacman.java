@@ -85,7 +85,7 @@ public class Pacman
     public void onCollide(PhysicsInterface others) {
         // TODO
         //System.out.println(this.toString() + " has collided with " + others.toString());
-        if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
+        if(others.getTag() == Settings.Tag.valueOf("POWERUP_WALLPASS")){
             superPowerActive();
         }
     }

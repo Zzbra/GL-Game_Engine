@@ -14,7 +14,10 @@ public class PacGomme
         implements PhysicsInterface, GraphicsInterface {
 
 
-    public PacGomme(){
+    public PacGomme() {
+        super(Settings.Tag.PACGUM);
+        setImageName("PacGum.jpg");
+        setLayerName("BACKGROUND");
     }
 
     /******************************************************************************************************************
