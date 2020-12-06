@@ -38,6 +38,7 @@ public class PhysicsEngine {
     }
 
     public void update(double ellapsedTime){
+        clearCollision();
         for(PhysicsInterface entity : this.physicsEntities) {
             if(entity.isRemovable()){
                 physicsEntitiesToRemove.add(entity);
