@@ -1,8 +1,9 @@
-package amu.gl.equipe200.pacman.entities;
+package amu.gl.equipe200.pacman.entities.pacman;
 
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
+import amu.gl.equipe200.pacman.entities.Entity;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.core.Settings;
 
@@ -27,17 +28,20 @@ public class Pacman
     /***  Input variables  ***/
     private String upKey, downKey, leftKey, rightKey;
 
-    /***  Entity Tag  ***/
-
+    /***  Others  ***/
+    private int lifes;
 
     public Pacman(){
         super(Settings.Tag.PLAYER);
+
         this.imageLastFrame = 0;
         this.animation = new ArrayList<>();
         this.animation.add("images/Pacman_1.png");
         this.animation.add("images/Pacman_2.png");
         this.animation.add("images/Pacman_3.png");
         this.animation.add("images/Pacman_2.png");
+
+        this.lifes = 4;
     }
 
     /******************************************************************************************************************
@@ -83,11 +87,17 @@ public class Pacman
     }
     @Override
     public void onCollide(PhysicsInterface others) {
-        // TODO
-        //System.out.println(this.toString() + " has collided with " + others.toString());
+        if (others.getTag() == Settings.Tag.ENEMY) {
+            this.lifes--;
+            System.out.println("Ennemy collision Life lost");
+        }
+
         if(others.getTag() == Settings.Tag.valueOf("FRUIT")){
             superPowerActive();
         }
+    }
+    private void collideWithEnemy() {
+
     }
 
     /******************************************************************************************************************

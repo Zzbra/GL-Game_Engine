@@ -58,8 +58,6 @@ public class GameApp
 
     @Override
     public void start(Stage primaryStage) {
-        System.out.println("Hello");
-
         /***  Create the engines  ***/
         this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
@@ -90,7 +88,7 @@ public class GameApp
         inputEngine.update();
 
         physicsEngine.update(ellapsedTime);
-        handleCollisions(physicsEngine.getCollisionPair());
+        this.handleCollisions(physicsEngine.getCollisionPair());
 
         graphicsEngine.update();
         iaEngine.update();
