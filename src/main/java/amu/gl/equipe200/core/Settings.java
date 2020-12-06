@@ -5,13 +5,13 @@ import amu.gl.equipe200.utils.Pair;
 public class Settings {
     public static double SCENE_WIDTH = 800;
     public static double SCENE_HEIGHT = 800;
+    public static int UISECTION_HEIGHT = 50;
 
-    public static double WORLD_WIDTH = 16;
-    public static double WORLD_HEIGHT = 16;
+//    public static double WORLD_WIDTH = 16;
+//    public static double WORLD_HEIGHT = 16;
 
     public static double PLAYER_SPEED = 5;
     public static double ENEMY_SPEED = 4;
-    public static int UISECTION_HEIGHT = 50;
 
     public static enum Tag { PLAYER, ENEMY,
                              POWERUP_INVINCIBLE, POWERUP_WALLPASS,

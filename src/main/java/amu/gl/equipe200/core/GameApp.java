@@ -59,7 +59,7 @@ public class GameApp
     @Override
     public void start(Stage primaryStage) {
         /***  Create the engines  ***/
-        this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
+        this.physicsEngine = new PhysicsEngine(100, 100);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine();
         this.iaEngine = new IAEngine();

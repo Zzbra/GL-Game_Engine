@@ -30,7 +30,7 @@ public class PacmanApp
     private ArrayList<Life> lifeCounter;
 
     private int grid_size;
-    private double cell_height, cell_width;
+    private double cell_height = 1, cell_width = 1;
 
     public static void main(String[] args) {
         launch(args);
@@ -41,16 +41,12 @@ public class PacmanApp
         System.out.println("Hello onInit");
 
         score = 0;
-        this.pacmanWorld = new GameWorld(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
 
-        int[][] map = createMap("Map.txt");
-
-        blinky.setPacMan(pacman);
+        int[][] map = loadMap("Map.txt");
+        loadNewGameWorld(map);
 
         getIaEngine().loadMap(map, this.cell_width, this.cell_height);
         loadMainMenu();
-        createCounter();
-        initLife();
     }
     @Override
     public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
@@ -87,44 +83,47 @@ public class PacmanApp
     public GameWorld getPacmanWorld() { return pacmanWorld; }
 
     private void initLife(){
+        double blockHeight = Settings.SCENE_HEIGHT / this.pacmanWorld.getHeight();
+        double size = Settings.UISECTION_HEIGHT / blockHeight;
         lifeCounter = new ArrayList<>();
         for (int i = 0; i < pacman.getLives(); i++) {
             Life life = new Life();
-            life.setX(Settings.WORLD_WIDTH-i-1);
-            life.setY(Settings.WORLD_HEIGHT);
-            life.setHeight(1);
-            life.setWidth(1);
+            life.setX(this.pacmanWorld.getWidth()- i * size - size);
+            life.setY(this.pacmanWorld.getHeight());
+            life.setHeight(size);
+            life.setWidth(size);
             pacmanWorld.addGraphicsEntity(life);
             lifeCounter.add(life);
         }
-
     }
 
     private void createCounter(){
-        double blockHeight = Settings.SCENE_HEIGHT / Settings.WORLD_HEIGHT;
+        double blockHeight = Settings.SCENE_HEIGHT / this.pacmanWorld.getHeight();
+        double size = Settings.UISECTION_HEIGHT / blockHeight;
         counter = new Counter();
-        counter.setWidth(1);
+        counter.setWidth(size);
+        counter.setHeight(size);
         counter.setX(0);
-        counter.setY(Settings.SCENE_HEIGHT/blockHeight);
-        counter.setHeight(Settings.UISECTION_HEIGHT/blockHeight);
+        counter.setY(this.pacmanWorld.getHeight());
+
         for(Digit digit : counter.getDigits()){
             pacmanWorld.addGraphicsEntity(digit);
         }
     }
 
 
-    private int[][] createMap(String mapName){
-        int[][] mapGrid = getMapGrid(mapName);
+    private void loadNewGameWorld(int[][] map) {
+        this.pacmanWorld = new GameWorld(this.grid_size * cell_width, this.grid_size * cell_height);
 
         for (int y = 0; y < grid_size; y++) {
             for (int x = 0; x < grid_size; x++) {
-                System.out.printf("%d", mapGrid[y][x]);
-                switch (mapGrid[y][x]) {
+                System.out.printf("%d", map[y][x]);
+                switch (map[y][x]) {
                     case 0: break; // Blank space
                     case 1: {
                         double wall_scale = 1;
                         double width = cell_width * wall_scale;
-                        double height = cell_height * wall_scale;
+                        double height = cell_width * wall_scale;
                         Block wall = new Block();
                         wall.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         wall.setY((y * cell_height) + (cell_height / 2) - (height / 2));
@@ -132,14 +131,14 @@ public class PacmanApp
                         wall.setHeight(height);
                         wall.setImageName(("images/Wall.png"));
                         wall.setLayerName("BACKGROUND");
-                        pacmanWorld.addGraphicsEntity(wall);
-                        pacmanWorld.addPhysicsEntity(wall);
+                        this.pacmanWorld.addGraphicsEntity(wall);
+                        this.pacmanWorld.addPhysicsEntity(wall);
                         break;
                     }
                     case 2: {
                         double pacgum_scale = 0.25;
                         double width = cell_width * pacgum_scale;
-                        double height = cell_height * pacgum_scale;
+                        double height = cell_width * pacgum_scale;
                         PacGomme PacGomme = new PacGomme();
                         PacGomme.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         PacGomme.setY((y * cell_height) + (cell_height / 2) - (height / 2));
@@ -147,8 +146,8 @@ public class PacmanApp
                         PacGomme.setHeight(height);
                         PacGomme.setImageName("images/PacGum.png");
                         PacGomme.setLayerName("BACKGROUND");
-                        pacmanWorld.addPhysicsEntity(PacGomme);
-                        pacmanWorld.addGraphicsEntity(PacGomme);
+                        this.pacmanWorld.addPhysicsEntity(PacGomme);
+                        this.pacmanWorld.addGraphicsEntity(PacGomme);
                         break;
                     }
                     case 3: {
@@ -162,8 +161,8 @@ public class PacmanApp
                         sp.setHeight(height);
                         sp.setImageName("images/Fruit_Cherry.png");
                         sp.setLayerName("BACKGROUND");
-                        pacmanWorld.addPhysicsEntity(sp);
-                        pacmanWorld.addGraphicsEntity(sp);
+                        this.pacmanWorld.addPhysicsEntity(sp);
+                        this.pacmanWorld.addGraphicsEntity(sp);
                         break;
                     }
                     case 4: {
@@ -180,9 +179,9 @@ public class PacmanApp
                         pacman.setHeight(height);
                         pacman.setLayerName("FOREGROUND");
                         pacman.setControls("Z", "S", "Q", "D");
-                        pacmanWorld.addGraphicsEntity(pacman);
-                        pacmanWorld.addPhysicsEntity(pacman);
-                        pacmanWorld.addIOEntity(pacman);
+                        this.pacmanWorld.addGraphicsEntity(pacman);
+                        this.pacmanWorld.addPhysicsEntity(pacman);
+                        this.pacmanWorld.addIOEntity(pacman);
                         break;
                     }
                     case 6: {
@@ -196,9 +195,9 @@ public class PacmanApp
                         blinky.setHeight(width);
                         blinky.setImageName("images/Ghost_Red_1.png");
                         blinky.setLayerName("FOREGROUND");
-                        pacmanWorld.addGraphicsEntity(blinky);
-                        pacmanWorld.addPhysicsEntity(blinky);
-                        pacmanWorld.addAIEntity(blinky);
+                        this.pacmanWorld.addGraphicsEntity(blinky);
+                        this.pacmanWorld.addPhysicsEntity(blinky);
+                        this.pacmanWorld.addAIEntity(blinky);
                         break;
                     }
 //                    case 7: {
@@ -216,10 +215,12 @@ public class PacmanApp
                 }
             }
         }
-        return mapGrid;
+        this.blinky.setPacMan(this.pacman);
+        createCounter();
+        initLife();
     }
 
-    private int[][] getMapGrid(String mapName){
+    private int[][] loadMap(String mapName){
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(mapName);
         if (inputStream == null) {
@@ -228,8 +229,6 @@ public class PacmanApp
         String sc = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining(""));
         // Map must be square
         this.grid_size = (int) Math.sqrt(sc.length());
-        this.cell_width = Settings.WORLD_WIDTH / grid_size;
-        this.cell_height = Settings.WORLD_HEIGHT / grid_size;
 
         System.out.println("Grid len= " + sc.length());
         System.out.println("Grid size= " + grid_size);
