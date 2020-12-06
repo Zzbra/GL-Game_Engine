@@ -35,15 +35,18 @@ public class Blinky extends Enemy {
 
         if(path.size()<=1) path = algo.start(start, goal);
 
-        int offset=2;
-        if(algo.getGrid().pointToCell(this.getX()-offset, this.getY()-offset) == algo.getGrid().pointToCell(this.getX()+this.getWidth()+offset, this.getY()+this.getHeight()+offset)){
+        int offset=4;
+        Cell c1 = algo.getGrid().pointToCell(this.getX()-offset, this.getY()-offset);
+        Cell c2 = algo.getGrid().pointToCell(this.getX()+offset+this.getWidth(), this.getY()+offset+this.getHeight());
+        if(c1.getX() == c2.getX() && c1.getY() == c2.getY()){
             now = algo.getGrid().pointToCell(this.getX(), this.getY());
+            System.out.println(now);
         }
         Cell next = path.get(1);
-        System.out.println(now);
 
         if(now.getX()==next.getX() && now.getY()==next.getY()){
             path.remove(0);
+            next = path.get(1);
             System.out.println(path);
         }
 
