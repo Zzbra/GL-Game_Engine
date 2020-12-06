@@ -7,4 +7,6 @@ public interface IAInterface {
     void setYSpeed(double speed);
     double getGoalX();
     double getGoalY();
+    double getWidth();
+    double getHeight();
 }

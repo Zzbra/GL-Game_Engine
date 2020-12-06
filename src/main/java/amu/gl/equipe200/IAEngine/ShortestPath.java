@@ -58,19 +58,19 @@ public class ShortestPath {
         int x = parent.getX();
         int y = parent.getY();
         if (x - 1 >= 0) {
-            Cell child = new Cell(x - 1, y, grid[x - 1][y] != 1);
+            Cell child = new Cell(x - 1, y, mapGrid.getCell(x - 1, y).isWalkable);
             children.add(child);
         }
         if (y - 1 >= 0) {
-            Cell child = new Cell(x, y - 1, grid[x][y - 1] != 1);
+            Cell child = new Cell(x, y - 1,  mapGrid.getCell(x, y - 1).isWalkable);
             children.add(child);
         }
         if (x + 1 < grid.length) {
-            Cell child = new Cell(x + 1, y, grid[x + 1][y] != 1);
+            Cell child = new Cell(x + 1, y,  mapGrid.getCell(x + 1, y).isWalkable);
             children.add(child);
         }
         if (y + 1 < grid[0].length) {
-            Cell child = new Cell(x, y + 1, grid[x][y + 1] != 1);
+            Cell child = new Cell(x, y + 1,  mapGrid.getCell(x, y + 1).isWalkable);
             children.add(child);
         }
         return children;

@@ -1,10 +1,8 @@
 package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.*;
-import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
-import amu.gl.equipe200.pacman.entities.Ghost;
-import amu.gl.equipe200.pacman.entities.Pacman;
+import amu.gl.equipe200.pacman.entities.pacman.Pacman;
 
 import java.util.ArrayList;
 
@@ -26,6 +24,8 @@ public class Blinky extends Ghost implements IAInterface {
     public void setPacMan(Pacman pacMan) {
         this.pacMan = pacMan;
     }
+
+    public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
 
     public void update(){
 
