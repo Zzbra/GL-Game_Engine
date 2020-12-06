@@ -21,9 +21,6 @@ public class Blinky extends Ghost implements IAInterface {
         setLayerName("FOREGROUND");
     }
 
-    public void setPacMan(Pacman pacMan) {
-        this.pacMan = pacMan;
-    }
 
     public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
 
