@@ -1,7 +1,7 @@
 package amu.gl.equipe200.pacman;
 
 import amu.gl.equipe200.pacman.entities.*;
-import amu.gl.equipe200.pacman.entities.pacman.Pacman;
+import amu.gl.equipe200.pacman.entities.Pacman;
 import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;
