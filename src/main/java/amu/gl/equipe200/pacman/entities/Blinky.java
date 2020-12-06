@@ -10,20 +10,22 @@ public class Blinky extends Ghost implements IAInterface {
     Pacman pacMan;
     ShortestPath algo;
     ArrayList<Cell> path;
-
     Cell now;
 
 
     public Blinky() {
         super();
-        this.pacMan=pacMan;
         this.path= new ArrayList<>();
         this.now = new Cell((int)getX(), (int)getY(), true);
+        setImageName("Images/Ghost_blue_1");
+        setLayerName("FOREGROUND");
+    }
 
+    public void setPacMan(Pacman pacMan) {
+        this.pacMan = pacMan;
     }
 
     public void update(){
-
 
         Cell start = new Cell((int)getX(), (int)getY(), true);
         Cell goal = new Cell((int)pacMan.getX(), (int)pacMan.getY(), true);

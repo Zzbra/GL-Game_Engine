@@ -19,10 +19,10 @@ public class LayerManager {
         this.rootNode = rootNode;
 
         // add the default layers
-        this.add("POPUPS");
-        this.add("GUI");
-        this.add("FOREGROUND");
         this.add("BACKGROUND");
+        this.add("FOREGROUND");
+        this.add("GUI");
+        this.add("POPUPS");
     }
 
     public void add(int depth, String name) {

@@ -2,8 +2,6 @@ package amu.gl.equipe200.core;
 
 
 import amu.gl.equipe200.IAEngine.IAEngine;
-import amu.gl.equipe200.entity.Block;
-import amu.gl.equipe200.entity.SuperFruit;
 import amu.gl.equipe200.graphicsengine.GameLoopListener;
 import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;

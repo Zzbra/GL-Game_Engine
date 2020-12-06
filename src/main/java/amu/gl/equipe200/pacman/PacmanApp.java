@@ -63,6 +63,9 @@ public class PacmanApp
 
     private void createGhost(){
         blinky = new Blinky();
+        blinky.setPacMan(pacman);
+        pacmanWorld.addGraphicsEntity(blinky);
+        pacmanWorld.addPhysicsEntity(blinky);
     }
 
     private void createMap(String mapName){
@@ -92,6 +95,17 @@ public class PacmanApp
                     superFruit.setLayerName("FOREGROUND");
                     pacmanWorld.addPhysicsEntity(superFruit);
                     pacmanWorld.addGraphicsEntity(superFruit);
+                }
+                if(mapGrid[i][j] == 0){
+                    PacGomme pacGomme = new PacGomme();
+                    pacGomme.setX(j + 0.5-0.1);
+                    pacGomme.setY(i + 0.5-0.1);
+                    pacGomme.setWidth(0.2);
+                    pacGomme.setHeight(0.2);
+                    pacGomme.setImageName("images/PacGum.png");
+                    pacGomme.setLayerName("BACKGROUND");
+                    pacmanWorld.addPhysicsEntity(pacGomme);
+                    pacmanWorld.addGraphicsEntity(pacGomme);
                 }
             }
         }
