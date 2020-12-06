@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Blinky extends Ghost implements IAInterface {
     Pacman pacMan;
-    ShortestPath algo;
     ArrayList<Cell> path;
     Cell now;
 
@@ -22,42 +21,6 @@ public class Blinky extends Ghost implements IAInterface {
 
 
     public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
-
-    public void update(){
-
-        Cell start = new Cell((int)getX(), (int)getY(), true);
-        Cell goal = new Cell((int)pacMan.getX(), (int)pacMan.getY(), true);
-        if(path.size()<=1) path = algo.getShortestPath(start, goal);
-
-        Cell next = path.get(1);
-
-        if(now.getX()==next.getX() && now.getY()==next.getY()){
-            path.remove(0);
-            System.out.println(path);
-        }
-
-        int Xd, Yd;
-        Xd = now.getX() - next.getX();
-        Yd = now.getY() - next.getY();
-
-        if (Math.abs(Xd) >= Math.abs(Yd)) {
-            if (Xd < 0) {
-                setXSpeed(Settings.ENEMY_SPEED);
-                setYSpeed(0);
-            } else {
-                setXSpeed(-Settings.ENEMY_SPEED);
-                setYSpeed(0);
-            }
-        } else {
-            if (Yd < 0) {
-                setXSpeed(0);
-                setYSpeed(Settings.ENEMY_SPEED);
-            } else {
-                setXSpeed(0);
-                setYSpeed(-Settings.ENEMY_SPEED);
-            }
-        }
-    }
 
     @Override
     public double getGoalX() {

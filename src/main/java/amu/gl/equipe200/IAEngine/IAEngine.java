@@ -38,12 +38,10 @@ public class IAEngine {
             Cell currentCellOtherCorner = new Cell((int)(entity.getX()+ entity.getWidth()), (int)(entity.getY() + entity.getHeight()), true);
             double dX = entity.getGoalX() - entity.getX();
             double dY = entity.getGoalY() - entity.getY();
-//            System.out.println(dX + " " + dY);
             if(currentCell.getX() == currentCellOtherCorner.getX() && currentCell.getY() == currentCellOtherCorner.getY()) {
                 Cell goal = new Cell((int) entity.getGoalX(), (int) entity.getGoalY(), true);
                 ArrayList<Cell> path = shortestPath.getShortestPath(currentCell, goal);
                 if (path.size() > 1) {
-//                    System.out.println(currentCell + " " + path.get(1));
                     adjustDirection(entity, path.get(1), currentCell);
                 }
             }

@@ -194,7 +194,7 @@ public class PhysicsEngine {
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() - entity.getWidth() - eps;
-            System.out.println("db1");
+            //System.out.println("db1");
 
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
@@ -203,7 +203,7 @@ public class PhysicsEngine {
             //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() + toCheck.getWidth() + eps;
-            System.out.println("db2");
+            //System.out.println("db2");
 
         }
 
@@ -216,7 +216,7 @@ public class PhysicsEngine {
 //            finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() - entity.getHeight() - eps;
-            System.out.println("db3");
+            //System.out.println("db3");
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
             && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
@@ -224,7 +224,7 @@ public class PhysicsEngine {
             //finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() + toCheck.getHeight() + eps;
-            System.out.println("db4");
+           // System.out.println("db4");
         }
         return Pair.create(finalX, finalY);
     }
