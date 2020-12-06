@@ -107,6 +107,17 @@ public class PacmanApp
                     pacmanWorld.addPhysicsEntity(superFruit);
                     pacmanWorld.addGraphicsEntity(superFruit);
                 }
+                if(mapGrid[y][x] == 0){
+                    PacGomme pacGomme = new PacGomme();
+                    pacGomme.setX(x+0.3);
+                    pacGomme.setY(y+0.3);
+                    pacGomme.setWidth(0.2);
+                    pacGomme.setHeight(0.2);
+                    pacGomme.setImageName("images/pacGomme.jpg");
+                    pacGomme.setLayerName("BACKGROUND");
+                    pacmanWorld.addPhysicsEntity(pacGomme);
+                    pacmanWorld.addGraphicsEntity(pacGomme);
+                }
             }
             System.out.println();
         }
