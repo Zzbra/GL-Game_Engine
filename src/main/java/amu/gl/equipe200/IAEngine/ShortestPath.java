@@ -34,9 +34,10 @@ public class ShortestPath {
                     //int value = child.getValue();
                     if (child.isWalkable) {
                         temp.add(child);
-                    } else if (child == endCell) {
+                    } else if (child.equals(endCell)) {
                         temp.add(child);
                         reachDestination = true;
+                        endCell = child;
                         break;
                     }
                 }
@@ -57,7 +58,7 @@ public class ShortestPath {
         int x = parent.getX();
         int y = parent.getY();
         if (x - 1 >= 0) {
-            Cell child = new Cell(x - 1, y, grid[x - 1][y] != 1) ;
+            Cell child = new Cell(x - 1, y, grid[x - 1][y] != 1);
             children.add(child);
         }
         if (y - 1 >= 0) {

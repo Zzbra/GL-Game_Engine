@@ -153,6 +153,7 @@ public class Player
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SPEED);
             setR(270);
+            System.out.println();
         }
         if (key.equals(downKey)) {
             setXSpeed(0);

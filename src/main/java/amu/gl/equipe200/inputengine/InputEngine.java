@@ -36,7 +36,6 @@ public class InputEngine {
       }
 
     public void update(){
-        System.out.println(pressedKeys);
         for(IOInterface ioEntity : ioEntities){
             for(String string : pressedKeys) {
                 ioEntity.reactToInput(string);

@@ -1,6 +1,9 @@
 package amu.gl.equipe200.core;
 
 
+import amu.gl.equipe200.IAEngine.IAEngine;
+import amu.gl.equipe200.IAEngine.ShortestPath;
+import amu.gl.equipe200.entity.Blinky;
 import amu.gl.equipe200.entity.Block;
 import amu.gl.equipe200.entity.Player;
 import amu.gl.equipe200.entity.SuperFruit;
@@ -42,9 +45,11 @@ public class PacmanApp
     private PhysicsEngine physicsEngine;
     private GraphicsEngine graphicsEngine;
     private InputEngine inputEngine;
+    private IAEngine iaEngine;
     private int[][] currentMap;
     private Random rnd = new Random();
-
+    private Player player;
+    private Blinky blinky;
     private GameWorld gameWorld;
 
     private boolean playerIsCreated;
@@ -59,12 +64,16 @@ public class PacmanApp
         this.physicsEngine = new PhysicsEngine(16, 16);  //TODO: replace scene size by world size
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine();
+        this.iaEngine = new IAEngine();
 
         /*** create the gameworld  ***/
         this.gameWorld = new GameWorld(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+        this.currentMap = createMap("Map1.txt");
         this.createPlayers();
 
-        this.currentMap = createMap("Map1.txt");
+        /*** Give map to iaEngine ***/
+        iaEngine.loadMap(currentMap);
+
         /***  Set up the graphics engine  ***/
         graphicsEngine.registerGameLoopListener(this);
         graphicsEngine.loadMenu(MainMenu.getInstance());
@@ -77,6 +86,7 @@ public class PacmanApp
                 graphicsEngine.display();
                 inputEngine.loadGameWorld(gameWorld.getIOEntities());
                 inputEngine.attachToScene(graphicsEngine.getCurrentScene());
+                iaEngine.loadGameWorld(gameWorld.getIAEntities());
             }
         });
 
@@ -110,29 +120,38 @@ public class PacmanApp
         double y = 16 * 0.6;
 
         // create player1
-        Player player1 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
-        player1.setX(x);
-        player1.setY(y);
-        player1.setWidth(0.8);
-        player1.setHeight(0.8);
-        player1.setControls("Z", "S", "Q", "D");
-        gameWorld.addGraphicsEntity(player1);
-        gameWorld.addPhysicsEntity(player1);
-        physicsEngine.registerEntity(player1);
-        gameWorld.addIOEntity(player1);
+        player = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
+        player.setX(x);
+        player.setY(y);
+        player.setWidth(0.8);
+        player.setHeight(0.8);
+        player.setControls("Z", "S", "Q", "D");
+        gameWorld.addGraphicsEntity(player);
+        gameWorld.addPhysicsEntity(player);
+        physicsEngine.registerEntity(player);
+        gameWorld.addIOEntity(player);
 
+//        ShortestPath shortestPath = new ShortestPath(currentMap);
+        //TODO: avoir une fonction qui créé les ennemies et du coup une référence du player dans pacmanapp?
+        blinky = new Blinky(0, 0, 0, 0, 0, 0, 1, 0, "ghostRed.jpg", "FOREGROUND", player);
+        blinky.setWidth(0.8);
+        blinky.setHeight(0.8);
+        gameWorld.addPhysicsEntity(blinky);
+        physicsEngine.registerEntity(blinky);
+        gameWorld.addGraphicsEntity(blinky);
+        gameWorld.addAIEntity(blinky);
 
-        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
-        player2.setX(5 * x);
-        player2.setY(y);
-        player2.setYSpeed(-0.1);
-        player2.setWidth(1);
-        player2.setHeight(1);
-        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
-        gameWorld.addGraphicsEntity(player2);
-        gameWorld.addPhysicsEntity(player2);
-        physicsEngine.registerEntity(player2);
-        gameWorld.addIOEntity(player2);
+//        Player player2 = new Player(x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SPEED,  "pacman.jpg", "FOREGROUND");
+//        player2.setX(5 * x);
+//        player2.setY(y);
+//        player2.setYSpeed(-0.1);
+//        player2.setWidth(1);
+//        player2.setHeight(1);
+//        player2.setControls("NUMPAD8", "NUMPAD5", "NUMPAD4", "NUMPAD6");
+//        gameWorld.addGraphicsEntity(player2);
+//        gameWorld.addPhysicsEntity(player2);
+//        physicsEngine.registerEntity(player2);
+//        gameWorld.addIOEntity(player2);
 
     }
 
@@ -144,7 +163,7 @@ public class PacmanApp
                 if(mapGrid[i][j] == 1) {
                     Block block = new Block(j , i , 1, 1, "Block.jpg", "BACKGROUND");
                     gameWorld.addGraphicsEntity(block);
-                    physicsEngine.registerEntity(block);
+                    gameWorld.addPhysicsEntity(block);
 
                 }
                 if(mapGrid[i][j] == 2){
@@ -246,7 +265,7 @@ public class PacmanApp
 
     @Override
     public void onNewFrame(long now) {
-        System.out.println("New Frame");
+        //System.out.println("New Frame");
 //        // player input
 //        //players.forEach(amu.gl.equipe200.entity -> amu.gl.equipe200.entity.processInput());
 //
@@ -257,6 +276,7 @@ public class PacmanApp
 //        //  spawnSuperFruit(true);
 //
 //        // Ici l'engin physique se charge de déplacer les entitées et de détecter les collisions
+        iaEngine.update();
 //        // TODO: compute the ellapsed time to send it to the engines
         physicsEngine.update(1);
 
@@ -267,6 +287,7 @@ public class PacmanApp
 //        // Ici le moteur graphique se charge de réafficher les entitées avec leurs coordonnées actualisées
 //        // TODO: compute the ellapsed time to send it to the engines
         graphicsEngine.update(1);
+        System.out.println(blinky.getXSpeed() + " " + blinky.getYSpeed());
 //
 //
 //        // check if amu.gl.equipe200.entity can be removed

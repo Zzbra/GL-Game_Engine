@@ -44,7 +44,6 @@ public class PhysicsEngine {
                 physicsEntities.remove(entity);
                 continue;
             }
-
             // Check if the entity is movable, as collidable only entities does not require any update
             if(!entity.isMovable()) continue;
 

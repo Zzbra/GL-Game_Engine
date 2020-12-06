@@ -1,5 +1,6 @@
 package amu.gl.equipe200;
 
+import amu.gl.equipe200.IAEngine.Test;
 import amu.gl.equipe200.core.PacmanApp;
 
 public class Main {

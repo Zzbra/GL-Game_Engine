@@ -27,4 +27,17 @@ public class Cell {
                 " : " + isWalkable +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return getX() == cell.getX() && getY() == cell.getY();
+    }
+    @Override
+    public int hashCode() {
+        return x * y;
+    }
 }
