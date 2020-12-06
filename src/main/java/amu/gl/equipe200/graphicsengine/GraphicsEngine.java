@@ -1,5 +1,6 @@
 package amu.gl.equipe200.graphicsengine;
 
+import amu.gl.equipe200.pacman.entities.Entity;
 import amu.gl.equipe200.utils.Pair;
 
 import javafx.animation.AnimationTimer;

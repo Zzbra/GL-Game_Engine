@@ -1,19 +1,10 @@
 package amu.gl.equipe200.core;
 
-import amu.gl.equipe200.entity.Entity;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameWorld {
     private final double width;

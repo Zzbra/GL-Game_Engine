@@ -1,7 +1,9 @@
-package amu.gl.equipe200.pacman;
+package amu.gl.equipe200.pacman.menues;
 
 import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.graphicsengine.MenuInterface;
+
+import amu.gl.equipe200.pacman.PacmanApp;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
