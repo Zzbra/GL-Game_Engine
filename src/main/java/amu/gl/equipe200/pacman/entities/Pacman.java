@@ -37,7 +37,7 @@ public class Pacman
     private final static double passWallTotalDuration = 5;
     private double passWallDuration;
 
-
+    private String inputWaiting;
 
     public Pacman(){
         super(Settings.Tag.PLAYER);
@@ -50,11 +50,13 @@ public class Pacman
         this.animation.add("images/Pacman_2.png");
 
         this.lives = 4;
+        this.inputWaiting = "";
 
         this.isInvincible = false;
         this.invincibleDuration = 0;
         this.isPassWall = false;
-        this.passWallDuration = 0;}
+        this.passWallDuration = 0;
+    }
 
     /******************************************************************************************************************
      *    Getters and Setters                                                                                         *
@@ -137,32 +139,40 @@ public class Pacman
      *    Input Engine behaviour                                                                                      *
      ******************************************************************************************************************/
     public void reactToInput(String key) {
-        key = key.toUpperCase();
+        this.inputWaiting = key.toUpperCase();
         //System.out.println(this + "recieved input " + key);
-        if(key.equals("K")) {
+
+
+    }
+
+    private void processInput() {
+        System.out.println("Process input: " + this.inputWaiting);
+        if (inputWaiting.isEmpty()) return;
+
+        if(inputWaiting.equals("K")) {
             isPassWall = !isPassWall;
         }
-        if (key.equals(upKey)) {
+        if (inputWaiting.equals(upKey)) {
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SPEED);
             setR(270);
         }
-        if (key.equals(downKey)) {
+        if (inputWaiting.equals(downKey)) {
             setXSpeed(0);
             setYSpeed(Settings.PLAYER_SPEED);
             setR(90);
         }
-        if (key.equals(leftKey)) {
+        if (inputWaiting.equals(leftKey)) {
             setXSpeed(-Settings.PLAYER_SPEED);
             setYSpeed(0);
             setR(180);
         }
-        if (key.equals(rightKey)) {
+        if (inputWaiting.equals(rightKey)) {
             setXSpeed(Settings.PLAYER_SPEED);
             setYSpeed(0);
             setR(0);
         }
-
+        this.inputWaiting = "";
     }
 
     /******************************************************************************************************************
@@ -182,6 +192,14 @@ public class Pacman
                 this.isPassWall = false;
                 this.passWallDuration = 0;
             }
+        }
+
+//        System.out.println("Pacman :" + this.getX() + "," + this.getY() + " , " + (this.getX()+this.getWidth()) + "," + (this.getY()+this.getHeight()));
+//        System.out.println("Pacman :" + (int)this.getX() + "," + (int)this.getY() + " , " + (int)(this.getX()+this.getWidth()) + "," + (int)(this.getY()+this.getHeight()));
+//        System.out.println("Pacman :" + (((int) this.getX()) == (int)(this.getX() + this.getWidth())) +" , " + (((int) this.getY()) == (int)(this.getY() + this.getHeight())));
+        if (((int) this.getX()) == (int)(this.getX() + this.getWidth())
+            && ((int) this.getY()) == (int)(this.getY() + this.getHeight())) {
+            processInput();
         }
     }
 
