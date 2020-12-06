@@ -1,18 +1,20 @@
 package amu.gl.equipe200.pacman.UI;
 
+import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 
 public class Digit implements GraphicsInterface {
     private double x, y, r, w, h;
-    private String imageName, layerName;
+    private String imageName;
+    private boolean hasNewSprite = false;
 
     public Digit(int value){
         setValue(value);
     }
 
     public void setValue(int value){
-        imageName = "images/digits_" + String.valueOf(value) +".jpg";
-        System.out.println(imageName);
+        imageName = "images/digits_" + String.valueOf(value) +".png";
+        hasNewSprite = true;
     }
 
     public void setX(double x){
@@ -64,5 +66,15 @@ public class Digit implements GraphicsInterface {
     @Override
     public String getLayerName() {
         return "GUI";
+    }
+
+    @Override
+    public boolean hasNewSprite() {
+        return hasNewSprite;
+    }
+
+    @Override
+    public void onGraphicsProcessed() {
+        hasNewSprite = false;
     }
 }

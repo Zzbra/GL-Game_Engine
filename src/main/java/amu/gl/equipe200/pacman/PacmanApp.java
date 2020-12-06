@@ -1,5 +1,6 @@
 package amu.gl.equipe200.pacman;
 
+import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.pacman.UI.Counter;
 import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
@@ -14,6 +15,7 @@ import amu.gl.equipe200.utils.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ public class PacmanApp
     private Blinky blinky;
     private Counter counter;
     private int score;
+    private ArrayList<Life> lifeCounter;
 
     public static void main(String[] args) {
         launch(args);
@@ -41,6 +44,7 @@ public class PacmanApp
         createGhost();
         loadMainMenu();
         createCounter();
+        initLife();
     }
     @Override
     public void handleCollisions(HashSet<Pair<PhysicsInterface, PhysicsInterface>> collisions){
@@ -48,15 +52,25 @@ public class PacmanApp
         for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
                 score++;
-                System.out.println("score: " + score);
                 counter.setValue(score);
             }
+
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY){
+                if(lifeCounter.size()> 0) {
+                   lifeCounter.get(pacman.getLives()).toRemove();
+                }if (pacman.getLives() == 0){
+                    loadMainMenu();
+                }
+                pacman.activateInvincible();
+            }
         }
+
     }
+
 
     @Override
     public void onGameIterBegin(double ellapsedTime) {
-
+        pacman.update(ellapsedTime);
     }
     public void onGameIterEnd(long ellapsedTime) { }
 
@@ -81,6 +95,20 @@ public class PacmanApp
         pacmanWorld.addGraphicsEntity(pacman);
         pacmanWorld.addPhysicsEntity(pacman);
         pacmanWorld.addIOEntity(pacman);
+    }
+
+    private void initLife(){
+        lifeCounter = new ArrayList<>();
+        for (int i = 0; i < pacman.getLives(); i++) {
+            Life life = new Life();
+            life.setX(Settings.WORLD_WIDTH-i-1);
+            life.setY(Settings.WORLD_HEIGHT);
+            life.setHeight(1);
+            life.setWidth(1);
+            pacmanWorld.addGraphicsEntity(life);
+            lifeCounter.add(life);
+        }
+
     }
 
     private void createGhost(){

@@ -22,5 +22,5 @@ public interface GraphicsInterface {
     default boolean hasNewSprite() { return false; }
 
     // Callback of the graphics engine
-    default void onProcessed(GraphicsEngine engine) {}
+    default void onGraphicsProcessed() {}
 }

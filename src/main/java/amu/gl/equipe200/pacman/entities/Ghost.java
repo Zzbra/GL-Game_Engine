@@ -49,7 +49,7 @@ public class Ghost
     public boolean isRemovable() { return false; }
 
     @Override
-    public Settings.Tag getTag() { return null; }
+    public Settings.Tag getTag() { return Settings.Tag.ENEMY; }
 
     @Override
     public void onWorldEnds() {
@@ -79,7 +79,7 @@ public class Ghost
     }
 
     @Override
-    public void onProcessed(GraphicsEngine engine) {
+    public void onGraphicsProcessed() {
         this.hasMoved = false;
     }
 }
