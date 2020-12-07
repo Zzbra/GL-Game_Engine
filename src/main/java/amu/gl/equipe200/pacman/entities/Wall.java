@@ -6,15 +6,17 @@ import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
 import java.util.Formatter;
 
-public class Block
+public class Wall
         extends Entity
         implements GraphicsInterface, PhysicsInterface {
 
     /***  Physics Flags  ***/
     private volatile boolean isSolid;
 
-    public Block() {
+    public Wall() {
         super(Settings.Tag.WALL);
+        setImageName(("images/Wall.png"));
+        setLayerName("BACKGROUND");
     }
 
 
