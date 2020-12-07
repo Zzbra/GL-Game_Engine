@@ -101,6 +101,7 @@ public class Pacman
     public boolean isCollidable() { return true; }
     @Override
     public boolean isSolid() { return !isPassWall; }
+    public void setPoweredUp(boolean isPoweredUp){this.isPoweredUp=isPoweredUp;}
 
     @Override
     public boolean isRemovable() {
@@ -215,6 +216,12 @@ public class Pacman
     public void activateInvincible() { this.isInvincible = true; }
     public void activatePassWall() { this.isPassWall = true; }
     public void activatePowerUp() {this.isPoweredUp = true; }
+
+    public void desactivateAllPower(){
+        this.isInvincible=false;
+        this.isPassWall=false;
+        isPoweredUp=false;
+    }
 
 //    public void superPowerActive(){
 //        new Thread(new Runnable()
