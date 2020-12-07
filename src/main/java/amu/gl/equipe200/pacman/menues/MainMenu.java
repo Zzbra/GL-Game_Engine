@@ -24,7 +24,7 @@ public class MainMenu
     private Scene mainMenuScene;
     private Pane root;
     private PacmanApp linkedApp;
-    public final Button startGameButton, controlButton, aboutButton;
+    public final Button startGameButton;
 
     private MainMenu(PacmanApp app) {
         this.linkedApp = app;
@@ -37,13 +37,13 @@ public class MainMenu
             }
         });
 
-        controlButton = new Button("Controls");
-        aboutButton = new Button("About");
+//        controlButton = new Button("Controls");
+//        aboutButton = new Button("About");
 
         Image img = new Image("menuScreen.jpg");
         ImageView imgView = new ImageView(img);
-        VBox vBox = new VBox(imgView,startGameButton, controlButton, aboutButton);
-        vBox.setAlignment(Pos.BOTTOM_CENTER);
+        VBox vBox = new VBox(imgView,startGameButton);
+        vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(20);
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
@@ -53,7 +53,6 @@ public class MainMenu
         mainMenuScene.getStylesheets().add("MainMenuStyleSheet.css");
 
         this.root = panel;
-        this.mainMenuScene = mainMenuScene;
     }
 
     public static MainMenu getInstance(PacmanApp app) {
