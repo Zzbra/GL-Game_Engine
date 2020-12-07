@@ -171,10 +171,10 @@ public class PacmanApp
                         break;
                     }
                     case 3: {
-                        double fruit_scale = 0.5;
+                        double fruit_scale = 0.75;
                         double width = cell_width * fruit_scale;
                         double height = cell_height * fruit_scale;
-                        SuperFruit sp = new SuperFruit();
+                        PowerUp sp = new PowerUp();
                         sp.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         sp.setY((y * cell_height) + (cell_height / 2) - (height / 2));
                         sp.setWidth(width);
@@ -186,6 +186,18 @@ public class PacmanApp
                         break;
                     }
                     case 4: {
+                        double tunnel_scale = 0.75;
+                        double width = cell_width * tunnel_scale;
+                        double height = cell_height * tunnel_scale;
+                        TunnelUp tu = new TunnelUp();
+                        tu.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        tu.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        tu.setWidth(width);
+                        tu.setHeight(height);
+                        tu.setImageName("images/TunnelUp.png");
+                        tu.setLayerName("BACKGROUND");
+                        this.pacmanWorld.addPhysicsEntity(tu);
+                        this.pacmanWorld.addGraphicsEntity(tu);
                         break;
                     }
                     case 5: {
