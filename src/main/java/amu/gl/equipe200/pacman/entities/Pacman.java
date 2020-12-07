@@ -125,7 +125,7 @@ public class Pacman
     @Override
     public String getImageName() {
         this.imageLastFrame++;
-        int url = (imageLastFrame / 30) % this.animation.size();
+        int url = (imageLastFrame / 10) % this.animation.size();
         return this.animation.get(url);
     }
 
@@ -140,7 +140,7 @@ public class Pacman
      ******************************************************************************************************************/
     public void reactToInput(String key) {
         this.inputWaiting = key.toUpperCase();
-        //System.out.println(this + "recieved input " + key);
+        System.out.println(this + " recieved input " + key);
 
 
     }
@@ -195,10 +195,11 @@ public class Pacman
         }
 
 //        System.out.println("Pacman :" + this.getX() + "," + this.getY() + " , " + (this.getX()+this.getWidth()) + "," + (this.getY()+this.getHeight()));
-//        System.out.println("Pacman :" + (int)this.getX() + "," + (int)this.getY() + " , " + (int)(this.getX()+this.getWidth()) + "," + (int)(this.getY()+this.getHeight()));
+        System.out.println("Pacman :" + (int)this.getX() + "," + (int)this.getY() + " , " + (int)(this.getX()+this.getWidth()) + "," + (int)(this.getY()+this.getHeight()));
 //        System.out.println("Pacman :" + (((int) this.getX()) == (int)(this.getX() + this.getWidth())) +" , " + (((int) this.getY()) == (int)(this.getY() + this.getHeight())));
-        if (((int) this.getX()) == (int)(this.getX() + this.getWidth())
-            && ((int) this.getY()) == (int)(this.getY() + this.getHeight())) {
+        System.out.println("input waiting : " + this.inputWaiting);
+        if (((inputWaiting == upKey || inputWaiting == downKey) && ((int) this.getX()) == (int)(this.getX() + this.getWidth()))
+            || ((inputWaiting == rightKey || inputWaiting == leftKey) && ((int) this.getY()) == (int)(this.getY() + this.getHeight()))) {
             processInput();
         }
     }

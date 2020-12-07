@@ -76,7 +76,10 @@ public class PacmanApp
     public void onGameIterEnd(long ellapsedTime) { }
 
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
-    public void loadGame() { loadGameWorld(pacmanWorld);}
+    public void loadGame() {
+        loadGameWorld(pacmanWorld);
+        this.getGraphicsEngine().setBackgroundColorToBlack();
+    }
 
     public GameWorld getPacmanWorld() { return pacmanWorld; }
 
@@ -167,7 +170,7 @@ public class PacmanApp
                         break;
                     }
                     case 5: {
-                        double pacman_scale = 0.99;
+                        double pacman_scale = 0.90;
                         double width = cell_width * pacman_scale;
                         double height = cell_height * pacman_scale;
                         pacman = new Pacman();

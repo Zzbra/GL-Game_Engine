@@ -53,7 +53,11 @@ public class GameApp
     }
     public void onGameIterEnd(double ellapsedTime) { }
 
+    public PhysicsEngine getPhysicsEngine() { return physicsEngine; }
+    public GraphicsEngine getGraphicsEngine() { return graphicsEngine; }
+    public InputEngine getInputEngine() { return inputEngine; }
     public IAEngine getIaEngine(){ return iaEngine;}
+
 
 
     @Override

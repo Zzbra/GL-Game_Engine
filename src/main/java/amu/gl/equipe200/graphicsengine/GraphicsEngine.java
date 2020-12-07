@@ -167,6 +167,10 @@ public class GraphicsEngine {
         if (this.launchGameLoop) this.gameLoop.start();
         this.stage.show();
     }
+    public void setBackgroundColorToBlack() {
+        this.getCurrentScene().getRoot().setStyle("-fx-background-color: #000000;");
+
+    }
     public Scene getCurrentScene() { return this.displayedScene; }
     /**********************************
      *     add or remove elements     *
