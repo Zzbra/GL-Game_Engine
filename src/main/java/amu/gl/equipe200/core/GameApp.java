@@ -10,8 +10,6 @@ import amu.gl.equipe200.inputengine.IOInterface;
 import amu.gl.equipe200.inputengine.InputEngine;
 import amu.gl.equipe200.physicsengine.PhysicsEngine;
 
-
-// TODO: remove the extends Application in the gameApp to remove these
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.utils.Pair;
 import javafx.application.Application;
@@ -19,15 +17,6 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-/*
-    TODO: Réparer un bug qui à lieux lorsque qu'on entre en colision tout en
-          bas de la map: le texte Collision ne disparait pas
-
-    Pour l'instant, tout ce qui est collision est géré au niveau de l'entité.
-    On pourrait peut-être declarer PhysicalComponent comme classe abstraite et demander
-    à l'utilisateur de créer des custom PhysicalComponent qui redéfinissent les
-    méthodes liées à la collision.
- */
 public class GameApp
         extends Application
         implements GameLoopListener {
@@ -63,7 +52,7 @@ public class GameApp
     @Override
     public void start(Stage primaryStage) {
         /***  Create the engines  ***/
-        this.physicsEngine = new PhysicsEngine(100, 100);  //TODO: replace scene size by world size
+        this.physicsEngine = new PhysicsEngine(100, 100);
         this.graphicsEngine = new GraphicsEngine(primaryStage, (int) Settings.SCENE_WIDTH, (int) Settings.SCENE_HEIGHT);
         this.inputEngine = new InputEngine();
         this.iaEngine = new IAEngine();

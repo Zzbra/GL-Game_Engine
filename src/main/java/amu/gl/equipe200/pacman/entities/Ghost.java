@@ -12,7 +12,7 @@ public class Ghost
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-    /***  Physics Flags  ***/
+    /***Physics Flags  ***/
 
     /***  Graphics Flags ***/
     private ArrayList<String> animation;
@@ -59,26 +59,13 @@ public class Ghost
     @Override
     public boolean isCollidable() { return true; }
     @Override
-    public boolean isSolid() { return true; }
+    public boolean isSolid() { return false; }
 
     @Override
     public boolean isRemovable() { return false; }
 
     @Override
     public Settings.Tag getTag() { return Settings.Tag.ENEMY; }
-
-    @Override
-    public void onWorldEnds() {
-        // TODO
-        //System.out.println(this.toString() + " has reach the end of the world");
-    }
-    @Override
-    public void onCollide(PhysicsInterface others) {
-        // TODO
-        //System.out.println(this.toString() + " has collided with " + others.toString());
-    }
-
-
 
     /******************************************************************************************************************
      *    Graphics Engine behaviour                                                                                   *

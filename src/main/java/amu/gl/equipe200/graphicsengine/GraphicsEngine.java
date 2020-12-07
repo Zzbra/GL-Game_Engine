@@ -98,7 +98,6 @@ public class GraphicsEngine {
         this.graphicsEntitiesToAdd.clear();
         // Update the scene
         for (GraphicsInterface entity : this.graphicsEntities){
-//            System.out.println(entity);
             // if the entity needs to be removed do it
             if (entity.isRemovable()) {
                this.graphicsEntitiesToRemove.add(entity);
