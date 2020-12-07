@@ -23,16 +23,19 @@ public class PacmanApp
     extends GameApp {
 
     private GameWorld pacmanWorld;
+
     private Pacman pacman;
     private Blinky blinky;
     private Clide clide;
-    private Counter counter;
+
     private int score;
+    private int nbGum;
+
+    private Counter counter;
     private ArrayList<Life> lifeCounter;
 
     private int grid_size;
     private double cell_height = 1, cell_width = 1;
-    private int nbGum;
 
     public static void main(String[] args) {
         launch(args);
@@ -40,14 +43,6 @@ public class PacmanApp
 
     @Override
     public void onInit() {
-        System.out.println("Hello onInit");
-
-        score = 0;
-        nbGum = 0;
-        int[][] map = loadMap("Map.txt");
-        loadNewGameWorld(map);
-
-        getIaEngine().loadMap(map, this.cell_width, this.cell_height);
         loadMainMenu();
     }
     @Override
@@ -89,6 +84,11 @@ public class PacmanApp
 
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
     public void loadGame() {
+        score = 0;
+        nbGum = 0;
+        int[][] map = loadMap("Map.txt");
+        loadNewGameWorld(map);
+        getIaEngine().loadMap(map, this.cell_width, this.cell_height);
         loadGameWorld(pacmanWorld);
         this.getGraphicsEngine().setBackgroundColorToBlack();
     }
