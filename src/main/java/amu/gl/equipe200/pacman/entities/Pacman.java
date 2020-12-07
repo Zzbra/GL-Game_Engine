@@ -30,11 +30,15 @@ public class Pacman
     private int lives;
 
     private boolean isInvincible;
-    private final static int invincibleTotalDuration = 2;
+    private final static int invincibleTotalDuration = 1;
     private double invincibleDuration;
 
+    private boolean isPoweredUp;
+    private final static int powerUpTotalDuration = 5;
+    private double powerUpDuration;
+
     private boolean isPassWall;
-    private final static double passWallTotalDuration = 5;
+    private final static double passWallTotalDuration = 4;
     private double passWallDuration;
 
     private String inputWaiting;
@@ -56,6 +60,7 @@ public class Pacman
         this.invincibleDuration = 0;
         this.isPassWall = false;
         this.passWallDuration = 0;
+        this.isPoweredUp = false;
     }
 
     /******************************************************************************************************************
@@ -65,6 +70,9 @@ public class Pacman
     public void setX(double x) { super.setX(x); hasMoved = true; }
     @Override
     public void setY(double y) { super.setY(y); hasMoved = true; }
+
+    public boolean isPoweredUp(){return isPoweredUp;}
+
 
     public void setControls(String up, String down, String left, String right) {
         this.upKey = up.toUpperCase();
@@ -105,9 +113,9 @@ public class Pacman
     }
     @Override
     public void onCollide(PhysicsInterface others) {
-        if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { activateInvincible(); }
+        if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { activatePowerUp(); }
         if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { activatePassWall(); }
-        if (others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
+        if(others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
             this.lives--;
             System.out.println("collide with enemy: one life lost");
             activateInvincible();
@@ -146,12 +154,8 @@ public class Pacman
     }
 
     private void processInput() {
-        System.out.println("Process input: " + this.inputWaiting);
         if (inputWaiting.isEmpty()) return;
 
-        if(inputWaiting.equals("K")) {
-            isPassWall = !isPassWall;
-        }
         if (inputWaiting.equals(upKey)) {
             setXSpeed(0);
             setYSpeed(-Settings.PLAYER_SPEED);
@@ -193,11 +197,14 @@ public class Pacman
                 this.passWallDuration = 0;
             }
         }
+        if (this.isPoweredUp){
+            this.powerUpDuration += ellapsedTime;
+            if (this.powerUpDuration >= powerUpTotalDuration) {
+                this.isPoweredUp = false;
+                this.powerUpDuration = 0;
+            }
+        }
 
-//        System.out.println("Pacman :" + this.getX() + "," + this.getY() + " , " + (this.getX()+this.getWidth()) + "," + (this.getY()+this.getHeight()));
-        System.out.println("Pacman :" + (int)this.getX() + "," + (int)this.getY() + " , " + (int)(this.getX()+this.getWidth()) + "," + (int)(this.getY()+this.getHeight()));
-//        System.out.println("Pacman :" + (((int) this.getX()) == (int)(this.getX() + this.getWidth())) +" , " + (((int) this.getY()) == (int)(this.getY() + this.getHeight())));
-        System.out.println("input waiting : " + this.inputWaiting);
         if (((inputWaiting == upKey || inputWaiting == downKey) && ((int) this.getX()) == (int)(this.getX() + this.getWidth()))
             || ((inputWaiting == rightKey || inputWaiting == leftKey) && ((int) this.getY()) == (int)(this.getY() + this.getHeight()))) {
             processInput();
@@ -206,6 +213,7 @@ public class Pacman
 
     public void activateInvincible() { this.isInvincible = true; }
     public void activatePassWall() { this.isPassWall = true; }
+    public void activatePowerUp() {this.isPoweredUp = true; }
 
 //    public void superPowerActive(){
 //        new Thread(new Runnable()
