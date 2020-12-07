@@ -115,7 +115,7 @@ public class Pacman
     public void onCollide(PhysicsInterface others) {
         if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { activatePowerUp(); }
         if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { activatePassWall(); }
-        if(others.getTag() == Settings.Tag.ENEMY && !this.isInvincible) {
+        if(others.getTag() == Settings.Tag.ENEMY && !this.isInvincible && !this.isPoweredUp) {
             this.lives--;
             System.out.println("collide with enemy: one life lost");
             activateInvincible();
