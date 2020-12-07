@@ -82,7 +82,7 @@ public class PacmanApp
                     collision.second.setX(clydeInit.first);
                     collision.second.setY(clydeInit.second);
                 }
-                score+=20;
+                score+=50;
                 counter.setValue(score);
             }
         }
