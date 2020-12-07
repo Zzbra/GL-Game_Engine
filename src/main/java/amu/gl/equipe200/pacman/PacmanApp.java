@@ -91,14 +91,10 @@ public class PacmanApp
         /*** update the entities ***/
        pacman.update(ellapsedTime);
        clyde.update(ellapsedTime);
-       if(nbGum == 0){
-           winGame();
-       }
     }
-    public void onGameIterEnd(long ellapsedTime) { }
-
-    private void winGame(){
-        loadMainMenu();
+    public void onGameIterEnd(double ellapsedTime) {
+        if (nbGum == 0) loadMenu(WinMenu.getInstance(this));
+        if (pacman.getLives() == 0) loadMenu(LoseMenu.getInstance(this));
     }
 
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
