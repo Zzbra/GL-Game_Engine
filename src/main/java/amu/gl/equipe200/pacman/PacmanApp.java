@@ -152,13 +152,11 @@ public class PacmanApp
                         double wall_scale = 1;
                         double width = cell_width * wall_scale;
                         double height = cell_width * wall_scale;
-                        Block wall = new Block();
+                        Wall wall = new Wall();
                         wall.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         wall.setY((y * cell_height) + (cell_height / 2) - (height / 2));
                         wall.setWidth(width);
                         wall.setHeight(height);
-                        wall.setImageName(("images/Wall.png"));
-                        wall.setLayerName("BACKGROUND");
                         this.pacmanWorld.addGraphicsEntity(wall);
                         this.pacmanWorld.addPhysicsEntity(wall);
                         break;
