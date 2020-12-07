@@ -51,7 +51,10 @@ public class IAEngine {
                                 true);
                 ArrayList<Cell> path = shortestPath.getShortestPath(currentCell, goal);
                 if (path.size() > 1) {
-                    adjustDirection(entity, path.get(1), currentCell);
+                    if(path.get(1).isWalkable)
+                        adjustDirection(entity, path.get(1), currentCell);
+                    else
+                        adjustDirection(entity, path.get(0), currentCell);
                 }
             }
         }
