@@ -9,12 +9,14 @@ import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import java.util.Set;
 
 
-public class PacGomme
+public class PacGum
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-    public PacGomme() {
+    public PacGum() {
         super(Settings.Tag.PACGUM);
+        setImageName("images/PacGum.png");
+        setLayerName("BACKGROUND");
     }
 
     /******************************************************************************************************************

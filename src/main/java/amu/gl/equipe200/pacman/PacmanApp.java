@@ -165,15 +165,13 @@ public class PacmanApp
                         double pacgum_scale = 0.25;
                         double width = cell_width * pacgum_scale;
                         double height = cell_width * pacgum_scale;
-                        PacGomme PacGomme = new PacGomme();
-                        PacGomme.setX((x * cell_width) + (cell_width / 2) - (width / 2));
-                        PacGomme.setY((y * cell_height) + (cell_height / 2) - (height / 2));
-                        PacGomme.setWidth(width);
-                        PacGomme.setHeight(height);
-                        PacGomme.setImageName("images/PacGum.png");
-                        PacGomme.setLayerName("BACKGROUND");
-                        this.pacmanWorld.addPhysicsEntity(PacGomme);
-                        this.pacmanWorld.addGraphicsEntity(PacGomme);
+                        PacGum PacGum = new PacGum();
+                        PacGum.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        PacGum.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        PacGum.setWidth(width);
+                        PacGum.setHeight(height);
+                        this.pacmanWorld.addPhysicsEntity(PacGum);
+                        this.pacmanWorld.addGraphicsEntity(PacGum);
                         this.nbGum++;
                         break;
                     }
