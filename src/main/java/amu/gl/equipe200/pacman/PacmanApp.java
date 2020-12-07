@@ -29,6 +29,10 @@ public class PacmanApp
     private int score;
     private ArrayList<Life> lifeCounter;
 
+    private Pair<Double,Double> pacmanInit;
+    private Pair<Double,Double> blinkyInit;
+
+
     private int grid_size;
     private double cell_height = 1, cell_width = 1;
 
@@ -60,8 +64,13 @@ public class PacmanApp
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY){
                 if(lifeCounter.size()> 0) {
                    lifeCounter.get(pacman.getLives()).toRemove();
+                   pacman.setX(pacmanInit.first);
+                   pacman.setY(pacmanInit.second);
+                   blinky.setX(blinkyInit.first);
+                   blinky.setY(blinkyInit.second);
+
                 }if (pacman.getLives() == 0){
-                    loadMainMenu();
+                    loadLoseMenu();
                 }
             }
         }
@@ -76,6 +85,7 @@ public class PacmanApp
     public void onGameIterEnd(long ellapsedTime) { }
 
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
+    protected void loadLoseMenu() { loadMenu(LoseMenu.getInstance(this)); }
     public void loadGame() { loadGameWorld(pacmanWorld);}
 
     public GameWorld getPacmanWorld() { return pacmanWorld; }
@@ -167,12 +177,13 @@ public class PacmanApp
                         break;
                     }
                     case 5: {
-                        double pacman_scale = 0.99;
+                        double pacman_scale = 0.85;
                         double width = cell_width * pacman_scale;
                         double height = cell_height * pacman_scale;
                         pacman = new Pacman();
                         pacman.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         pacman.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        pacmanInit=Pair.create(pacman.getX(), pacman.getY());
                         pacman.setWidth(width);
                         pacman.setHeight(height);
                         pacman.setLayerName("FOREGROUND");
@@ -180,6 +191,7 @@ public class PacmanApp
                         this.pacmanWorld.addGraphicsEntity(pacman);
                         this.pacmanWorld.addPhysicsEntity(pacman);
                         this.pacmanWorld.addIOEntity(pacman);
+
                         break;
                     }
                     case 6: {
@@ -189,6 +201,7 @@ public class PacmanApp
                         blinky = new Blinky();
                         blinky.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         blinky.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        blinkyInit=Pair.create(blinky.getX(), blinky.getY());
                         blinky.setWidth(width);
                         blinky.setHeight(width);
                         blinky.setImageName("images/Ghost_Red_1.png");

@@ -194,9 +194,6 @@ public class Pacman
             }
         }
 
-//        System.out.println("Pacman :" + this.getX() + "," + this.getY() + " , " + (this.getX()+this.getWidth()) + "," + (this.getY()+this.getHeight()));
-//        System.out.println("Pacman :" + (int)this.getX() + "," + (int)this.getY() + " , " + (int)(this.getX()+this.getWidth()) + "," + (int)(this.getY()+this.getHeight()));
-//        System.out.println("Pacman :" + (((int) this.getX()) == (int)(this.getX() + this.getWidth())) +" , " + (((int) this.getY()) == (int)(this.getY() + this.getHeight())));
         if (((int) this.getX()) == (int)(this.getX() + this.getWidth())
             && ((int) this.getY()) == (int)(this.getY() + this.getHeight())) {
             processInput();
