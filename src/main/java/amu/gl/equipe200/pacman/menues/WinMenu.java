@@ -40,7 +40,7 @@ public class WinMenu
         imgView.setFitWidth(Settings.SCENE_WIDTH * 2 / 3);
         imgView.setFitHeight(Settings.SCENE_HEIGHT * 20 / 100);
         VBox vBox = new VBox(imgView, gotoMainMenu);
-        vBox.setAlignment(Pos.BOTTOM_CENTER);
+        vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(20);
         vBox.setPadding(new Insets(50,10,50,10));
         StackPane panel = new StackPane(vBox);
