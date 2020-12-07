@@ -2,13 +2,13 @@ package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.IAInterface;
 
-public class Clide extends Ghost implements IAInterface {
+public class Clyde extends Ghost implements IAInterface {
 
     private double changeTime;
     private double cycleLength;
     private double goalX, goalY;
 
-    public Clide() {
+    public Clyde() {
         super();
         setImageName("Images/Ghost_orange_1");
         setLayerName("FOREGROUND");
