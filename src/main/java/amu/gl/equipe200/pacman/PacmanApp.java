@@ -68,6 +68,7 @@ public class PacmanApp
                    blinky.setY(blinkyInit.second);
                    clyde.setX(clydeInit.first);
                    clyde.setY(clydeInit.second);
+                   pacman.desactivateAllPower();
                 }if (pacman.getLives() == 0){
                     loadMainMenu();
                 }
@@ -81,6 +82,8 @@ public class PacmanApp
                     collision.second.setX(clydeInit.first);
                     collision.second.setY(clydeInit.second);
                 }
+                score+=20;
+                counter.setValue(score);
             }
         }
     }
