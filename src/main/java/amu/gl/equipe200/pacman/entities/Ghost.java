@@ -4,6 +4,7 @@ import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.utils.Pair;
 
 import java.util.ArrayList;
 
@@ -11,9 +12,15 @@ public class Ghost
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-    /***  Graphics Flags ***/
-    private boolean hasMoved;
+    /***  Physics Flags  ***/
 
+    /***  Graphics Flags ***/
+    private ArrayList<String> animation;
+    private int imageLastFrame;
+    private boolean hasMoved;
+    private Pair<Double, Double> fearedGoal;
+    private boolean isFeared;
+    private Pacman pacMan;
     public Ghost() {
         super(Settings.Tag.ENEMY);
         setLayerName("FOREGROUND");
@@ -27,6 +34,20 @@ public class Ghost
     public void setX(double x) { super.setX(x); this.hasMoved = true; }
     @Override
     public void setY(double y) { super.setY(y); this.hasMoved = true; }
+
+    public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
+
+    public Pacman getPacMan() {
+        return pacMan;
+    }
+
+    public boolean isFeared() {
+        return isFeared;
+    }
+
+    public Pair<Double, Double> getFearedGoal() {
+        return fearedGoal;
+    }
 
     /******************************************************************************************************************
      *    Physics Engine behaviour                                                                                    *
@@ -58,6 +79,7 @@ public class Ghost
     }
 
 
+
     /******************************************************************************************************************
      *    Graphics Engine behaviour                                                                                   *
      ******************************************************************************************************************/
@@ -72,4 +94,14 @@ public class Ghost
     public void onGraphicsProcessed() {
         this.hasMoved = false;
     }
+
+
+
+    public void fear(Pair<Double, Double> point){
+        isFeared = true;
+        fearedGoal = point;
+    }
+
+    public void fearEnd(){ isFeared = false;}
+
 }

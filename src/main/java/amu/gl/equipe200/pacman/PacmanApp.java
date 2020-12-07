@@ -54,7 +54,8 @@ public class PacmanApp
         super.handleCollisions(collisions);
         for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
-                score++;
+                if(score<999)
+                    score++;
                 nbGum--;
                 System.out.println("nbGum: " + nbGum);
                 counter.setValue(score);
@@ -94,6 +95,16 @@ public class PacmanApp
         /*** update the entities ***/
        pacman.update(ellapsedTime);
        clyde.update(ellapsedTime);
+       if(nbGum == 0){
+//           winGame();
+       }
+       if(pacman.isPoweredUp()){
+           clyde.fear(clydeInit);
+           blinky.fear(blinkyInit);
+       }else{
+           clyde.fearEnd();
+           blinky.fearEnd();
+       }
     }
     public void onGameIterEnd(double ellapsedTime) {
         if (nbGum == 0) loadMenu(WinMenu.getInstance(this));
@@ -160,6 +171,8 @@ public class PacmanApp
                         wall.setY((y * cell_height) + (cell_height / 2) - (height / 2));
                         wall.setWidth(width);
                         wall.setHeight(height);
+                        wall.setImageName(("images/Wall.png"));
+                        wall.setLayerName("BACKGROUND");
                         this.pacmanWorld.addGraphicsEntity(wall);
                         this.pacmanWorld.addPhysicsEntity(wall);
                         break;
@@ -214,6 +227,7 @@ public class PacmanApp
                         pacmanInit=Pair.create(pacman.getX(), pacman.getY());
                         pacman.setWidth(width);
                         pacman.setHeight(height);
+                        pacman.setLayerName("FOREGROUND");
                         pacman.setControls("Z", "S", "Q", "D");
                         this.pacmanWorld.addGraphicsEntity(pacman);
                         this.pacmanWorld.addPhysicsEntity(pacman);
@@ -231,6 +245,8 @@ public class PacmanApp
                         blinkyInit=Pair.create(blinky.getX(), blinky.getY());
                         blinky.setWidth(width);
                         blinky.setHeight(width);
+                        blinky.setImageName("images/Ghost_Red_1.png");
+                        blinky.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(blinky);
                         this.pacmanWorld.addPhysicsEntity(blinky);
                         this.pacmanWorld.addAIEntity(blinky);
@@ -246,6 +262,8 @@ public class PacmanApp
                         clydeInit=Pair.create(clyde.getX(), clyde.getY());
                         clyde.setWidth(width);
                         clyde.setHeight(width);
+                        clyde.setImageName("images/Ghost_Pink_1.png");
+                        clyde.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(clyde);
                         this.pacmanWorld.addPhysicsEntity(clyde);
                         this.pacmanWorld.addAIEntity(clyde);
@@ -265,6 +283,7 @@ public class PacmanApp
             }
         }
         this.blinky.setPacMan(this.pacman);
+        this.clyde.setPacMan(this.pacman);
         createCounter();
         initLife();
     }

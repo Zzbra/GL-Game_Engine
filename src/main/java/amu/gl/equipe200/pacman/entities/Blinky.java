@@ -2,6 +2,7 @@ package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.*;
 import amu.gl.equipe200.core.Settings;
+import amu.gl.equipe200.utils.Pair;
 
 import java.util.ArrayList;
 
@@ -21,14 +22,22 @@ public class Blinky
     }
 
 
-    public void setPacMan(Pacman pacMan){ this.pacMan = pacMan;}
+
     @Override
     public double getGoalX() {
-        return pacMan.getX();
+        if(isFeared()){
+            return getFearedGoal().first;
+        }else {
+            return getPacMan().getX();
+        }
     }
     @Override
     public double getGoalY() {
-        return pacMan.getY();
+        if(isFeared()){
+            return getFearedGoal().second;
+        }else {
+            return getPacMan().getY();
+        }
     }
 
     @Override
@@ -37,4 +46,5 @@ public class Blinky
         int url = (imageLastFrame / 10) % this.animation.size();
         return this.animation.get(url);
     }
+
 }

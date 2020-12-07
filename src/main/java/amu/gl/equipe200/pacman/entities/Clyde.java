@@ -6,15 +6,21 @@ import java.util.ArrayList;
 
 public class Clyde extends Ghost implements IAInterface {
 
+
+    private double aStarChangeTime;
+    private double aStarCycleLength;
     private double changeTime;
     private double cycleLength;
+    private boolean isAstar;
     private double goalX, goalY;
+    private Pacman pacman;
 
     private ArrayList<String> animation;
     private int imageLastFrame;
 
     public Clyde() {
         super();
+        setImageName("Images/Ghost_orange_1");
         setLayerName("FOREGROUND");
 
         this.animation = new ArrayList<>();
@@ -22,7 +28,10 @@ public class Clyde extends Ghost implements IAInterface {
         this.animation.add("images/Ghost_Orange_2.png");
 
         changeTime = 0;
+        aStarChangeTime = 0;
         cycleLength = 3;
+        aStarCycleLength = 6;
+        isAstar = true;
     }
     public void initGoal(){
         goalX = getX();
@@ -30,21 +39,44 @@ public class Clyde extends Ghost implements IAInterface {
         actualizeGoal();
     }
 
+    public void setPacMan(Pacman pacman){ this.pacman = pacman;}
+
     @Override
     public double getGoalX() {
-        return goalX;
+        if(!isFeared()) {
+            if (isAstar) {
+                return pacman.getX();
+            } else {
+                return goalX;
+            }
+        }else {
+            return getFearedGoal().first;
+        }
     }
 
     @Override
     public double getGoalY() {
-        return goalY;
+        if(!isFeared()) {
+            if (isAstar) {
+                return pacman.getY();
+            } else {
+                return goalY;
+            }
+        }else{
+            return getFearedGoal().second;
+        }
     }
 
     public void update(double ellapsedTime){
         changeTime += ellapsedTime;
+        aStarChangeTime += ellapsedTime;
         if(changeTime > cycleLength){
             actualizeGoal();
             changeTime = 0;
+        }
+        if(aStarChangeTime > aStarCycleLength){
+            isAstar = !isAstar;
+            aStarChangeTime = 0;
         }
     }
     private void actualizeGoal(){
