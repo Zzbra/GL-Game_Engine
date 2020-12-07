@@ -16,6 +16,7 @@ public class Clyde extends Ghost implements IAInterface {
     private Pacman pacman;
 
     private ArrayList<String> animation;
+    private ArrayList<String> animationFeared;
     private int imageLastFrame;
 
     public Clyde() {
@@ -26,6 +27,10 @@ public class Clyde extends Ghost implements IAInterface {
         this.animation = new ArrayList<>();
         this.animation.add("images/Ghost_Orange_1.png");
         this.animation.add("images/Ghost_Orange_2.png");
+
+        this.animationFeared = new ArrayList<>();
+        this.animationFeared.add("images/Ghost_Scared_1.png");
+        this.animationFeared.add("images/Ghost_Scared_2.png");
 
         changeTime = 0;
         aStarChangeTime = 0;
@@ -98,7 +103,14 @@ public class Clyde extends Ghost implements IAInterface {
     @Override
     public String getImageName() {
         this.imageLastFrame++;
-        int url = (imageLastFrame / 10) % this.animation.size();
-        return this.animation.get(url);
+        int url;
+        if (this.isFeared()) {
+             url = (imageLastFrame / 10) % this.animationFeared.size();
+            return this.animationFeared.get(url);
+        } else {
+            url = (imageLastFrame / 10) % this.animation.size();
+            return this.animation.get(url);
+        }
+
     }
 }

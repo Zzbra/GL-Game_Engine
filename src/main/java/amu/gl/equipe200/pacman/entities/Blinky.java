@@ -12,6 +12,8 @@ public class Blinky
 
     Pacman pacMan;
     private ArrayList<String> animation;
+    private ArrayList<String> animationFeared;
+
     private int imageLastFrame;
 
     public Blinky() {
@@ -19,6 +21,10 @@ public class Blinky
         this.animation = new ArrayList<>();
         this.animation.add("images/Ghost_Red_1.png");
         this.animation.add("images/Ghost_Red_2.png");
+
+        this.animationFeared = new ArrayList<>();
+        this.animationFeared.add("images/Ghost_Scared_1.png");
+        this.animationFeared.add("images/Ghost_Scared_2.png");
     }
 
 
@@ -43,8 +49,15 @@ public class Blinky
     @Override
     public String getImageName() {
         this.imageLastFrame++;
-        int url = (imageLastFrame / 10) % this.animation.size();
-        return this.animation.get(url);
+        int url;
+        if (this.isFeared()) {
+            url = (imageLastFrame / 10) % this.animationFeared.size();
+            return this.animationFeared.get(url);
+        } else {
+            url = (imageLastFrame / 10) % this.animation.size();
+            return this.animation.get(url);
+        }
+
     }
 
 }
