@@ -223,20 +223,4 @@ public class Pacman
         isPoweredUp=false;
     }
 
-//    public void superPowerActive(){
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                    long startTime=System.currentTimeMillis();
-//                    long time=System.currentTimeMillis();
-//                    while (time<(startTime+5000)) {
-//                        isSolid = false;
-//                        time=System.currentTimeMillis();
-//                    }
-//                isSolid = true;
-//            }
-//        }).start();
-//    }
 }
