@@ -49,7 +49,7 @@ public class Life implements GraphicsInterface {
 
     @Override
     public String getImageName() {
-        return "images/Pacman_2.png";
+        return "Pacman_2.png";
     }
 
     @Override

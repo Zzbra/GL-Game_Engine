@@ -17,12 +17,12 @@ public class Blinky
     public Blinky() {
         super();
         this.animation = new ArrayList<>();
-        this.animation.add("images/Ghost_Red_1.png");
-        this.animation.add("images/Ghost_Red_2.png");
+        this.animation.add("Ghost_Red_1.png");
+        this.animation.add("Ghost_Red_2.png");
 
         this.animationFeared = new ArrayList<>();
-        this.animationFeared.add("images/Ghost_Scared_1.png");
-        this.animationFeared.add("images/Ghost_Scared_2.png");
+        this.animationFeared.add("Ghost_Scared_1.png");
+        this.animationFeared.add("Ghost_Scared_2.png");
     }
 
 

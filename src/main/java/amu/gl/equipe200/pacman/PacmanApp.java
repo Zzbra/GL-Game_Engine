@@ -10,6 +10,7 @@ import amu.gl.equipe200.core.GameWorld;
 import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.utils.Pair;
+import javafx.scene.image.Image;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -193,7 +194,7 @@ public class PacmanApp
                         wall.setY((y * cell_height) + (cell_height / 2) - (height / 2));
                         wall.setWidth(width);
                         wall.setHeight(height);
-                        wall.setImageName(("images/Wall.png"));
+                        wall.setImageName(("Wall.png"));
                         wall.setLayerName("BACKGROUND");
                         this.pacmanWorld.addGraphicsEntity(wall);
                         this.pacmanWorld.addPhysicsEntity(wall);

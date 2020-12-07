@@ -2,7 +2,6 @@ package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
-import amu.gl.equipe200.pacman.entities.Entity;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
 
@@ -12,7 +11,7 @@ public class PacGum
 
     public PacGum() {
         super(Settings.Tag.PACGUM);
-        setImageName("images/PacGum.png");
+        setImageName("PacGum.png");
         setLayerName("BACKGROUND");
     }
 

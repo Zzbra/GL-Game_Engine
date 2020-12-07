@@ -44,10 +44,10 @@ public class Pacman
 
         this.imageLastFrame = 0;
         this.animation = new ArrayList<>();
-        this.animation.add("images/Pacman_1.png");
-        this.animation.add("images/Pacman_2.png");
-        this.animation.add("images/Pacman_3.png");
-        this.animation.add("images/Pacman_2.png");
+        this.animation.add("Pacman_1.png");
+        this.animation.add("Pacman_2.png");
+        this.animation.add("Pacman_3.png");
+        this.animation.add("Pacman_2.png");
 
         this.lives = 4;
         this.inputWaiting = "";

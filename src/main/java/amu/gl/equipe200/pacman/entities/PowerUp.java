@@ -11,7 +11,7 @@ public class PowerUp
 
     public PowerUp() {
         super(Settings.Tag.POWERUP_INVINCIBLE);
-        setImageName("images/Fruit_Cherry.png");
+        setImageName("Fruit_Cherry.png");
         setLayerName("BACKGROUND");
     }
 

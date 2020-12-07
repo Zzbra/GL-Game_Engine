@@ -13,7 +13,7 @@ public class Wall
 
     public Wall() {
         super(Settings.Tag.WALL);
-        setImageName(("images/Wall.png"));
+        setImageName(("Wall.png"));
         setLayerName("BACKGROUND");
     }
 

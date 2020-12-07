@@ -12,7 +12,7 @@ public class Digit implements GraphicsInterface {
     }
 
     public void setValue(int value){
-        imageName = "images/digits_" + String.valueOf(value) +".png";
+        imageName = "digits_" + String.valueOf(value) +".png";
         hasNewSprite = true;
     }
 

@@ -21,16 +21,16 @@ public class Clyde extends Ghost implements IAInterface {
 
     public Clyde() {
         super();
-        setImageName("Images/Ghost_orange_1");
+        setImageName("Ghost_orange_1");
         setLayerName("FOREGROUND");
 
         this.animation = new ArrayList<>();
-        this.animation.add("images/Ghost_Orange_1.png");
-        this.animation.add("images/Ghost_Orange_2.png");
+        this.animation.add("Ghost_Orange_1.png");
+        this.animation.add("Ghost_Orange_2.png");
 
         this.animationFeared = new ArrayList<>();
-        this.animationFeared.add("images/Ghost_Scared_1.png");
-        this.animationFeared.add("images/Ghost_Scared_2.png");
+        this.animationFeared.add("Ghost_Scared_1.png");
+        this.animationFeared.add("Ghost_Scared_2.png");
 
         changeTime = 0;
         aStarChangeTime = 0;
