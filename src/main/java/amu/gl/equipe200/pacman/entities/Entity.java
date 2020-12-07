@@ -4,9 +4,6 @@ import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
-import java.security.PrivateKey;
-import java.util.Set;
-
 
 public abstract class Entity
     implements PhysicsInterface, GraphicsInterface {

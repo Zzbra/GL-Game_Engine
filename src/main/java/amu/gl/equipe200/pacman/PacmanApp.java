@@ -3,7 +3,6 @@ package amu.gl.equipe200.pacman;
 import amu.gl.equipe200.pacman.UI.Counter;
 import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
-import amu.gl.equipe200.pacman.entities.Pacman;
 import amu.gl.equipe200.pacman.menues.*;
 
 import amu.gl.equipe200.core.GameApp;

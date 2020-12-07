@@ -1,8 +1,6 @@
 package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.*;
-import amu.gl.equipe200.core.Settings;
-import amu.gl.equipe200.utils.Pair;
 
 import java.util.ArrayList;
 

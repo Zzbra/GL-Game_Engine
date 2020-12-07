@@ -4,8 +4,6 @@ import amu.gl.equipe200.core.Settings;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
-import java.util.Formatter;
-
 public class Wall
         extends Entity
         implements GraphicsInterface, PhysicsInterface {

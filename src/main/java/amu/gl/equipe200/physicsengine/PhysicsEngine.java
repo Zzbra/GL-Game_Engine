@@ -1,9 +1,7 @@
 package amu.gl.equipe200.physicsengine;
 
-import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.utils.Pair;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class PhysicsEngine {
