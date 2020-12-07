@@ -37,8 +37,6 @@ public class MainMenu
             }
         });
 
-//        controlButton = new Button("Controls");
-//        aboutButton = new Button("About");
 
         Image img = new Image("menuScreen.jpg");
         ImageView imgView = new ImageView(img);

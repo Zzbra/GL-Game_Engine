@@ -14,7 +14,6 @@ public class Grid {
     private void fillCells(int[][] mat) {
         for (int y = 0; y < mat.length; y++){
             for (int x = 0; x < mat.length; x++){
-                //System.out.printf("%d",mat[y][x]);
                 Cell cell = new Cell(x, y, mat[y][x] != 1);
                 addCell(x, y, cell);
             }

@@ -140,11 +140,8 @@ public class PhysicsEngine {
 
                 // trigger the collision call back
                 collisionPair.add(Pair.create(entity, toCheck));
-//                System.out.println(entity + " " + toCheck);
 
                 // check if both entities are solid and if so compute the final position of the entity
-                // TODO: Changer absolument la partie BLOCK, on ne doit pas checker de Tag ici mais les blocks ne doivent pas collide
-                // && (entity.getTag() != Settings.Tag.BLOCK || toCheck.getTag() != Settings.Tag.BLOCK)
                 if (entity.isSolid() && toCheck.isSolid() ) newPosition = computeCollidedPosition(entity, newPosition, toCheck);
             }
         }
@@ -187,20 +184,15 @@ public class PhysicsEngine {
         if (Double.compare(entity.getXSpeed(), eps) > 0
             && Double.compare(entity.getX() + entity.getWidth(), toCheck.getX() + eps) > 0 ) {
             // the movable is on the right of the obstacle and try to go in (maybe)
-//            finalX = min(finalX, toCheck.getX() - entity.getWidth());
-            //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() - entity.getWidth() - eps;
-            //System.out.println("db1");
 
         } else if (Double.compare(entity.getXSpeed(), -eps) < 0
             && Double.compare(entity.getX(),  toCheck.getX() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the left of the obstacle and try to go in (maybe)
-//            finalX = max(finalX, toCheck.getX() + toCheck.getWidth());
-            //finalX = entity.getX();
             stop(entity);
             finalX = toCheck.getX() + toCheck.getWidth() + eps;
-            //System.out.println("db2");
+
 
         }
 
@@ -209,19 +201,13 @@ public class PhysicsEngine {
         if (Double.compare(entity.getYSpeed(), eps) > 0
             && Double.compare(entity.getY() + entity.getHeight(), toCheck.getY() + eps) > 0 ) {
             // the movable is on the top of the obstacle and try to go in (maybe)
-//            finalY = min(finalY, toCheck.getY() - entity.getHeight());
-//            finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() - entity.getHeight() - eps;
-            //System.out.println("db3");
         } else if (Double.compare(entity.getYSpeed(), -eps) < 0
             && Double.compare(entity.getY(),  toCheck.getY() + toCheck.getWidth() - eps) < 0) {
             // the movable is on the bottom of the obstacle and try to go in (maybe)
-//            finalY = max(finalY, toCheck.getY() + toCheck.getHeight());
-            //finalY = entity.getY();
             stop(entity);
             finalY = toCheck.getY() + toCheck.getHeight() + eps;
-           // System.out.println("db4");
         }
         return Pair.create(finalX, finalY);
     }

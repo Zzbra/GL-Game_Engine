@@ -14,15 +14,10 @@ public class Pacman
     extends Entity
     implements PhysicsInterface, GraphicsInterface, IOInterface {
 
-    /***  Physics Flag  ***/
-//    private volatile boolean isSolid = true;
-
     /***  Graphics variables  ***/
     private ArrayList<String> animation;
     private int imageLastFrame;
     private boolean hasMoved;
-    private boolean hasNewSprite;
-
     /***  Input variables  ***/
     private String upKey, downKey, leftKey, rightKey;
 
@@ -43,7 +38,7 @@ public class Pacman
 
     private String inputWaiting;
 
-    public Pacman(){
+    public Pacman() {
         super(Settings.Tag.PLAYER);
         setLayerName("FOREGROUND");
 
@@ -68,11 +63,20 @@ public class Pacman
      *    Getters and Setters                                                                                         *
      ******************************************************************************************************************/
     @Override
-    public void setX(double x) { super.setX(x); hasMoved = true; }
-    @Override
-    public void setY(double y) { super.setY(y); hasMoved = true; }
+    public void setX(double x) {
+        super.setX(x);
+        hasMoved = true;
+    }
 
-    public boolean isPoweredUp(){return isPoweredUp;}
+    @Override
+    public void setY(double y) {
+        super.setY(y);
+        hasMoved = true;
+    }
+
+    public boolean isPoweredUp() {
+        return isPoweredUp;
+    }
 
 
     public void setControls(String up, String down, String left, String right) {
@@ -82,26 +86,32 @@ public class Pacman
         this.rightKey = right.toUpperCase();
     }
 
-    public int getLives(){return lives;}
-    public void setLives(int lives){
-        if(lives >0) {
-            this.lives = lives;
-        }
+    public int getLives() {
+        return lives;
     }
-
 
     /******************************************************************************************************************
      *    Physics Engine behaviour                                                                                    *
      ******************************************************************************************************************/
     @Override
-    public boolean isMovable() { return true; }
+    public boolean isMovable() {
+        return true;
+    }
+
     @Override
-    public boolean isWorldBounded() { return true; }
+    public boolean isWorldBounded() {
+        return true;
+    }
+
     @Override
-    public boolean isCollidable() { return true; }
+    public boolean isCollidable() {
+        return true;
+    }
+
     @Override
-    public boolean isSolid() { return !isPassWall; }
-    public void setPoweredUp(boolean isPoweredUp){this.isPoweredUp=isPoweredUp;}
+    public boolean isSolid() {
+        return !isPassWall;
+    }
 
     @Override
     public boolean isRemovable() {
@@ -110,16 +120,18 @@ public class Pacman
 
     @Override
     public void onWorldEnds() {
-        // TODO
-        //System.out.println(this.toString() + " has reach the end of the world");
     }
+
     @Override
     public void onCollide(PhysicsInterface others) {
-        if(others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) { activatePowerUp(); }
-        if(others.getTag() == Settings.Tag.POWERUP_WALLPASS) { activatePassWall(); }
-        if(others.getTag() == Settings.Tag.ENEMY && !this.isInvincible && !this.isPoweredUp) {
+        if (others.getTag() == Settings.Tag.POWERUP_INVINCIBLE) {
+            activatePowerUp();
+        }
+        if (others.getTag() == Settings.Tag.POWERUP_WALLPASS) {
+            activatePassWall();
+        }
+        if (others.getTag() == Settings.Tag.ENEMY && !this.isInvincible && !this.isPoweredUp) {
             this.lives--;
-            System.out.println("collide with enemy: one life lost");
             activateInvincible();
         }
     }
@@ -128,21 +140,25 @@ public class Pacman
      *    Graphics Engine behaviour                                                                                   *
      ******************************************************************************************************************/
     @Override
-    public boolean hasMoved() { return this.hasMoved; }
+    public boolean hasMoved() {
+        return this.hasMoved;
+    }
 
     @Override
-    public boolean hasNewSprite() { return true; }
+    public boolean hasNewSprite() {
+        return true;
+    }
+
     @Override
     public String getImageName() {
         this.imageLastFrame++;
-        int url = (imageLastFrame / 30) % this.animation.size();
+        int url = (imageLastFrame / 10) % this.animation.size();
         return this.animation.get(url);
     }
 
     @Override
     public void onGraphicsProcessed() {
         this.hasMoved = false;
-        this.hasNewSprite = false;
     }
 
     /******************************************************************************************************************
@@ -150,9 +166,6 @@ public class Pacman
      ******************************************************************************************************************/
     public void reactToInput(String key) {
         this.inputWaiting = key.toUpperCase();
-        //System.out.println(this + "recieved input " + key);
-
-
     }
 
     private void processInput() {
@@ -199,7 +212,7 @@ public class Pacman
                 this.passWallDuration = 0;
             }
         }
-        if (this.isPoweredUp){
+        if (this.isPoweredUp) {
             this.powerUpDuration += ellapsedTime;
             if (this.powerUpDuration >= powerUpTotalDuration) {
                 this.isPoweredUp = false;
@@ -207,36 +220,27 @@ public class Pacman
             }
         }
 
-        if (((inputWaiting == upKey || inputWaiting == downKey) && ((int) this.getX()) == (int)(this.getX() + this.getWidth()))
-            || ((inputWaiting == rightKey || inputWaiting == leftKey) && ((int) this.getY()) == (int)(this.getY() + this.getHeight()))) {
+        if (((inputWaiting == upKey || inputWaiting == downKey) && ((int) this.getX()) == (int) (this.getX() + this.getWidth()))
+                || ((inputWaiting == rightKey || inputWaiting == leftKey) && ((int) this.getY()) == (int) (this.getY() + this.getHeight()))) {
             processInput();
         }
     }
 
-    public void activateInvincible() { this.isInvincible = true; }
-    public void activatePassWall() { this.isPassWall = true; }
-    public void activatePowerUp() {this.isPoweredUp = true; }
-
-    public void desactivateAllPower(){
-        this.isInvincible=false;
-        this.isPassWall=false;
-        isPoweredUp=false;
+    public void activateInvincible() {
+        this.isInvincible = true;
     }
 
-//    public void superPowerActive(){
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                    long startTime=System.currentTimeMillis();
-//                    long time=System.currentTimeMillis();
-//                    while (time<(startTime+5000)) {
-//                        isSolid = false;
-//                        time=System.currentTimeMillis();
-//                    }
-//                isSolid = true;
-//            }
-//        }).start();
-//    }
+    public void activatePassWall() {
+        this.isPassWall = true;
+    }
+
+    public void activatePowerUp() {
+        this.isPoweredUp = true;
+    }
+
+    public void desactivateAllPower() {
+        this.isInvincible = false;
+        this.isPassWall = false;
+        isPoweredUp = false;
+    }
 }

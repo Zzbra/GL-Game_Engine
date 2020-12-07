@@ -57,7 +57,6 @@ public class PacmanApp
 
                 score++;
                 nbGum--;
-                System.out.println("nbGum: " + nbGum);
                 counter.setValue(score);
             }
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY && !pacman.isPoweredUp()){
@@ -159,7 +158,6 @@ public class PacmanApp
 
         for (int y = 0; y < grid_size; y++) {
             for (int x = 0; x < grid_size; x++) {
-                System.out.printf("%d", map[y][x]);
                 switch (map[y][x]) {
                     case 0: break; // Blank space
                     case 1: {
@@ -297,9 +295,6 @@ public class PacmanApp
         String sc = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining(""));
         // Map must be square
         this.grid_size = (int) Math.sqrt(sc.length());
-
-        System.out.println("Grid len= " + sc.length());
-        System.out.println("Grid size= " + grid_size);
 
         int[][] mapTab = new int[grid_size][grid_size];
 

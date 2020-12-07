@@ -7,22 +7,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class IAEngine {
-    private int[][] grid;
     private HashSet<IAInterface> entities;
     private ShortestPath shortestPath;
-    private AStar aStar;
 
     private double cell_width, cell_height;
 
     public IAEngine(){ }
 
     public void loadMap(int[][] grid, double cell_width, double cell_height){
-        this.grid = grid;
         this.cell_width = cell_width;
         this.cell_height = cell_height;
 
         this.shortestPath = new ShortestPath(grid);
-        this.aStar = new AStar(new Grid(grid));
     }
 
     public void loadGameWorld(HashSet<IAInterface> entities){
