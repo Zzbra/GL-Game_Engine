@@ -35,10 +35,8 @@ public class IAEngine {
 
 
     public void update(){
-        System.out.println("IA Update :");
 
         for(IAInterface entity : entities){
-            System.out.println("Update Entity");
             Cell currentCell = new Cell((int)(entity.getX() / this.cell_width),
                                         (int)(entity.getY() / this.cell_height),
                                true);

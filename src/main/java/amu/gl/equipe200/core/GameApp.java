@@ -84,7 +84,6 @@ public class GameApp
 
     @Override
     public void onNewFrame(long now) {
-        System.out.println("NEW FRAME");
         double ellapsedTime = (now - this.lastGameUpdate) / 1000000000d;
         this.lastGameUpdate = now;
 

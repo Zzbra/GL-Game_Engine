@@ -140,7 +140,7 @@ public class PhysicsEngine {
 
                 // trigger the collision call back
                 collisionPair.add(Pair.create(entity, toCheck));
-                System.out.println(entity + " " + toCheck);
+//                System.out.println(entity + " " + toCheck);
 
                 // check if both entities are solid and if so compute the final position of the entity
                 // TODO: Changer absolument la partie BLOCK, on ne doit pas checker de Tag ici mais les blocks ne doivent pas collide
