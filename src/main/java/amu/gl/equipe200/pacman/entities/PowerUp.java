@@ -5,6 +5,8 @@ import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 
+import java.util.ArrayList;
+
 
 public class PowerUp
         extends Entity
@@ -12,6 +14,8 @@ public class PowerUp
 
     public PowerUp() {
         super(Settings.Tag.POWERUP_INVINCIBLE);
+        setImageName("images/Fruit_Cherry.png");
+        setLayerName("BACKGROUND");
     }
 
     /******************************************************************************************************************

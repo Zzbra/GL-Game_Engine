@@ -10,6 +10,8 @@ public class TunnelUp
 
     public TunnelUp() {
         super(Settings.Tag.POWERUP_WALLPASS);
+        setImageName("images/TunnelUp.png");
+        setLayerName("BACKGROUND");
     }
 
     /******************************************************************************************************************

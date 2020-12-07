@@ -2,16 +2,25 @@ package amu.gl.equipe200.pacman.entities;
 
 import amu.gl.equipe200.IAEngine.IAInterface;
 
+import java.util.ArrayList;
+
 public class Clyde extends Ghost implements IAInterface {
 
     private double changeTime;
     private double cycleLength;
     private double goalX, goalY;
 
+    private ArrayList<String> animation;
+    private int imageLastFrame;
+
     public Clyde() {
         super();
-        setImageName("Images/Ghost_orange_1");
         setLayerName("FOREGROUND");
+
+        this.animation = new ArrayList<>();
+        this.animation.add("images/Ghost_Orange_1.png");
+        this.animation.add("images/Ghost_Orange_2.png");
+
         changeTime = 0;
         cycleLength = 3;
     }
@@ -53,5 +62,11 @@ public class Clyde extends Ghost implements IAInterface {
             }
 
         }
+    }
+    @Override
+    public String getImageName() {
+        this.imageLastFrame++;
+        int url = (imageLastFrame / 10) % this.animation.size();
+        return this.animation.get(url);
     }
 }

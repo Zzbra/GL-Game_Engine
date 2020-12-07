@@ -45,6 +45,7 @@ public class Pacman
 
     public Pacman(){
         super(Settings.Tag.PLAYER);
+        setLayerName("FOREGROUND");
 
         this.imageLastFrame = 0;
         this.animation = new ArrayList<>();

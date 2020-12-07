@@ -179,15 +179,13 @@ public class PacmanApp
                         double fruit_scale = 0.75;
                         double width = cell_width * fruit_scale;
                         double height = cell_height * fruit_scale;
-                        PowerUp sp = new PowerUp();
-                        sp.setX((x * cell_width) + (cell_width / 2) - (width / 2));
-                        sp.setY((y * cell_height) + (cell_height / 2) - (height / 2));
-                        sp.setWidth(width);
-                        sp.setHeight(height);
-                        sp.setImageName("images/Fruit_Cherry.png");
-                        sp.setLayerName("BACKGROUND");
-                        this.pacmanWorld.addPhysicsEntity(sp);
-                        this.pacmanWorld.addGraphicsEntity(sp);
+                        PowerUp pu = new PowerUp();
+                        pu.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        pu.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        pu.setWidth(width);
+                        pu.setHeight(height);
+                        this.pacmanWorld.addPhysicsEntity(pu);
+                        this.pacmanWorld.addGraphicsEntity(pu);
                         break;
                     }
                     case 4: {
@@ -199,8 +197,6 @@ public class PacmanApp
                         tu.setY((y * cell_height) + (cell_height / 2) - (height / 2));
                         tu.setWidth(width);
                         tu.setHeight(height);
-                        tu.setImageName("images/TunnelUp.png");
-                        tu.setLayerName("BACKGROUND");
                         this.pacmanWorld.addPhysicsEntity(tu);
                         this.pacmanWorld.addGraphicsEntity(tu);
                         break;
@@ -215,7 +211,6 @@ public class PacmanApp
                         pacmanInit=Pair.create(pacman.getX(), pacman.getY());
                         pacman.setWidth(width);
                         pacman.setHeight(height);
-                        pacman.setLayerName("FOREGROUND");
                         pacman.setControls("Z", "S", "Q", "D");
                         this.pacmanWorld.addGraphicsEntity(pacman);
                         this.pacmanWorld.addPhysicsEntity(pacman);
@@ -233,8 +228,6 @@ public class PacmanApp
                         blinkyInit=Pair.create(blinky.getX(), blinky.getY());
                         blinky.setWidth(width);
                         blinky.setHeight(width);
-                        blinky.setImageName("images/Ghost_Red_1.png");
-                        blinky.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(blinky);
                         this.pacmanWorld.addPhysicsEntity(blinky);
                         this.pacmanWorld.addAIEntity(blinky);
@@ -250,8 +243,6 @@ public class PacmanApp
                         clydeInit=Pair.create(clyde.getX(), clyde.getY());
                         clyde.setWidth(width);
                         clyde.setHeight(width);
-                        clyde.setImageName("images/Ghost_Pink_1.png");
-                        clyde.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(clyde);
                         this.pacmanWorld.addPhysicsEntity(clyde);
                         this.pacmanWorld.addAIEntity(clyde);

@@ -11,18 +11,13 @@ public class Ghost
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-    /***  Physics Flags  ***/
-
     /***  Graphics Flags ***/
-    private ArrayList<String> animation;
-    private int imageLastFrame;
     private boolean hasMoved;
 
     public Ghost() {
         super(Settings.Tag.ENEMY);
-        this.animation = new ArrayList<>();
-        this.animation.add("images/Ghost_Red_1.png");
-        this.animation.add("images/Ghost_Red_2.png");
+        setLayerName("FOREGROUND");
+
     }
 
     /******************************************************************************************************************
@@ -71,12 +66,7 @@ public class Ghost
 
     @Override
     public boolean hasNewSprite() { return true; }
-    @Override
-    public String getImageName() {
-        this.imageLastFrame++;
-        int url = (imageLastFrame / 30) % this.animation.size();
-        return this.animation.get(url);
-    }
+
 
     @Override
     public void onGraphicsProcessed() {
