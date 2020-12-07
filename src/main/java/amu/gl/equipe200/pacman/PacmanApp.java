@@ -54,8 +54,6 @@ public class PacmanApp
         super.handleCollisions(collisions);
         for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
-                if(score<999)
-                    score++;
                 nbGum--;
                 System.out.println("nbGum: " + nbGum);
                 counter.setValue(score);

@@ -15,6 +15,7 @@ public class Counter {
     }
 
     public void setValue(int value){
+        if (value > 999) value = 999;
         centaine.setValue(value/100);
         dizaine.setValue((value%100)/10);
         unite.setValue(value%10);
