@@ -6,8 +6,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>amu.gl.equipe200</groupId>
-    <artifactId>gameengine</artifactId>
-    <version>3.0</version>
+    <artifactId>pacman</artifactId>
+    <version>4.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
