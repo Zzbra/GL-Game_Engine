@@ -31,7 +31,6 @@ public class PacmanApp
     private int score;
     private int nbGum;
 
-    private Counter counter;
     private ArrayList<Life> lifeCounter;
 
     private Pair<Double,Double> pacmanInit;
