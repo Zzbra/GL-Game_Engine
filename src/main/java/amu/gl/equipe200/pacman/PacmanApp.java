@@ -1,6 +1,5 @@
 package amu.gl.equipe200.pacman;
 
-import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.pacman.UI.Counter;
 import amu.gl.equipe200.pacman.UI.Digit;
 import amu.gl.equipe200.pacman.entities.*;
@@ -26,13 +25,19 @@ public class PacmanApp
 
     private Pacman pacman;
     private Blinky blinky;
-    private Clide clide;
+    private Clyde clyde;
 
+    private Counter counter;
     private int score;
     private int nbGum;
 
     private Counter counter;
     private ArrayList<Life> lifeCounter;
+
+    private Pair<Double,Double> pacmanInit;
+    private Pair<Double,Double> blinkyInit;
+    private Pair<Double,Double> clydeInit;
+
 
     private int grid_size;
     private double cell_height = 1, cell_width = 1;
@@ -59,6 +64,12 @@ public class PacmanApp
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY){
                 if(lifeCounter.size()> 0) {
                    lifeCounter.get(pacman.getLives()).toRemove();
+                   pacman.setX(pacmanInit.first);
+                   pacman.setY(pacmanInit.second);
+                   blinky.setX(blinkyInit.first);
+                   blinky.setY(blinkyInit.second);
+                   clyde.setX(clydeInit.first);
+                   clyde.setY(clydeInit.second);
                 }if (pacman.getLives() == 0){
                     loadMainMenu();
                 }
@@ -71,7 +82,7 @@ public class PacmanApp
     public void onGameIterBegin(double ellapsedTime) {
         /*** update the entities ***/
        pacman.update(ellapsedTime);
-       clide.update(ellapsedTime);
+       clyde.update(ellapsedTime);
        if(nbGum == 0){
            winGame();
        }
@@ -189,6 +200,7 @@ public class PacmanApp
                         pacman = new Pacman();
                         pacman.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         pacman.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        pacmanInit=Pair.create(pacman.getX(), pacman.getY());
                         pacman.setWidth(width);
                         pacman.setHeight(height);
                         pacman.setLayerName("FOREGROUND");
@@ -196,6 +208,7 @@ public class PacmanApp
                         this.pacmanWorld.addGraphicsEntity(pacman);
                         this.pacmanWorld.addPhysicsEntity(pacman);
                         this.pacmanWorld.addIOEntity(pacman);
+
                         break;
                     }
                     case 6: {
@@ -205,6 +218,7 @@ public class PacmanApp
                         blinky = new Blinky();
                         blinky.setX((x * cell_width) + (cell_width / 2) - (width / 2));
                         blinky.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        blinkyInit=Pair.create(blinky.getX(), blinky.getY());
                         blinky.setWidth(width);
                         blinky.setHeight(width);
                         blinky.setImageName("images/Ghost_Red_1.png");
@@ -218,17 +232,18 @@ public class PacmanApp
                         double clyde_scale = 0.9;
                         double width = cell_width * clyde_scale;
                         double height = cell_height * clyde_scale;
-                        clide = new Clide();
-                        clide.setX((x * cell_width) + (cell_width / 2) - (width / 2));
-                        clide.setY((y * cell_height) + (cell_height / 2) - (height / 2));
-                        clide.setWidth(width);
-                        clide.setHeight(width);
-                        clide.setImageName("images/Ghost_Pink_1.png");
-                        clide.setLayerName("FOREGROUND");
-                        this.pacmanWorld.addGraphicsEntity(clide);
-                        this.pacmanWorld.addPhysicsEntity(clide);
-                        this.pacmanWorld.addAIEntity(clide);
-                        clide.initGoal();
+                        clyde = new Clyde();
+                        clyde.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        clyde.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        clydeInit=Pair.create(clyde.getX(), clyde.getY());
+                        clyde.setWidth(width);
+                        clyde.setHeight(width);
+                        clyde.setImageName("images/Ghost_Pink_1.png");
+                        clyde.setLayerName("FOREGROUND");
+                        this.pacmanWorld.addGraphicsEntity(clyde);
+                        this.pacmanWorld.addPhysicsEntity(clyde);
+                        this.pacmanWorld.addAIEntity(clyde);
+                        clyde.initGoal();
                         break;
                     }
 //                    case 8: {

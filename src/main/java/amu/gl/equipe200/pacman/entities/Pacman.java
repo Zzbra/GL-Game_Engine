@@ -125,7 +125,7 @@ public class Pacman
     @Override
     public String getImageName() {
         this.imageLastFrame++;
-        int url = (imageLastFrame / 10) % this.animation.size();
+        int url = (imageLastFrame / 30) % this.animation.size();
         return this.animation.get(url);
     }
 
@@ -140,7 +140,7 @@ public class Pacman
      ******************************************************************************************************************/
     public void reactToInput(String key) {
         this.inputWaiting = key.toUpperCase();
-        System.out.println(this + " recieved input " + key);
+        //System.out.println(this + "recieved input " + key);
 
 
     }
