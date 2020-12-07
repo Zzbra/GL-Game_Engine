@@ -1,12 +1,10 @@
 package amu.gl.equipe200.graphicsengine;
 
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.PrimitiveIterator;
 
 public class LayerManager {
 

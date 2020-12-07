@@ -1,6 +1,5 @@
 package amu.gl.equipe200.pacman.entities;
 
-import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 import amu.gl.equipe200.physicsengine.PhysicsInterface;
 import amu.gl.equipe200.core.Settings;

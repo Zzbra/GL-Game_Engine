@@ -2,7 +2,6 @@ package amu.gl.equipe200.graphicsengine;
 
 import javafx.scene.image.Image;
 
-import java.net.URL;
 import java.util.HashMap;
 
 public class ImagesManager {

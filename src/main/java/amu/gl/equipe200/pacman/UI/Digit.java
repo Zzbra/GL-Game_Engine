@@ -1,6 +1,5 @@
 package amu.gl.equipe200.pacman.UI;
 
-import amu.gl.equipe200.graphicsengine.GraphicsEngine;
 import amu.gl.equipe200.graphicsengine.GraphicsInterface;
 
 public class Digit implements GraphicsInterface {
