@@ -53,7 +53,11 @@ public class GameApp
     }
     public void onGameIterEnd(double ellapsedTime) { }
 
+    public PhysicsEngine getPhysicsEngine() { return physicsEngine; }
+    public GraphicsEngine getGraphicsEngine() { return graphicsEngine; }
+    public InputEngine getInputEngine() { return inputEngine; }
     public IAEngine getIaEngine(){ return iaEngine;}
+
 
 
     @Override
@@ -80,7 +84,6 @@ public class GameApp
 
     @Override
     public void onNewFrame(long now) {
-        System.out.println("NEW FRAME");
         double ellapsedTime = (now - this.lastGameUpdate) / 1000000000d;
         this.lastGameUpdate = now;
 

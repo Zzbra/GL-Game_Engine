@@ -25,6 +25,7 @@ public class PacmanApp
     private GameWorld pacmanWorld;
     private Pacman pacman;
     private Blinky blinky;
+    private Clide clide;
     private Counter counter;
     private int score;
     private ArrayList<Life> lifeCounter;
@@ -35,6 +36,7 @@ public class PacmanApp
 
     private int grid_size;
     private double cell_height = 1, cell_width = 1;
+    private int nbGum;
 
     public static void main(String[] args) {
         launch(args);
@@ -45,7 +47,7 @@ public class PacmanApp
         System.out.println("Hello onInit");
 
         score = 0;
-
+        nbGum = 0;
         int[][] map = loadMap("Map.txt");
         loadNewGameWorld(map);
 
@@ -58,6 +60,8 @@ public class PacmanApp
         for(Pair<PhysicsInterface, PhysicsInterface> collision : collisions){
             if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.PACGUM){
                 score++;
+                nbGum--;
+                System.out.println("nbGum: " + nbGum);
                 counter.setValue(score);
             }
 
@@ -70,7 +74,7 @@ public class PacmanApp
                    blinky.setY(blinkyInit.second);
 
                 }if (pacman.getLives() == 0){
-                    loadLoseMenu();
+                    loadMainMenu();
                 }
             }
         }
@@ -81,12 +85,22 @@ public class PacmanApp
     public void onGameIterBegin(double ellapsedTime) {
         /*** update the entities ***/
        pacman.update(ellapsedTime);
+       clide.update(ellapsedTime);
+       if(nbGum == 0){
+           winGame();
+       }
     }
     public void onGameIterEnd(long ellapsedTime) { }
 
+    private void winGame(){
+        loadMainMenu();
+    }
+
     protected void loadMainMenu() { loadMenu(MainMenu.getInstance(this)); }
-    protected void loadLoseMenu() { loadMenu(LoseMenu.getInstance(this)); }
-    public void loadGame() { loadGameWorld(pacmanWorld);}
+    public void loadGame() {
+        loadGameWorld(pacmanWorld);
+        this.getGraphicsEngine().setBackgroundColorToBlack();
+    }
 
     public GameWorld getPacmanWorld() { return pacmanWorld; }
 
@@ -156,6 +170,7 @@ public class PacmanApp
                         PacGomme.setLayerName("BACKGROUND");
                         this.pacmanWorld.addPhysicsEntity(PacGomme);
                         this.pacmanWorld.addGraphicsEntity(PacGomme);
+                        this.nbGum++;
                         break;
                     }
                     case 3: {
@@ -211,9 +226,23 @@ public class PacmanApp
                         this.pacmanWorld.addAIEntity(blinky);
                         break;
                     }
-//                    case 7: {
-//                        break;
-//                    }
+                    case 7: {
+                        double clyde_scale = 0.9;
+                        double width = cell_width * clyde_scale;
+                        double height = cell_height * clyde_scale;
+                        clide = new Clide();
+                        clide.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        clide.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        clide.setWidth(width);
+                        clide.setHeight(width);
+                        clide.setImageName("images/Ghost_Pink_1.png");
+                        clide.setLayerName("FOREGROUND");
+                        this.pacmanWorld.addGraphicsEntity(clide);
+                        this.pacmanWorld.addPhysicsEntity(clide);
+                        this.pacmanWorld.addAIEntity(clide);
+                        clide.initGoal();
+                        break;
+                    }
 //                    case 8: {
 //                        break;
 //                    }
