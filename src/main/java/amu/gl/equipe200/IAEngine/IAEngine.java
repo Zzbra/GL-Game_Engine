@@ -29,7 +29,6 @@ public class IAEngine {
         entities.add(entity);
     }
 
-
     public void update(){
 
         for(IAInterface entity : entities){
@@ -39,8 +38,6 @@ public class IAEngine {
             Cell currentCellOtherCorner = new Cell((int)((entity.getX()+ entity.getWidth()) / this.cell_width),
                                                    (int)((entity.getY() + entity.getHeight()) / this.cell_height),
                                           true);
-            double dX = entity.getGoalX() - entity.getX();
-            double dY = entity.getGoalY() - entity.getY();
             if(currentCell.getX() == currentCellOtherCorner.getX() && currentCell.getY() == currentCellOtherCorner.getY()) {
                 Cell goal = new Cell((int) (entity.getGoalX() / this.cell_width),
                                      (int) (entity.getGoalY() / this.cell_width),

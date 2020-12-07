@@ -26,6 +26,8 @@ public class PacmanApp
     private Pacman pacman;
     private Blinky blinky;
     private Clyde clyde;
+    private Inky inky;
+    private Pinky pinky;
 
     private Counter counter;
     private int score;
@@ -36,6 +38,10 @@ public class PacmanApp
     private Pair<Double,Double> pacmanInit;
     private Pair<Double,Double> blinkyInit;
     private Pair<Double,Double> clydeInit;
+    private Pair<Double,Double> inkyInit;
+    private Pair<Double,Double> pinkyInit;
+
+
 
 
     private int grid_size;
@@ -68,7 +74,13 @@ public class PacmanApp
                    blinky.setY(blinkyInit.second);
                    clyde.setX(clydeInit.first);
                    clyde.setY(clydeInit.second);
+                   inky.setX(inkyInit.first);
+                   inky.setY(inkyInit.second);
+                   pinky.setX(pinkyInit.first);
+                   pinky.setY(pinkyInit.second);
+
                    pacman.desactivateAllPower();
+
                 }if (pacman.getLives() == 0){
                     loadMainMenu();
                 }
@@ -82,7 +94,15 @@ public class PacmanApp
                     collision.second.setX(clydeInit.first);
                     collision.second.setY(clydeInit.second);
                 }
-                score+=50;
+                if(collision.second == inky) {
+                    collision.second.setX(inkyInit.first);
+                    collision.second.setY(inkyInit.second);
+                }
+                if(collision.second == pinky) {
+                    collision.second.setX(pinkyInit.first);
+                    collision.second.setY(pinkyInit.second);
+                }
+                score+=20;
                 counter.setValue(score);
             }
         }
@@ -94,15 +114,20 @@ public class PacmanApp
         /*** update the entities ***/
        pacman.update(ellapsedTime);
        clyde.update(ellapsedTime);
+       pinky.update(ellapsedTime);
        if(nbGum == 0){
 //           winGame();
        }
        if(pacman.isPoweredUp()){
            clyde.fear(clydeInit);
            blinky.fear(blinkyInit);
+           inky.fear(inkyInit);
+           pinky.fear(pinkyInit);
        }else{
            clyde.fearEnd();
            blinky.fearEnd();
+           inky.fearEnd();
+           pinky.fearEnd();
        }
     }
     public void onGameIterEnd(double ellapsedTime) {
@@ -243,7 +268,6 @@ public class PacmanApp
                         blinkyInit=Pair.create(blinky.getX(), blinky.getY());
                         blinky.setWidth(width);
                         blinky.setHeight(width);
-                        blinky.setImageName("images/Ghost_Red_1.png");
                         blinky.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(blinky);
                         this.pacmanWorld.addPhysicsEntity(blinky);
@@ -260,7 +284,6 @@ public class PacmanApp
                         clydeInit=Pair.create(clyde.getX(), clyde.getY());
                         clyde.setWidth(width);
                         clyde.setHeight(width);
-                        clyde.setImageName("images/Ghost_Pink_1.png");
                         clyde.setLayerName("FOREGROUND");
                         this.pacmanWorld.addGraphicsEntity(clyde);
                         this.pacmanWorld.addPhysicsEntity(clyde);
@@ -268,12 +291,39 @@ public class PacmanApp
                         clyde.initGoal();
                         break;
                     }
-//                    case 8: {
-//                        break;
-//                    }
-//                    case 9: {
-//                        break;
-//                    }
+                    case 8: {
+                        double inky_scale = 0.9;
+                        double width = cell_width * inky_scale;
+                        double height = cell_height * inky_scale;
+                        inky = new Inky();
+                        inky.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        inky.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        inkyInit=Pair.create(inky.getX(), inky.getY());
+                        inky.setWidth(width);
+                        inky.setHeight(width);
+                        inky.setLayerName("FOREGROUND");
+                        this.pacmanWorld.addGraphicsEntity(inky);
+                        this.pacmanWorld.addPhysicsEntity(inky);
+                        this.pacmanWorld.addAIEntity(inky);
+                        break;
+                    }
+                    case 9: {
+                        double pinky_scale = 0.9;
+                        double width = cell_width * pinky_scale;
+                        double height = cell_height * pinky_scale;
+                        pinky = new Pinky();
+                        pinky.setX((x * cell_width) + (cell_width / 2) - (width / 2));
+                        pinky.setY((y * cell_height) + (cell_height / 2) - (height / 2));
+                        pinkyInit=Pair.create( pinky.getX(),  pinky.getY());
+                        pinky.setWidth(width);
+                        pinky.setHeight(width);
+                        pinky.setLayerName("FOREGROUND");
+                        this.pacmanWorld.addGraphicsEntity(pinky);
+                        this.pacmanWorld.addPhysicsEntity(pinky);
+                        this.pacmanWorld.addAIEntity(pinky);
+                        pinky.initGoal();
+                        break;
+                    }
                     default: {
                         System.out.println("Parsing Error");
                     }
@@ -282,6 +332,8 @@ public class PacmanApp
         }
         this.blinky.setPacMan(this.pacman);
         this.clyde.setPacMan(this.pacman);
+        this.inky.setPacMan(this.pacman);
+        this.pinky.setPacMan(this.pacman);
         createCounter();
         initLife();
     }

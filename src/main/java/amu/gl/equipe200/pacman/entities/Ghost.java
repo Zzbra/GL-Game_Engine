@@ -12,7 +12,7 @@ public class Ghost
         extends Entity
         implements PhysicsInterface, GraphicsInterface {
 
-    /***  Physics Flags  ***/
+    /***Physics Flags  ***/
 
     /***  Graphics Flags ***/
     private ArrayList<String> animation;
