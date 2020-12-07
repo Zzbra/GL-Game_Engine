@@ -53,7 +53,6 @@ public class IAEngine {
                 if (path.size() > 1) {
                     adjustDirection(entity, path.get(1), currentCell);
                 }
-                System.out.println("Path :" + path);
             }
         }
     }

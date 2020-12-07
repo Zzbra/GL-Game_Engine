@@ -31,7 +31,6 @@ public class PacmanApp
     private int score;
     private int nbGum;
 
-    private Counter counter;
     private ArrayList<Life> lifeCounter;
 
     private Pair<Double,Double> pacmanInit;
@@ -60,8 +59,7 @@ public class PacmanApp
                 System.out.println("nbGum: " + nbGum);
                 counter.setValue(score);
             }
-
-            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY){
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY && !pacman.isPoweredUp()){
                 if(lifeCounter.size()> 0) {
                    lifeCounter.get(pacman.getLives()).toRemove();
                    pacman.setX(pacmanInit.first);
@@ -72,6 +70,16 @@ public class PacmanApp
                    clyde.setY(clydeInit.second);
                 }if (pacman.getLives() == 0){
                     loadMainMenu();
+                }
+            }
+            if(collision.first.getTag() == Settings.Tag.PLAYER && collision.second.getTag() == Settings.Tag.ENEMY && pacman.isPoweredUp()){
+                if(collision.second == blinky){
+                    collision.second.setX(blinkyInit.first);
+                    collision.second.setY(blinkyInit.second);
+                }
+                if(collision.second == clyde) {
+                    collision.second.setX(clydeInit.first);
+                    collision.second.setY(clydeInit.second);
                 }
             }
         }
